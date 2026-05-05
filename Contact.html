@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Hueflow Studio</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<template id="__bundler_thumbnail" data-bg-color="#FAF9F5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FAF9F5"/>
+    <line x1="80" y1="120" x2="1120" y2="120" stroke="#1F1F1F" stroke-width="1"/>
+    <text x="80" y="100" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" letter-spacing="4" fill="#1F1F1F">HUEFLOW STUDIO</text>
+    <text x="1040" y="100" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="400" letter-spacing="4" fill="#1F1F1F">APPLY</text>
+    <text x="80" y="260" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="6" fill="#1F1F1F">CONTACT</text>
+    <text x="1080" y="260" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="6" fill="#1F1F1F">00</text>
+    <text x="80" y="400" font-family="Helvetica, Arial, sans-serif" font-size="56" font-weight="300" fill="#1F1F1F">김예진</text>
+    <line x1="80" y1="500" x2="1120" y2="500" stroke="#1F1F1F" stroke-width="0.5" opacity="0.3"/>
+    <line x1="80" y1="580" x2="1120" y2="580" stroke="#1F1F1F" stroke-width="0.5" opacity="0.3"/>
+    <line x1="80" y1="660" x2="1120" y2="660" stroke="#1F1F1F" stroke-width="0.5" opacity="0.3"/>
+  </svg>
+</template>
+<style>
+  :root {
+    --bg:        #FAF9F5;
+    --ink:       #1F1F1F;
+    --mid:       #888780;
+    --line-soft: rgba(31,31,31,0.14);
+    --accent:    #1F1F1F;
+    --hf-font-kr: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont,
+                  "Apple SD Gothic Neo", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --hf-font-en: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont,
+                  "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; overflow-x: hidden; max-width: 100vw; }
+  img, svg, video { max-width: 100%; height: auto; }
+  p, h1, h2, h3, h4, h5, h6, li, dt, dd, span { word-break: keep-all; overflow-wrap: anywhere; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--hf-font-kr); font-weight: 300;
+    font-size: 15px; line-height: 1.65;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    padding-bottom: 64px;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--accent); }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 700px) { .wrap { padding: 0 24px; } }
+  @media (max-width: 380px) { .wrap { padding: 0 24px; } }
+
+  .section { padding-top: 96px; padding-bottom: 96px; }
+  .section + .section { border-top: 0.5px solid var(--line-soft); }
+  @media (max-width: 768px) { .section { padding-top: 64px; padding-bottom: 64px; } }
+
+  .sec-head {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: baseline; gap: 16px;
+    margin-bottom: 40px; padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .sec-head .label {
+    font-family: var(--hf-font-en); font-weight: 500;
+    font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .sec-head .idx {
+    font-family: var(--hf-font-en); font-weight: 400;
+    font-size: 12px; letter-spacing: 0.18em;
+    color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+
+  .topnav {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); border-bottom: 0.5px solid var(--line-soft);
+  }
+  .topnav .row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 32px; max-width: 1240px; margin: 0 auto;
+  }
+  .topnav .brand, .topnav .apply {
+    font-family: var(--hf-font-en); font-weight: 500;
+    font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .topnav .apply { font-weight: 400; }
+  @media (max-width: 768px) { .topnav .row { padding: 18px 24px; } }
+  @media (max-width: 380px) { .topnav .row { padding: 16px 20px; } }
+
+  /* Index head */
+  .index-head { padding-top: 80px; padding-bottom: 32px; }
+  .index-head .line {
+    display: flex; align-items: baseline; gap: 24px;
+    font-family: var(--hf-font-en); font-weight: 400;
+    font-size: 13px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .index-head .line .dash { color: var(--mid); }
+  .index-head .line .num { color: var(--accent); }
+  @media (max-width: 768px) {
+    .index-head { padding-top: 56px; padding-bottom: 24px; }
+    .index-head .line { gap: 16px; font-size: 12px; }
+  }
+
+  /* Identity card */
+  .identity { padding-top: 24px; padding-bottom: 96px; }
+  .identity .name {
+    font-family: var(--hf-font-kr); font-weight: 300;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.2; letter-spacing: -0.02em;
+    margin: 0 0 14px; color: var(--ink);
+  }
+  .identity .role {
+    font-family: var(--hf-font-en); font-weight: 400;
+    font-size: 13px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--mid);
+    margin: 0 0 4px;
+  }
+  .identity .studio {
+    font-family: var(--hf-font-en); font-weight: 500;
+    font-size: 13px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink);
+    margin: 0;
+  }
+
+  /* About / Approach prose */
+  .prose p {
+    font-family: var(--hf-font-kr); font-weight: 300;
+    font-size: 16px; line-height: 1.85; color: var(--ink);
+    margin: 0; max-width: 60ch;
+  }
+  .prose p + p { margin-top: 0; }
+
+  /* Definition rows (paired meta + body) */
+  .deflist { margin: 0; padding: 0; }
+  .deflist .row {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 32px; padding: 18px 0;
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .deflist .row:last-child { border-bottom: 0; }
+  .deflist dt {
+    font-family: var(--hf-font-kr); font-weight: 400;
+    font-size: 14px; color: var(--mid);
+    padding-top: 2px; letter-spacing: -0.005em;
+  }
+  .deflist dd {
+    margin: 0; font-family: var(--hf-font-kr);
+    font-weight: 300; font-size: 16px;
+    line-height: 1.65; color: var(--ink);
+  }
+  .deflist dd .note {
+    display: block; margin-top: 4px;
+    font-size: 13px; color: var(--mid);
+  }
+  .cta-list .row {
+    align-items: start;
+  }
+  .cta-list .inline-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-bottom: 0.5px solid var(--ink);
+    line-height: 1.4;
+  }
+  @media (max-width: 640px) {
+    .deflist .row { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
+  }
+
+  /* Footer */
+  footer.foot {
+    border-top: 0.5px solid var(--line-soft);
+    padding-top: 64px;
+    padding-bottom: 96px;
+  }
+  footer.foot .brand-large {
+    font-family: var(--hf-font-en); font-weight: 500;
+    font-size: 14px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--ink);
+    margin: 0 0 8px;
+  }
+  footer.foot .tag {
+    font-family: var(--hf-font-en); font-weight: 400;
+    font-size: 12px; letter-spacing: 0.14em;
+    color: var(--mid); margin: 0;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; left: 50%; bottom: 60px;
+    transform: translate(-50%, 20px);
+    background: var(--ink); color: var(--bg);
+    font-family: var(--hf-font-kr); font-weight: 400;
+    font-size: 13px; letter-spacing: 0.06em;
+    padding: 12px 22px; border-radius: 999px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .28s ease, transform .28s ease;
+    z-index: 100; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="row">
+    <a href="index.html" class="brand">Hueflow Studio</a>
+    <a href="Plano.html" class="apply">Apply</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- Index head -->
+  <section class="wrap index-head">
+    <div class="line">
+      <span>Contact</span>
+      <span class="dash">—</span>
+      <span class="num">00</span>
+    </div>
+  </section>
+
+  <!-- Identity -->
+  <section class="wrap identity">
+    <h1 class="name">김예진</h1>
+    <p class="role">Founder &amp; Director</p>
+    <p class="studio">Hueflow Studio</p>
+  </section>
+
+  <!-- About -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">About</span>
+      <span class="idx"></span>
+    </div>
+    <div class="prose">
+      <p>20년차 공간 설계자.<br>건축·인테리어 설계 실무와 공간 비주얼라이징 작업을 기반으로,<br>AI 워크플로우까지 확장하는 스튜디오를 운영합니다.</p>
+      <p>Hueflow Studio는 건축 비주얼라이징,<br>AI 렌더링, 공간 제안 이미지 제작,<br>그리고 AI 교육·자문을 함께 다룹니다.</p>
+      <p>현재는 Plano(정규 강의), Library(전자책),<br>Lab(B2B 강의·자문) 세 개의 라인으로 공간 설계와 AI를 연결합니다.</p>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Approach</span>
+      <span class="idx"></span>
+    </div>
+    <div class="prose">
+      <p>20년의 실무 경험과 새로운 도구 사이에서,<br>디자인의 본질은 변하지 않는다고 믿습니다.<br>공간을 만드는 일은 여전히 사람을 향합니다.<br>AI는 그 일을 더 빠르고 풍부하게 할 도구일 뿐.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Start Here</span>
+      <span class="idx"></span>
+    </div>
+    <dl class="deflist cta-list">
+      <div class="row">
+        <dt>정규 강의 상담</dt>
+        <dd>
+          Plano 1기 수강이 맞는지,<br>준비물과 수업 흐름을 먼저 확인하고 싶을 때.
+          <a href="Plano.html#apply" class="inline-cta">Plano 보기 →</a>
+        </dd>
+      </div>
+      <div class="row">
+        <dt>기업·협회 문의</dt>
+        <dd>
+          조직 대상 AI 강의나 자문이 필요할 때.<br>기관명, 인원, 희망 일정만 먼저 보내도 됩니다.
+          <a href="Lab.html#inquiry" class="inline-cta">Lab 문의 →</a>
+        </dd>
+      </div>
+      <div class="row">
+        <dt>비주얼라이징 / 협업</dt>
+        <dd>
+          건축 비주얼라이징, AI 렌더링,<br>공간 제안 이미지 제작 관련 협업 문의.
+          <a href="mailto:kimyj0623@naver.com" class="inline-cta">이메일 보내기 →</a>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- Selected Experience -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Selected Experience</span>
+      <span class="idx">01</span>
+    </div>
+    <p class="intro" style="font-family: var(--hf-font-kr); font-weight: 300; font-size: 14px; color: var(--mid); margin: 0 0 24px;">공간·건축 설계 실무 20년</p>
+    <dl class="deflist">
+      <div class="row"><dt>금융 공간</dt><dd>은행 본·지점 인테리어</dd></div>
+      <div class="row"><dt>의료 공간</dt><dd>클리닉 · 통증의학 인테리어</dd></div>
+      <div class="row"><dt>상업 공간</dt><dd>대형 마트 · 리테일 · F&amp;B</dd></div>
+      <div class="row"><dt>주거 공간</dt><dd>단독주택 · 아파트 리노베이션</dd></div>
+      <div class="row"><dt>해외 프로젝트</dt><dd>골프 클럽하우스 <span class="note">Hawaii</span></dd></div>
+    </dl>
+  </section>
+
+  <!-- Teaching & Consulting -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Teaching &amp; Consulting</span>
+      <span class="idx">02</span>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>한솔건축아카데미</dt><dd>특강 강사</dd></div>
+      <div class="row"><dt>목포대학교 건축사회</dt><dd>정규 강좌 <span class="note">5주 · 30시간 · 2타임</span></dd></div>
+      <div class="row"><dt>삼성전자 판매센터</dt><dd>본사 AI 워크플로우 자문</dd></div>
+      <div class="row"><dt>Fastcampus</dt><dd>AI 인테리어 정규 과정</dd></div>
+      <div class="row"><dt>인테리어 업체</dt><dd>AI 워크플로우 도입 컨설팅 <span class="note">진행 중</span></dd></div>
+    </dl>
+  </section>
+
+  <!-- Hueflow Studio lines -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Hueflow Studio</span>
+      <span class="idx">03</span>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>Plano</dt><dd>인테리어 정규 강의 <span class="note">1기 모집 중</span></dd></div>
+      <div class="row"><dt>Library</dt><dd>AI 워크플로우 전자책 시리즈 <span class="note">준비 중</span></dd></div>
+      <div class="row"><dt>Lab</dt><dd>B2B 기업·협회 AI 강의 및 자문</dd></div>
+    </dl>
+  </section>
+
+  <!-- Contact -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Contact</span>
+      <span class="idx">04</span>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>이메일</dt><dd><a href="mailto:kimyj0623@naver.com">kimyj0623@naver.com</a></dd></div>
+      <div class="row"><dt>카카오톡</dt><dd><a href="https://pf.kakao.com/_LxajxbX" target="_blank" rel="noopener">pf.kakao.com/_LxajxbX</a></dd></div>
+      <div class="row"><dt>인스타그램</dt><dd><a href="https://instagram.com/hueflow_studio" target="_blank" rel="noopener">@hueflow_studio</a></dd></div>
+      <div class="row"><dt>스레드</dt><dd><a href="https://threads.net/@hueflow_studio" target="_blank" rel="noopener">@hueflow_studio</a></dd></div>
+      <div class="row"><dt>업무 시간</dt><dd>평일 10:00 — 18:00 <span class="note">주말·공휴일 휴무</span></dd></div>
+      <div class="row"><dt>전화 문의</dt><dd>카카오톡으로 1차 문의 부탁드립니다.</dd></div>
+    </dl>
+  </section>
+
+  <!-- Inquiries -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Inquiries</span>
+      <span class="idx">05</span>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>강의 문의</dt><dd>Plano · Lab 모두 환영</dd></div>
+      <div class="row"><dt>협업 / 컨설팅</dt><dd>AI 워크플로우 도입</dd></div>
+      <div class="row"><dt>미디어 / 인터뷰</dt><dd>보도 자료는 이메일로</dd></div>
+    </dl>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p class="brand-large">Hueflow Studio</p>
+    <p class="tag">Spatial design × AI workflow</p>
+  </div>
+</footer>
+
+</body>
+</html>

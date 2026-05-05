@@ -1,0 +1,223 @@
+/* ==========================================================================
+   Hueflow Studio — Design Tokens v2 (May 2026)
+   Scandinavian neutral system · single Clay accent
+   ========================================================================== */
+
+@font-face {
+  font-family: 'AppleSDGothicNeo';
+  src: local('Apple SD Gothic Neo'), url('fonts/AppleSDGothicNeoR.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+/* General Sans — self-hosted brand font */
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-Extralight.woff2') format('woff2'),
+       url('fonts/GeneralSans-Extralight.woff') format('woff'),
+       url('fonts/GeneralSans-Extralight.ttf') format('truetype');
+  font-weight: 200; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-ExtralightItalic.woff2') format('woff2'),
+       url('fonts/GeneralSans-ExtralightItalic.woff') format('woff'),
+       url('fonts/GeneralSans-ExtralightItalic.ttf') format('truetype');
+  font-weight: 200; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-Light.woff2') format('woff2'),
+       url('fonts/GeneralSans-Light.woff') format('woff'),
+       url('fonts/GeneralSans-Light.ttf') format('truetype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-LightItalic.woff2') format('woff2'),
+       url('fonts/GeneralSans-LightItalic.woff') format('woff'),
+       url('fonts/GeneralSans-LightItalic.ttf') format('truetype');
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-Regular.woff2') format('woff2'),
+       url('fonts/GeneralSans-Regular.woff') format('woff'),
+       url('fonts/GeneralSans-Regular.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-Italic.woff2') format('woff2'),
+       url('fonts/GeneralSans-Italic.woff') format('woff'),
+       url('fonts/GeneralSans-Italic.ttf') format('truetype');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-Medium.woff2') format('woff2'),
+       url('fonts/GeneralSans-Medium.woff') format('woff'),
+       url('fonts/GeneralSans-Medium.ttf') format('truetype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-MediumItalic.woff2') format('woff2'),
+       url('fonts/GeneralSans-MediumItalic.woff') format('woff'),
+       url('fonts/GeneralSans-MediumItalic.ttf') format('truetype');
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-Semibold.woff2') format('woff2'),
+       url('fonts/GeneralSans-Semibold.woff') format('woff'),
+       url('fonts/GeneralSans-Semibold.ttf') format('truetype');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-SemiboldItalic.woff2') format('woff2'),
+       url('fonts/GeneralSans-SemiboldItalic.woff') format('woff'),
+       url('fonts/GeneralSans-SemiboldItalic.ttf') format('truetype');
+  font-weight: 600; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-Bold.woff2') format('woff2'),
+       url('fonts/GeneralSans-Bold.woff') format('woff'),
+       url('fonts/GeneralSans-Bold.ttf') format('truetype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('fonts/GeneralSans-BoldItalic.woff2') format('woff2'),
+       url('fonts/GeneralSans-BoldItalic.woff') format('woff'),
+       url('fonts/GeneralSans-BoldItalic.ttf') format('truetype');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+:root {
+  /* ===== Base ===== */
+  --hf-white:        #FFFFFF;   /* main bg */
+  --hf-cream:        #F8F6F2;   /* secondary bg */
+  --hf-canvas:       #F2EFE9;   /* image placeholder */
+
+  /* ===== Text ===== */
+  --hf-ink:          #0E0E0C;   /* headings, emphasis */
+  --hf-graphite:     #1F1F1D;   /* body */
+  --hf-stone:        #6B6862;   /* secondary, captions */
+  --hf-mist:         #A8A49C;   /* placeholder */
+
+  /* ===== Borders ===== */
+  --hf-line:         #E5E1D8;
+  --hf-line-strong:  #C9C2B5;
+
+  /* ===== Accent — only one ===== */
+  --hf-clay:         #B5A48C;   /* CTA bg only */
+  --hf-clay-soft:    #E8DFD2;   /* hover, badges */
+
+  /* ===== Functional ===== */
+  --hf-success:      #5B6B52;
+  --hf-error:        #8C4A3D;
+  --hf-warning:      #B5915C;
+
+  /* ===== Type ===== */
+  --hf-font-kr: 'General Sans', -apple-system, BlinkMacSystemFont, 'AppleSDGothicNeo', 'Apple SD Gothic Neo',
+                'SF Pro Text', 'SF Pro KR', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --hf-font-en: 'General Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+                'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --hf-font-serif: 'Times New Roman', 'Apple SD Gothic Neo', serif;
+  --hf-font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+
+  /* ===== Spacing ===== */
+  --hf-s-1: 4px;  --hf-s-2: 8px;  --hf-s-3: 12px; --hf-s-4: 16px;
+  --hf-s-5: 24px; --hf-s-6: 32px; --hf-s-7: 48px; --hf-s-8: 64px;
+
+  /* ===== Radii ===== */
+  --hf-r-0: 0;    --hf-r-1: 2px;  --hf-r-2: 4px;
+  --hf-r-3: 8px;  --hf-r-4: 12px;
+}
+
+/* ==========================================================================
+   Type scale
+   ========================================================================== */
+
+.hf-display {
+  font-family: var(--hf-font-serif);
+  font-weight: 300;
+  font-size: 96px; line-height: 1.0; letter-spacing: -0.025em;
+  color: var(--hf-ink);
+}
+.hf-h1 { font-family: var(--hf-font-kr); font-weight: 700; font-size: 56px; line-height: 1.1; letter-spacing: -0.02em; color: var(--hf-ink); }
+.hf-h2 { font-family: var(--hf-font-kr); font-weight: 600; font-size: 36px; line-height: 1.2; letter-spacing: -0.015em; color: var(--hf-ink); }
+.hf-h3 { font-family: var(--hf-font-kr); font-weight: 600; font-size: 22px; line-height: 1.3; color: var(--hf-ink); }
+.hf-body { font-family: var(--hf-font-kr); font-weight: 400; font-size: 16px; line-height: 1.6; color: var(--hf-graphite); }
+.hf-small { font-family: var(--hf-font-kr); font-weight: 400; font-size: 13px; line-height: 1.5; color: var(--hf-stone); }
+.hf-caption { font-family: var(--hf-font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hf-stone); }
+.hf-overline { font-family: var(--hf-font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--hf-stone); }
+.hf-mono { font-family: var(--hf-font-mono); font-size: 12px; color: var(--hf-graphite); }
+
+/* ==========================================================================
+   Buttons (Primary = Clay only)
+   ========================================================================== */
+
+.hf-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 44px; padding: 0 20px;
+  font-family: var(--hf-font-kr); font-weight: 500; font-size: 14px;
+  letter-spacing: 0.02em;
+  border: 0; border-radius: var(--hf-r-1);
+  cursor: pointer; transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.hf-btn-primary   { background: var(--hf-clay); color: var(--hf-white); }
+.hf-btn-primary:hover { background: #A4937B; }
+.hf-btn-secondary { background: transparent; color: var(--hf-ink); border: 1px solid var(--hf-ink); }
+.hf-btn-secondary:hover { background: var(--hf-clay-soft); }
+.hf-btn-ghost     { background: transparent; color: var(--hf-graphite); border: 0; padding: 0 4px; height: 32px; border-bottom: 1px solid transparent; border-radius: 0; }
+.hf-btn-ghost:hover { border-bottom-color: var(--hf-graphite); }
+
+/* ==========================================================================
+   Inputs / Cards / Tags
+   ========================================================================== */
+
+.hf-input {
+  width: 100%; height: 44px; padding: 0 14px;
+  background: var(--hf-white); color: var(--hf-graphite);
+  border: 1px solid var(--hf-line); border-radius: var(--hf-r-1);
+  font-family: var(--hf-font-kr); font-size: 14px;
+  transition: border-color .18s ease;
+}
+.hf-input::placeholder { color: var(--hf-mist); }
+.hf-input:focus { outline: none; border-color: var(--hf-line-strong); }
+
+.hf-card {
+  background: var(--hf-white);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-r-2);
+  padding: 24px;
+}
+.hf-card-cream { background: var(--hf-cream); border-color: var(--hf-line); }
+
+.hf-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; height: 24px;
+  background: var(--hf-clay-soft); color: var(--hf-ink);
+  font-family: var(--hf-font-en); font-size: 11px; letter-spacing: 0.08em;
+  border-radius: 999px;
+}
+.hf-tag-outline { background: transparent; color: var(--hf-graphite); border: 1px solid var(--hf-line-strong); }
+
+/* Functional tags */
+.hf-tag-success { background: rgba(91,107,82,0.12); color: var(--hf-success); }
+.hf-tag-error   { background: rgba(140,74,61,0.12); color: var(--hf-error); }
+.hf-tag-warning { background: rgba(181,145,92,0.16); color: var(--hf-warning); }
+
+/* ==========================================================================
+   Dividers / Surfaces
+   ========================================================================== */
+
+.hf-divider { border: 0; border-top: 1px solid var(--hf-line); margin: 0; }
+.hf-divider-strong { border-top-color: var(--hf-line-strong); }
+
+.hf-surface-white  { background: var(--hf-white);  color: var(--hf-graphite); }
+.hf-surface-cream  { background: var(--hf-cream);  color: var(--hf-graphite); }
+.hf-surface-canvas { background: var(--hf-canvas); color: var(--hf-graphite); }
