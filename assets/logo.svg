@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 80" width="520" height="80">
+  
+  <text x="0" y="48" class="wm" font-size="26">HUEFLOW</text>
+  <circle cx="172" cy="40" r="3" class="dot"></circle>
+  <text x="190" y="48" class="wm" font-size="26">STUDIO</text>
+</svg>

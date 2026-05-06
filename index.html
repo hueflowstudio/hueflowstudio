@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hueflow Studio</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
+<template id="__bundler_thumbnail" data-bg-color="#F2EFE9">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#F2EFE9"/>
+    <text x="80" y="100" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="500" letter-spacing="6" fill="#0E0E0C">HUEFLOW STUDIO</text>
+    <rect x="80" y="180" width="540" height="540" fill="#0E0E0C" opacity="0.08"/>
+    <rect x="660" y="180" width="460" height="260" fill="#0E0E0C" opacity="0.06"/>
+    <rect x="660" y="460" width="460" height="260" fill="#0E0E0C" opacity="0.04"/>
+  </svg>
+</template>
+<style>
+  :root {
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans-kr: 'General Sans', 'Pretendard', -apple-system, sans-serif;
+    --color-white: #FFFFFF;
+    --color-cream: #F8F6F2;
+    --color-canvas: #F2EFE9;
+    --color-ink: #0E0E0C;
+    --color-graphite: #1F1F1D;
+    --color-stone: #6B6862;
+    --color-mist: #A8A49C;
+    --color-line: #E5E1D8;
+    --color-line-strong: #C9C2B5;
+    /* Brand palette — Aesop / Le Labo / Acne mood */
+    --hf-base:        #FAF9F5;
+    --hf-base-2:      #FDFCF8;
+    --hf-neutral-1:   #EDE7DC;
+    --hf-neutral-2:   #DCD3C2;
+    --hf-neutral-3:   #C8BFB2;
+    --hf-taupe:       #A88975;  /* Warm Taupe — accent */
+    --hf-espresso:    #3D2F26;  /* Espresso Brown — body */
+    --hf-inkwell:     #1F1F1F;  /* Inkwell — headline / CTA */
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow-x: hidden; }
+  html, body { max-width: 100vw; }
+  body {
+    background: var(--color-white);
+    color: var(--color-ink);
+    font-family: var(--font-sans-kr);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ Header ============ */
+  .top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 32px 0;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--color-graphite);
+    flex-shrink: 0;
+  }
+  .top a { transition: color 160ms ease; }
+  .top a:hover { color: var(--color-ink); }
+
+  /* ============ Brand line ============ */
+  .brand-line {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 24px 32px 24px;
+    flex-shrink: 0;
+  }
+  .brand {
+    font-size: 48px; font-weight: 400; letter-spacing: -0.02em;
+    color: var(--color-ink);
+    line-height: 1;
+  }
+  /* Brand block: headline + small Warm Taupe sub-copy */
+  .brand-block { display: flex; flex-direction: column; gap: 10px; }
+  .brand-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--hf-inkwell);
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+  .brand-sub .dot { display: inline-block; padding: 0 8px; opacity: 0.7; }
+
+  /* Right-aligned three-line meta links */
+  .meta-links {
+    display: flex; flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    line-height: 1.8;
+  }
+  .meta-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--hf-inkwell);
+    letter-spacing: 0.005em;
+    border-bottom: 1px solid transparent;
+    transition: color 200ms ease, border-color 200ms ease;
+  }
+  .meta-links a .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: color 200ms ease, transform 240ms ease;
+  }
+  .meta-links a:hover {
+    color: var(--hf-taupe);
+    border-bottom-color: var(--hf-taupe);
+  }
+  .meta-links a:hover .arrow { transform: translateX(2px); }
+
+  /* ============ Main grid — fits viewport ============ */
+  .grid {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 33fr 34fr 33fr;
+    gap: 40px;
+    padding: 0 40px;
+    min-height: 0;
+  }
+  .col-right {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 40px;
+    min-height: 0;
+  }
+  .mobile-grid {
+    display: none;
+  }
+  .mobile-original-stack {
+    display: none;
+  }
+
+  .tile {
+    position: relative; overflow: hidden;
+    background: transparent;
+    cursor: pointer;
+  }
+  .tile a { display: block; height: 100%; }
+
+  /* Bottom-anchored fade-in CTA label — minimal, Aesop-mood */
+  .tile .cta-label {
+    position: absolute;
+    left: 16px; right: 16px; top: 16px;
+    padding: 10px 14px;
+    background: rgba(250, 249, 245, 0.92);
+    color: var(--hf-inkwell);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 400ms ease, transform 400ms ease;
+    pointer-events: none;
+    z-index: 3;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  .tile .cta-label .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 240ms ease;
+  }
+  .tile:hover .cta-label,
+  .tile:focus-visible .cta-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .tile:hover .cta-label .arrow { transform: translateX(2px); }
+  /* Video tile — lift the label so it doesn't fight the play controls area */
+  .tile-video .cta-label { top: 24px; }
+
+  /* ============ Tile 1 — Architectural footage ============ */
+  .tile-video {
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+  }
+  .tile-video .video-frame {
+    position: relative;
+    width: 100%; height: 100%;
+    background: var(--color-graphite);
+    overflow: hidden;
+  }
+  .tile-video .video-frame::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, #2a2a27 0%, #141413 70%, #0a0a09 100%);
+  }
+  .tile-video .video-frame video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    transition: opacity 600ms ease;
+  }
+  .tile-video .video-frame::after {
+    content: ''; position: absolute; left: 10%; right: 10%; bottom: 14%; top: 22%;
+    background: linear-gradient(180deg, rgba(168,164,156,0.18) 0%, rgba(168,164,156,0.04) 100%);
+    clip-path: polygon(0 100%, 0 30%, 22% 30%, 22% 8%, 58% 8%, 58% 30%, 78% 30%, 78% 18%, 100% 18%, 100% 100%);
+  }
+
+  /* ============ Tile 2 — Library book (single volume) ============ */
+  .tile-library {
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    padding: 3% 1%;
+    overflow: visible;
+  }
+  .book {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    height: auto;
+    max-height: 100%;
+    background: #F4EDE4;
+    position: relative;
+    overflow: hidden;
+    /* Book-like depth: tight contact shadow + soft ambient + slight directional lift */
+    box-shadow:
+      0 1px 1px rgba(14, 14, 12, 0.08),
+      0 2px 3px rgba(14, 14, 12, 0.06),
+      0 8px 16px -4px rgba(14, 14, 12, 0.10),
+      0 24px 40px -12px rgba(14, 14, 12, 0.18),
+      4px 6px 14px -2px rgba(14, 14, 12, 0.08);
+    transform: translateY(0);
+    transition: transform 360ms cubic-bezier(.2,.7,.2,1),
+                box-shadow 360ms cubic-bezier(.2,.7,.2,1);
+  }
+  /* Faint inner-left edge to suggest a spine */
+  .book::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(90deg, rgba(14,14,12,0.10) 0%, rgba(14,14,12,0) 100%);
+    z-index: 2; pointer-events: none;
+  }
+  .tile-library:hover .book {
+    transform: translateY(-6px);
+    box-shadow:
+      0 1px 1px rgba(14, 14, 12, 0.08),
+      0 4px 6px rgba(14, 14, 12, 0.07),
+      0 14px 22px -4px rgba(14, 14, 12, 0.12),
+      0 36px 56px -14px rgba(14, 14, 12, 0.24),
+      6px 10px 22px -2px rgba(14, 14, 12, 0.10);
+  }
+  .book img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* ============ Tile 3 — Moodboard image (top, fills remaining) ============ */
+  .tile-plano {
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+  }
+  .tile-plano img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: left bottom;
+    transform: scale(1.3);
+    transform-origin: left bottom;
+    display: block;
+  }
+
+  /* ============ Tile 4 — Portfolio interior (1:1) ============ */
+  .tile-interior {
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+  }
+  .tile-interior img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* ============ Footer ============ */
+  footer {
+    flex-shrink: 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--color-line);
+    padding: 16px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--color-stone);
+    letter-spacing: 0.02em;
+    gap: 16px;
+  }
+  footer .l, footer .r { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  footer .b2b { color: var(--color-graphite); }
+  footer .b2b:hover { color: var(--color-ink); }
+
+  /* ============ Hero portfolio image (single, full-bleed) ============ */
+  .hero-img {
+    flex: 1 1 auto;
+    padding: 0 40px 40px;
+    min-height: 0;
+    display: flex;
+  }
+  .hero-img__link {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .hero-img__link img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 600ms cubic-bezier(.2,.7,.2,1);
+  }
+  .hero-img__link:hover img { transform: scale(1.02); }
+  .hero-img__cta {
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    padding: 12px 18px;
+    background: rgba(250, 249, 245, 0.92);
+    color: var(--hf-inkwell);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    transition: opacity 200ms ease, transform 240ms ease;
+  }
+  .hero-img__cta .arrow {
+    display: inline-block;
+    margin-left: 10px;
+    transition: transform 240ms ease;
+  }
+  .hero-img__link:hover .hero-img__cta .arrow { transform: translateX(3px); }
+
+  /* ============ Toast (preparing) ============ */
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 40px;
+    transform: translate(-50%, 20px);
+    background: var(--color-ink, #1a1a1a);
+    color: var(--color-paper, #f5f1ea);
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    padding: 14px 22px;
+    border-radius: 999px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .28s ease, transform .28s ease;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ============ Responsive ============ */
+  @media (max-width: 1024px) and (min-width: 901px) {
+    .brand { font-size: 36px; }
+    .brand-sub { font-size: 12px; }
+    .meta-links a { font-size: 13px; }
+    .grid { grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(260px, 1fr); }
+    .col-right { grid-column: span 2; grid-template-rows: auto auto; grid-template-columns: 1fr 1fr; }
+    .col-right > * { min-height: 260px; }
+  }
+  @media (max-width: 900px) {
+    .top { padding: 20px 24px 0; }
+    .top,
+    .brand-line,
+    .mobile-grid,
+    footer {
+      width: 100vw;
+      max-width: 100vw;
+    }
+    .top {
+      display: grid;
+      grid-template-columns: auto auto;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .top a {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+    .top a:last-child {
+      margin-left: 0;
+      text-align: right;
+    }
+    .top a[href="#library"] {
+      display: none;
+    }
+    .brand-line { padding: 20px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .brand { font-size: 28px; }
+    .meta-links { align-items: flex-start; }
+    .hero-img { display: none; }
+
+    /* Single hero image: 4:3 ratio so it always renders. */
+    .hero-img {
+      padding: 0 24px 24px;
+      flex: 0 0 auto;
+    }
+    .hero-img__link {
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+    .hero-img__cta {
+      left: 16px;
+      bottom: 16px;
+      font-size: 13px;
+      padding: 10px 14px;
+    }
+
+    /* Mobile: stack tiles in document order, show full images uncropped. */
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 0 24px;
+      grid-auto-rows: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .mobile-grid { display: none !important; }
+    .mobile-original-stack {
+      display: grid;
+      gap: 16px;
+      width: 100vw;
+      max-width: 100vw;
+      padding: 0 24px;
+    }
+    .mobile-original-link {
+      position: relative;
+      display: block;
+      width: 100%;
+      overflow: visible;
+    }
+    .mobile-original-link img,
+    .mobile-original-link video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+    .mobile-original-label {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 2;
+      padding: 9px 12px;
+      background: rgba(250, 249, 245, 0.94);
+      color: var(--hf-inkwell);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .mobile-original-label .arrow {
+      display: inline-block;
+      margin-left: 6px;
+    }
+    .mobile-original-link:first-child .mobile-original-label {
+      top: 12px;
+      bottom: auto;
+    }
+    .col-right { grid-column: auto; display: contents; }
+    .col-right > * { min-height: 0; }
+
+    /* Drop forced aspect ratios; let each image dictate its own height. */
+    .tile { min-height: 0; aspect-ratio: auto; }
+
+    /* Video tile: show full video, no crop. */
+    .tile-video { aspect-ratio: auto; height: auto; }
+    .tile-video .video-frame {
+      position: relative;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background: #0a0a09;
+    }
+    /* Hide the desktop decorative gradient overlays that were covering the video on mobile. */
+    .tile-video .video-frame::before,
+    .tile-video .video-frame::after {
+      display: none !important;
+    }
+    .tile-video .video-frame video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover !important;
+      background: #0a0a09;
+    }
+
+    /* Mobile tiles use each asset's native aspect ratio. */
+    .tile-video {
+      display: block;
+      width: 100%;
+      height: calc(56.25vw - 27px);
+      position: relative;
+      overflow: hidden;
+    }
+    .tile-plano {
+      display: block;
+      width: 100%;
+      height: calc(66.6667vw - 32px);
+      position: relative;
+      overflow: hidden;
+    }
+    .tile-interior {
+      display: block;
+      width: 100%;
+      height: calc(100vw - 48px);
+      position: relative;
+      overflow: hidden;
+    }
+    .tile-video::before,
+    .tile-plano::before,
+    .tile-interior::before {
+      display: none;
+    }
+    .tile-video .video-frame,
+    .tile-video video,
+    .tile-plano img,
+    .tile-interior img {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+    .tile-plano img {
+      transform: none !important;
+      object-position: center center !important;
+    }
+    .tile-interior img {
+      object-position: center center !important;
+    }
+
+    /* Library book — keep proper 2:3 ratio so book is not cropped on mobile. */
+    .tile-library {
+      aspect-ratio: auto !important;
+      min-height: 360px;
+      padding: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tile-library .book {
+      width: 55%;
+      max-width: 200px;
+      aspect-ratio: 2 / 3;
+      max-height: none;
+      margin: 0 auto;
+    }
+
+    /* CTA label: keep it inside the fixed-height mobile tile so it cannot be clipped. */
+    .tile { position: relative; }
+    .tile .cta-label {
+      position: absolute;
+      left: 12px;
+      right: auto;
+      top: auto;
+      bottom: 12px;
+      opacity: 1;
+      transform: none;
+      background: rgba(250, 249, 245, 0.92);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--hf-inkwell);
+      text-align: left;
+    }
+    .tile-video .cta-label,
+    .tile-library .cta-label { padding-top: 12px; }
+
+    footer { padding: 16px 24px; flex-direction: column; align-items: flex-start; gap: 6px; }
+    footer .l,
+    footer .r {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    footer .l span:nth-child(2),
+    footer .r span {
+      display: none;
+    }
+    footer a,
+    footer span {
+      overflow-wrap: anywhere;
+    }
+
+    /* Final mobile media reset: render the original files in normal flow. */
+    .mobile-grid .tile,
+    .mobile-grid .tile-video,
+    .mobile-grid .tile-library,
+    .mobile-grid .tile-plano,
+    .mobile-grid .tile-interior,
+    .mobile-grid .video-frame,
+    .mobile-grid .book {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+      position: relative !important;
+      overflow: visible !important;
+    }
+    .mobile-grid .tile-video .video-frame {
+      display: block !important;
+      background: transparent !important;
+    }
+    .mobile-grid video,
+    .mobile-grid img {
+      position: static !important;
+      inset: auto !important;
+      width: 100% !important;
+      height: auto !important;
+      max-width: 100% !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      transform: none !important;
+      display: block !important;
+    }
+    .mobile-grid .tile-library {
+      padding: 0 !important;
+    }
+    .mobile-grid .tile-library .book {
+      margin: 0 !important;
+      box-shadow: none !important;
+    }
+    .mobile-grid .tile .cta-label {
+      z-index: 5;
+    }
+    .grid {
+      display: none !important;
+    }
+    .mobile-original-stack {
+      display: grid !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top nav -->
+  <nav class="top">
+    <a href="Contact.html">Contact</a>
+    <a href="#library">Free Library</a>
+  </nav>
+
+  <!-- Brand + meta -->
+  <div class="brand-line">
+    <div class="brand-block">
+      <div class="brand">Hueflow Studio</div>
+      <div class="brand-sub">Spatial design meets AI</div>
+    </div>
+    <nav class="meta-links" aria-label="Primary">
+      <a href="Plano.html"><span>Plano — 정규 강의</span><span class="arrow" aria-hidden="true">→</span></a>
+      <a href="Lab.html"><span>Lab — 기업 강의 문의</span><span class="arrow" aria-hidden="true">→</span></a>
+      <a href="#library" data-soon="준비중"><span>E-Book — 전자책</span><span class="arrow" aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+
+  <!-- Desktop 4-tile grid -->
+  <section class="grid" aria-label="Hueflow landing menu">
+
+    <a href="#portfolio" class="tile tile-video" data-soon="준비중" aria-label="포트폴리오">
+      <div class="video-frame">
+        <video data-hero-video autoplay muted loop playsinline preload="auto" src="assets/hero-footage.mp4"></video>
+      </div>
+      <div class="cta-label">포트폴리오<span class="arrow" aria-hidden="true">→</span></div>
+    </a>
+
+    <a href="#library" class="tile tile-library" data-soon="준비중" aria-label="전자책">
+      <div class="book">
+        <img src="assets/library-vol01-cover.png" alt="Hueflow Library Vol.01 — Visualization">
+      </div>
+      <div class="cta-label">전자책<span class="arrow" aria-hidden="true">→</span></div>
+    </a>
+
+    <div class="col-right">
+      <a href="Lab.html" class="tile tile-plano" aria-label="단체강의">
+        <img src="assets/corp-meeting.png" alt="단체강의">
+        <div class="cta-label">단체강의<span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+
+      <a href="Plano.html" class="tile tile-interior" aria-label="플라노 1기">
+        <img src="assets/interior.png" alt="플라노 1기">
+        <div class="cta-label">플라노 1기<span class="arrow" aria-hidden="true">→</span></div>
+      </a>
+    </div>
+
+  </section>
+
+  <!-- Mobile original-file stack: plain images, no tile sizing logic -->
+  <section class="mobile-original-stack" aria-label="모바일 랜딩 메뉴">
+    <a href="#portfolio" class="mobile-original-link" data-soon="준비중" aria-label="포트폴리오">
+      <video data-hero-video autoplay muted loop playsinline preload="auto" src="assets/hero-footage.mp4" aria-label="포트폴리오 건축 영상"></video>
+      <span class="mobile-original-label">포트폴리오<span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+
+    <a href="#library" class="mobile-original-link" data-soon="준비중" aria-label="전자책">
+      <img src="assets/library-vol01-cover.png" alt="전자책">
+      <span class="mobile-original-label">전자책<span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+
+    <a href="Lab.html" class="mobile-original-link" aria-label="단체강의">
+      <img src="assets/corp-meeting.png" alt="단체강의">
+      <span class="mobile-original-label">단체강의<span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+
+    <a href="Plano.html" class="mobile-original-link" aria-label="플라노 1기">
+      <img src="assets/interior.png" alt="플라노 1기">
+      <span class="mobile-original-label">플라노 1기<span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="l">
+      <span>Hueflow Studio</span>
+      <span>·</span>
+      <span>사업자등록번호 566-25-02364</span>
+    </div>
+    <div class="r">
+      <a class="b2b" href="Contact.html">B2B inquiries → contact</a>
+      <span style="opacity:0.4">·</span>
+      <a href="https://instagram.com/hueflow_studio">@hueflow_studio</a>
+      <a href="mailto:hello@hueflow.studio">hello@hueflow.studio</a>
+    </div>
+  </footer>
+
+<script>
+  // Hero video — full-length, slow loop
+  (function(){
+    var videos = document.querySelectorAll('[data-hero-video]');
+    if (!videos.length) return;
+    var RATE = 0.9;
+    function startVideo(v){
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      var playAttempt = v.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(function(){});
+      }
+    }
+    videos.forEach(function(v){
+      v.playbackRate = RATE;
+      v.addEventListener('loadedmetadata', function(){ v.playbackRate = RATE; startVideo(v); });
+      v.addEventListener('canplay', function(){ startVideo(v); });
+      v.addEventListener('ratechange', function(){
+        if (v.playbackRate !== RATE) v.playbackRate = RATE;
+      });
+      startVideo(v);
+    });
+  })();
+
+  /* "준비중" toast for unfinished links */
+  (function(){
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    document.body.appendChild(toast);
+    var hideTimer = null;
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+    }
+    document.addEventListener('click', function(e){
+      var el = e.target.closest('[data-soon]');
+      if (!el) return;
+      e.preventDefault();
+      showToast(el.getAttribute('data-soon') || '준비중입니다');
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano 01 — 인테리어 정규 강의 1기 · Hueflow Studio</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<template id="__bundler_thumbnail" data-bg-color="#FAF9F5">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FAF9F5"/>
+    <line x1="80" y1="120" x2="1120" y2="120" stroke="#1F1F1F" stroke-width="1"/>
+    <text x="80" y="100" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" letter-spacing="4" fill="#1F1F1F">HUEFLOW STUDIO</text>
+    <text x="1040" y="100" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="400" letter-spacing="4" fill="#1F1F1F">APPLY</text>
+    <text x="80" y="260" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="6" fill="#1F1F1F">PLANO</text>
+    <text x="1080" y="260" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="6" fill="#1F1F1F">01</text>
+    <text x="80" y="380" font-family="Helvetica, Arial, sans-serif" font-size="40" font-weight="300" fill="#1F1F1F">인테리어 정규 강의 1기</text>
+    <line x1="80" y1="460" x2="1120" y2="460" stroke="#1F1F1F" stroke-width="0.5" opacity="0.3"/>
+    <line x1="80" y1="540" x2="1120" y2="540" stroke="#1F1F1F" stroke-width="0.5" opacity="0.3"/>
+    <line x1="80" y1="620" x2="1120" y2="620" stroke="#1F1F1F" stroke-width="0.5" opacity="0.3"/>
+    <line x1="80" y1="700" x2="1120" y2="700" stroke="#1F1F1F" stroke-width="0.5" opacity="0.3"/>
+  </svg>
+</template>
+<style>
+  :root {
+    --bg:        #FAF9F5;
+    --ink:       #1F1F1F;
+    --mid:       #888780;
+    --hairline:  #1F1F1F;     /* hairline strokes use ink at 0.5px */
+    --line-soft: rgba(31,31,31,0.14);
+    --terracotta:#1F1F1F;
+
+    /* Override design-system tokens locally — General Sans first for Latin glyphs,
+       Pretendard handles Hangul. Browser falls back per-glyph automatically. */
+    --hf-font-kr: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont,
+                  "Apple SD Gothic Neo", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --hf-font-en: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont,
+                  "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  /* Hangul readability tuning — applies to anything using --hf-font-kr */
+  :lang(ko), html[lang="ko"] body {
+    letter-spacing: -0.01em;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; overflow-x: hidden; max-width: 100vw; }
+  img, svg, video { max-width: 100%; height: auto; }
+  p, h1, h2, h3, h4, h5, h6, li, dt, dd, span { word-break: keep-all; overflow-wrap: anywhere; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    padding-bottom: 88px; /* room for fixed bottom bar */
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--terracotta); }
+
+  ::selection { background: var(--terracotta); color: #fff; }
+
+  /* ============ Layout primitives ============ */
+  .wrap { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 700px) { .wrap { padding: 0 24px; } }
+  @media (max-width: 380px) { .wrap { padding: 0 24px; } }
+  @media (max-width: 700px) {
+    p, h1, h2, h3, h4, h5, h6, li, dt, dd, span {
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .section { padding-top: 84px; padding-bottom: 84px; }
+  .statement { padding-top: 0 !important; }
+  .section + .section { border-top: 0; }
+  @media (max-width: 768px) { .section { padding-top: 40px; padding-bottom: 40px; } }
+  @media (max-width: 768px) { .statement { padding-top: 0 !important; padding-bottom: 32px !important; } }
+
+  /* ============ Section header — ALL CAPS + index ============ */
+  .sec-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 40px;
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .sec-head .label {
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .sec-head .idx {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--terracotta);
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 768px) {
+    .sec-head { margin-bottom: 28px; }
+  }
+
+  /* ============ Top nav ============ */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .topnav .row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 32px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .topnav .brand,
+  .topnav .apply {
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .topnav .apply { font-weight: 400; }
+  @media (max-width: 768px) { .topnav .row { padding: 18px 28px; } }
+  @media (max-width: 768px) {
+    .topnav .row { position: relative; }
+    .topnav .apply { position: absolute; right: 28px; }
+  }
+  @media (max-width: 380px) {
+    .topnav .row { padding: 16px 24px; }
+    .topnav .apply { right: 24px; }
+  }
+
+  /* ============ Index head (Plano — 01) ============ */
+  .index-head {
+    padding-top: 80px;
+    padding-bottom: 32px;
+  }
+  .index-head .line {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .index-head .line .dash { color: var(--mid); }
+  .index-head .line .num { color: var(--terracotta); }
+  .index-head .ko {
+    margin-top: 18px;
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--mid);
+  }
+  @media (max-width: 768px) {
+    .index-head { padding-top: 56px; padding-bottom: 24px; }
+    .index-head .line { gap: 16px; font-size: 12px; }
+  }
+
+  /* ============ Hero ============ */
+  .hero { padding-top: 24px; padding-bottom: 0; }
+  .hero h1 {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: clamp(18px, 3.6vw, 32px);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 28px;
+    white-space: nowrap;
+  }
+  .hero .sub {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--mid);
+    letter-spacing: 0.01em;
+    margin-bottom: 16px;
+  }
+  .hero .sub .ko {
+    display: block;
+    font-family: var(--hf-font-kr);
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .hero .placeholder {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    background: transparent;
+    border: 0.5px solid var(--line-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mid);
+    font-family: var(--hf-font-en);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 768px) {
+    .hero { padding-top: 16px; padding-bottom: 0; }
+    .hero .sub { margin-bottom: 16px; }
+    .hero h1 { white-space: normal; word-break: keep-all; }
+  }
+
+  /* ============ Statement ============ */
+  .statement .quote {
+    font-family: var(--hf-font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 2.4vw, 24px);
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 36px;
+    letter-spacing: 0;
+  }
+  .statement p {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0 0 14px;
+    max-width: 56ch;
+  }
+  .statement p + p { color: var(--ink); }
+
+  /* ============ Generic prose ============ */
+  .prose p {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0 0 14px;
+    max-width: 60ch;
+  }
+  .prose p.muted { color: var(--mid); }
+
+  /* ============ Bulleted list (em-dash, no boxes) ============ */
+  .dash-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .dash-list li {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink);
+    padding: 14px 0 14px 0;
+    border-bottom: 0.5px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .dash-list li::before {
+    content: "—";
+    color: var(--mid);
+  }
+  .dash-list li:last-child { border-bottom: 0; }
+  .section-loose .dash-list li {
+    border-bottom: 0;
+    padding: 9px 0;
+  }
+  .section-loose {
+    padding-top: 62px;
+    padding-bottom: 48px;
+  }
+
+  /* ============ Approach (numbered) ============ */
+  .approach {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .approach li {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .approach li:last-child { border-bottom: 0; }
+  .approach .num {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    color: var(--terracotta);
+    font-variant-numeric: tabular-nums;
+    padding-top: 4px;
+  }
+  .approach .title {
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 10px;
+    letter-spacing: -0.005em;
+  }
+  .approach .body {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0;
+    max-width: 56ch;
+  }
+  .approach li:hover .num {
+    color: var(--terracotta);
+  }
+  .approach li:hover .title {
+    color: var(--terracotta);
+  }
+  @media (max-width: 640px) {
+    .approach li { grid-template-columns: 1fr; gap: 10px; padding: 22px 0; }
+  }
+  .section-loose .approach li {
+    border-bottom: 0;
+    padding: 18px 0;
+  }
+  .section-loose .approach li:first-child { padding-top: 8px; }
+  .section-loose .approach li:last-child { padding-bottom: 0; }
+  .section-loose + .section-loose {
+    padding-top: 30px;
+  }
+
+  /* ============ Curriculum (week meta + body) ============ */
+  .curr-intro {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--mid);
+    margin: 0 0 48px;
+    max-width: 56ch;
+  }
+  .week {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    padding: 36px 0;
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .week:last-child { border-bottom: 0; }
+  .week .meta {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .week .meta .week-num {
+    display: block;
+    color: var(--terracotta);
+    margin-bottom: 14px;
+  }
+  .week .meta .mode {
+    display: block;
+    color: var(--mid);
+  }
+  .week .meta .place {
+    display: block;
+    color: var(--mid);
+  }
+  .week .body { padding-top: 0; }
+  .week h3 {
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 0 0 20px;
+    letter-spacing: -0.005em;
+  }
+  .week .block {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0 0 18px;
+    max-width: 60ch;
+  }
+  .week .block:last-child { margin-bottom: 0; }
+  .week .items {
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+    max-width: 60ch;
+  }
+  .week .items li {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    gap: 10px;
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+  .week .items li::before {
+    content: "—";
+    color: var(--mid);
+  }
+  .week .outcome {
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--line-soft);
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--mid);
+    letter-spacing: 0.005em;
+  }
+  .week .outcome strong {
+    font-weight: 500;
+    color: var(--ink);
+    font-family: var(--hf-font-en);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-right: 12px;
+  }
+  @media (max-width: 768px) {
+    .week { grid-template-columns: 1fr; gap: 18px; padding: 28px 0; }
+  .week .meta .week-num { margin-bottom: 6px; }
+  }
+
+  /* ============ Conversion CTA ============ */
+  .conversion {
+    padding-top: 44px;
+    padding-bottom: 60px;
+  }
+  .conversion .kicker {
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin: 0 0 18px;
+  }
+  .conversion h2 {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: clamp(24px, 3.8vw, 38px);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 18px;
+    max-width: 18ch;
+  }
+  .no-orphan {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .conversion .lead {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0 0 34px;
+    max-width: 58ch;
+  }
+  .conversion .track-note {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--mid);
+    margin: -16px 0 34px;
+    max-width: 58ch;
+  }
+  .conversion-points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    border-top: 0.5px solid var(--line-soft);
+    border-bottom: 0.5px solid var(--line-soft);
+    margin: 0 0 26px;
+  }
+  .conversion-points .point {
+    padding: 20px 0;
+  }
+  .conversion-points .point:last-child { padding-right: 0; }
+  .conversion-points strong {
+    display: block;
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .conversion-points span {
+    display: block;
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  @media (max-width: 768px) {
+    .conversion {
+      padding-top: 34px;
+      padding-bottom: 44px;
+    }
+    .conversion-points {
+      grid-template-columns: 1fr;
+    }
+    .conversion-points .point,
+    .conversion-points .point:last-child {
+      border-right: 0;
+      border-bottom: 0.5px solid var(--line-soft);
+      padding: 18px 0;
+    }
+    .conversion-points .point:last-child { border-bottom: 0; }
+  }
+
+  /* ============ Schedule / Tuition / Refund (def-list) ============ */
+  .deflist {
+    margin: 0;
+    padding: 0;
+  }
+  .deflist .row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 18px 0;
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .deflist .row:last-child { border-bottom: 0; }
+  .deflist dt {
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding-top: 2px;
+  }
+  .deflist dd {
+    margin: 0;
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .deflist dd .note {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--mid);
+  }
+  #program-setup .deflist .row {
+    border-bottom: 0;
+  }
+  @media (max-width: 640px) {
+    .deflist .row { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
+  }
+
+  /* ============ Tuition emphasis ============ */
+  .tuition .price {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+  .tuition .price-note {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--mid);
+    margin: 0 0 40px;
+  }
+  .tuition .price-note .accent { color: var(--terracotta); }
+  .track-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 0.5px solid var(--line-soft);
+    border-bottom: 0.5px solid var(--line-soft);
+    margin: 0 0 34px;
+  }
+  .track-card {
+    padding: 26px 30px 28px 0;
+    border-right: 0.5px solid var(--line-soft);
+  }
+  .track-card + .track-card {
+    padding-left: 30px;
+    padding-right: 0;
+    border-right: 0;
+  }
+  .track-card .eyebrow {
+    display: block;
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin: 0 0 14px;
+  }
+  .track-card h3 {
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .track-card .track-price {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    color: var(--terracotta);
+    margin: 0 0 18px;
+  }
+  .track-card .track-copy {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 16px;
+    max-width: 44ch;
+  }
+  .track-card ul {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+  }
+  .track-card li {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    gap: 10px;
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .track-card li::before {
+    content: "—";
+    color: var(--mid);
+  }
+  @media (max-width: 768px) {
+    .track-grid { grid-template-columns: 1fr; }
+    .track-card,
+    .track-card + .track-card {
+      padding: 22px 0;
+      border-right: 0;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .track-card + .track-card { border-bottom: 0; }
+  }
+
+  /* ============ FAQ ============ */
+  .faq dl { margin: 0; padding: 0; }
+  .faq .qa {
+    padding: 28px 0;
+    border-bottom: 0.5px solid var(--line-soft);
+  }
+  .faq .qa:last-child { border-bottom: 0; }
+  .faq dt {
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 12px;
+    letter-spacing: -0.005em;
+  }
+  .faq dd {
+    margin: 0;
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 60ch;
+  }
+
+  /* ============ Instructor ============ */
+  .instructor .name {
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .instructor .studio {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin: 0 0 32px;
+  }
+  .instructor .credits {
+    margin: 0 0 22px;
+  }
+  .instructor .credits li {
+    border-bottom: 0;
+    padding: 9px 0;
+  }
+  .instructor .projects-label {
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin: 0 0 12px;
+  }
+  .instructor .projects {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .instructor .projects-note {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--mid);
+    margin: 14px 0 0;
+    max-width: 56ch;
+  }
+  .instructor .project-experience {
+    margin-top: 34px;
+  }
+
+  /* ============ Apply ============ */
+  .apply-section .lead {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: clamp(22px, 3.2vw, 32px);
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+    max-width: 22ch;
+  }
+  .apply-section .meta {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin: 0 0 48px;
+  }
+  .apply-section .copy {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0 0 26px;
+    max-width: 58ch;
+  }
+  .apply-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 52px;
+    padding: 0 28px;
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
+    min-width: 240px;
+  }
+  .btn-solid {
+    background: var(--ink);
+    color: var(--bg);
+    border: 0.5px solid var(--ink);
+  }
+  .btn-solid:hover {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: #fff;
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 0.5px solid var(--ink);
+  }
+  .btn-outline:hover {
+    color: var(--terracotta);
+    border-color: var(--terracotta);
+  }
+  .btn .arrow { font-family: var(--hf-font-en); }
+
+  /* ============ Footer ============ */
+  footer.foot {
+    border-top: 0.5px solid var(--line-soft);
+    padding-top: 64px;
+    padding-bottom: 96px;
+  }
+  footer.foot .brand-large {
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  footer.foot .tag {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--mid);
+    margin: 0 0 40px;
+  }
+  footer.foot .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    font-family: var(--hf-font-en);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--mid);
+  }
+  footer.foot .links .sep { color: var(--line-soft); }
+
+  /* ============ Fixed bottom bar ============ */
+  .bottom-bar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: var(--bg);
+    border-top: 0.5px solid var(--line-soft);
+    z-index: 40;
+  }
+  .bottom-bar .row {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  @media (max-width: 768px) {
+    .bottom-bar .row { padding: 14px 28px; }
+  }
+  @media (max-width: 380px) {
+    .bottom-bar .row { padding: 14px 24px; }
+  }
+  .bottom-bar .left {
+    font-family: var(--hf-font-en);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .bottom-bar .left .accent {
+    color: var(--terracotta);
+    margin-left: 10px;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .bottom-bar .right a {
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 0.5px solid var(--ink);
+    padding-bottom: 2px;
+  }
+  .bottom-bar .right a:hover {
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
+  }
+  @media (max-width: 768px) {
+    .bottom-bar .row { position: relative; padding-right: 96px; }
+    .bottom-bar .left { font-size: 12px; }
+    .bottom-bar .left .accent { display: block; margin: 2px 0 0; }
+    .bottom-bar .right {
+      position: absolute;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      flex: 0 0 auto;
+    }
+    .bottom-bar .right a { font-size: 12px; letter-spacing: 0.12em; }
+  }
+  @media (max-width: 380px) {
+    .bottom-bar .right { right: 24px; }
+  }
+
+  /* ============ Toast ============ */
+  .toast {
+    position: fixed;
+    left: 50%; bottom: 110px;
+    transform: translate(-50%, 20px);
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding: 12px 22px;
+    border-radius: 999px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .28s ease, transform .28s ease;
+    z-index: 100;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media print {
+    @page { size: A4; margin: 12mm; }
+    html, body {
+      background: var(--bg);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    body { padding-bottom: 0; }
+    .topnav { position: static; }
+    .bottom-bar,
+    .toast { display: none !important; }
+    .section,
+    .week,
+    .track-card,
+    .qa,
+    .row { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 01 — TOP NAV -->
+<header class="topnav">
+  <div class="row">
+    <a href="index.html" class="brand">Hueflow Studio</a>
+    <a href="#apply" class="apply">Apply</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- 02 — INDEX HEAD -->
+  <section class="wrap index-head">
+    <div class="line">
+      <span>Plano</span>
+      <span class="dash">—</span>
+      <span class="num">01</span>
+    </div>
+    <div class="ko">인테리어 정규 강의 · 1기</div>
+  </section>
+
+  <!-- 03 — HERO -->
+  <section class="wrap hero">
+    <h1>인테리어 AI 워크플로우 실무 클래스</h1>
+    <p class="sub">
+      <span class="ko">Spatial design × AI workflow.</span>
+      <span class="ko">Studio Curriculum · Online Curriculum.</span>
+    </p>
+  </section>
+
+  <!-- 04 — STATEMENT -->
+  <section class="wrap section statement">
+    <p>20년차 공간 설계자가 직접 가르치는,<br>실무에 바로 쓰는 AI 워크플로우 정규 과정.</p>
+  </section>
+
+  <!-- 04-1 — CONVERSION CTA -->
+  <section class="wrap section conversion">
+    <p class="kicker">Plano 1st Cohort</p>
+    <h2><span class="no-orphan">스튜디오반과 온라인반,</span><br><span class="no-orphan">두 가지 방식으로 운영합니다.</span></h2>
+    <p class="lead">툴 사용법만 알려드리는 수업이 아닙니다.<br>AI를 보조로 아이디어를 도출하고, 시안·제안서·영상·홈페이지까지 실무 결과물로 연결하는 프로그램입니다.</p>
+    <p class="track-note">두 반 모두 같은 진도와 같은 커리큘럼으로 진행됩니다.<br>스튜디오반은 오프라인 3회 + Zoom 라이브 2회로 진행하고,<br>온라인반은 Zoom 라이브 5회로 참여합니다.<br>Zoom 라이브 수업은 매주 목요일 저녁 7-10시에 진행됩니다.<br>1·3·5회차는 스튜디오반은 오프라인 장소에서, 온라인반은 별도 Zoom 라이브로 진행됩니다.<br>수업 녹화본은 제공하지 않습니다.</p>
+    <div class="conversion-points" aria-label="신청 이유">
+        <div class="point">
+          <strong>Studio Curriculum</strong>
+          <span>스튜디오반은 오프라인 회차마다 강사가 옆에서 작업물을 같이 보며, 바로 수정 방향을 잡아줍니다.</span>
+      </div>
+      <div class="point">
+        <strong>Online Curriculum</strong>
+        <span>온라인반은 같은 커리큘럼을 Zoom 라이브 5회로 끝까지 따라갑니다.</span>
+      </div>
+      <div class="point">
+        <strong>Curriculum Price</strong>
+        <span>스튜디오반 69만원, 온라인반 39만원으로 신청합니다.</span>
+      </div>
+    </div>
+    <div class="apply-actions">
+      <a href="#" class="btn btn-solid" data-soon="스튜디오반 결제 링크 준비중">
+        <span>스튜디오반 결제하기</span><span class="arrow">→</span>
+      </a>
+      <a href="#" class="btn btn-solid" data-soon="온라인반 결제 링크 준비중">
+        <span>온라인반 결제하기</span><span class="arrow">→</span>
+      </a>
+      <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
+        <span>카카오톡 문의</span><span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 05 — FOR -->
+  <section class="wrap section section-loose">
+    <div class="sec-head">
+      <span class="label">For</span>
+      <span class="idx">01</span>
+    </div>
+    <ul class="dash-list">
+      <li>AI를 보조 도구로 활용해 공간 아이디어와 콘셉트 방향을 넓히고 싶은 디자이너</li>
+      <li>시안 · 보고서 · 영상까지, 반복 업무를 줄이고 싶은 실무자</li>
+      <li>외주 렌더링 비용·시간을 줄이고 미팅 자리에서 바로 시안을 보여주고 싶은 분</li>
+      <li>"인테리어 맥락에 맞는" AI 워크플로우를 배운 적이 없는 분</li>
+      <li>혼자 사무실을 운영하는 1인 대표 디자이너</li>
+    </ul>
+  </section>
+
+  <!-- 07 — APPROACH -->
+  <section class="wrap section section-loose">
+    <div class="sec-head">
+      <span class="label">Approach</span>
+      <span class="idx">02</span>
+    </div>
+    <ol class="approach">
+      <li>
+        <span class="num">01</span>
+        <div>
+          <h3 class="title">실무 워크플로우</h3>
+          <p class="body">툴 버튼을 따라 누르는 수업이 아닙니다.<br>아이디어 도출, 시안 구성, 보고서, 사이트, 자동화까지<br>한 프로젝트를 끝까지 끌고 가는 방법을 가르칩니다.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div>
+          <h3 class="title">20년차 공간 설계 베이스</h3>
+          <p class="body">금융권 · 의료 · 상업 · F&B · 리조트까지.<br>진행 중인 실제 프로젝트의 워크플로우 그대로.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <div>
+          <h3 class="title">소수정예 8–12명</h3>
+          <p class="body">본인이 가져온 실제 자료로 실습합니다.<br>진행 중인 프로젝트가 없으신 분에게는 강사가 자료를 제공합니다.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <div>
+          <h3 class="title">1인 대표 풀 패키지</h3>
+          <p class="body">시안과 영상에서 끝나지 않습니다.<br>5회차에 본인 브랜드 사이트와 프로젝트 관리 흐름까지.<br>수료와 동시에 클라이언트에게 보여줄 모든 것이 갖춰집니다.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">05</span>
+        <div>
+          <h3 class="title">1인 실무자의 자동화 자산</h3>
+          <p class="body">CAD 리습, 시안 이미지를 수정 가능한 PPT로 변환하는 프로그램,<br>릴스 제작 자동화, 프롬프트 생성기,<br>바이브코딩 기반 홈페이지 제작까지.<br>혼자 일하는 실무자가 시간을 줄이기 위해 만든 흐름을 바탕으로 수업합니다.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 08 — CURRICULUM -->
+  <section id="curriculum" class="wrap section">
+    <div class="sec-head">
+      <span class="label">Curriculum</span>
+      <span class="idx">03</span>
+    </div>
+    <p class="curr-intro">두 반 모두 같은 진도와 같은 커리큘럼으로 진행됩니다.<br>스튜디오반은 오프라인 3회 + Zoom 라이브 2회,<br>온라인반은 Zoom 라이브 5회로 진행됩니다.<br>Zoom 라이브 수업은 매주 목요일 저녁 7-10시에 진행됩니다.<br>1·3·5회차는 스튜디오반은 오프라인 장소에서, 온라인반은 별도 Zoom 라이브로 수업합니다.<br>수업 녹화본은 제공하지 않습니다.</p>
+
+    <article class="week">
+      <div class="meta">
+        <span class="week-num">Session 01</span>
+        <span class="mode">같은 주제 · 별도 라이브</span>
+        <span class="place">스튜디오반 오프라인 / 온라인반 Zoom</span>
+      </div>
+      <div class="body">
+        <h3>AI 이미지 기초 &amp; 아이디어 도출｜첫 콘셉트에서 첫 렌더링까지</h3>
+        <p class="block">AI 이미지 툴을 누르는 법보다 먼저,<br>공간의 방향을 잡고 첫 장면을 설계하는 방법부터 시작합니다.</p>
+        <ul class="items">
+          <li>실무에서 바로 쓰는 AI 이미지 생성 툴 정리</li>
+          <li>공간 아이디어를 뽑아내는 질문 리스트 만들기</li>
+          <li>레퍼런스 분석 → 키워드 → 이미지 방향 전환</li>
+          <li>시점, 구도, 조명, 재질의 기본값 이해</li>
+          <li>첫 렌더링을 위한 프롬프트 골격 만들기</li>
+          <li>결과물이 이상하게 나올 때 확인해야 할 기준</li>
+        </ul>
+        <p class="outcome"><strong>Outcome</strong>공간 아이디어 보드 + 첫 AI 렌더링 이미지컷 완성</p>
+      </div>
+    </article>
+
+    <article class="week">
+      <div class="meta">
+        <span class="week-num">Session 02</span>
+        <span class="mode">공통 Zoom Live</span>
+        <span class="place">스튜디오반 + 온라인반 함께</span>
+      </div>
+      <div class="body">
+        <h3>AI 렌더링 심화｜프롬프트 분해와 공간별 이미지 패턴</h3>
+        <p class="block">좋은 결과가 우연히 나오게 두지 않고,<br>프롬프트를 요소별로 분해해 원하는 이미지로 조정하는 방법을 익힙니다.</p>
+        <ul class="items">
+          <li>프롬프트를 공간, 스타일, 카메라, 조명, 재질로 분해하기</li>
+          <li>어떤 단어가 형태·무드·디테일을 바꾸는지 비교하기</li>
+          <li>주거 / 카페 / 상업공간 / 외관별 이미지 패턴</li>
+          <li>SketchUp 모델, 평면, 사진, 레퍼런스별 프롬프트 방식</li>
+          <li>시안 A안 / B안 / 디테일 컷 이미지 세트 만들기</li>
+          <li>실패 이미지에서 원인을 찾아 프롬프트 수정하기</li>
+        </ul>
+        <p class="outcome"><strong>Outcome</strong>실내 + 외관 이미지 세트와 재사용 가능한 프롬프트 구조 완성</p>
+      </div>
+    </article>
+
+    <article class="week">
+      <div class="meta">
+        <span class="week-num">Session 03</span>
+        <span class="mode">같은 주제 · 별도 라이브</span>
+        <span class="place">스튜디오반 오프라인 / 온라인반 Zoom</span>
+      </div>
+      <div class="body">
+        <h3>제안서 &amp; 포트폴리오 제작｜이미지에서 영상 기초까지</h3>
+        <p class="block">잘 만든 이미지를 흩어진 컷으로 두지 않고,<br>클라이언트에게 설득되는 제안서와 포트폴리오 흐름으로 묶습니다.</p>
+        <ul class="items">
+          <li>클라이언트가 이해하는 제안서 페이지 순서 잡기</li>
+          <li>공간 스토리 기반 이미지 구성과 컷 배치</li>
+          <li>A안 / B안 비교 제안 구조 만들기</li>
+          <li>무드보드, 키 이미지, 디테일 컷을 포트폴리오로 묶기</li>
+          <li>AI로 제안 문구와 PPT 흐름 다듬기</li>
+          <li>이미지를 영상으로 넘기기 위한 장면 순서와 스토리보드 기초</li>
+          <li>이미지 → 영상 전환을 위한 기본 프롬프트 작성</li>
+        </ul>
+        <p class="outcome"><strong>Outcome</strong>AI 제안서·포트폴리오 초안 + 영상 스토리보드 완성</p>
+      </div>
+    </article>
+
+    <article class="week">
+      <div class="meta">
+        <span class="week-num">Session 04</span>
+        <span class="mode">공통 Zoom Live</span>
+        <span class="place">스튜디오반 + 온라인반 함께</span>
+      </div>
+      <div class="body">
+        <h3>AI 인테리어 영상 심화｜클라이언트 설득 영상 만들기</h3>
+        <p class="block">움직이는 장면을 단순히 만드는 데서 끝내지 않고,<br>공간의 장점이 보이는 영상 흐름으로 설계합니다.</p>
+        <ul class="items">
+          <li>AI 영상 생성 툴별 결과 차이 이해</li>
+          <li>카메라 워킹 (Zoom / 이동 / 회전) 고급 조정</li>
+          <li>인트로 → 공간 진입 → 디테일 → 마무리 장면 구성</li>
+          <li>Walk-through 영상의 속도, 시선, 전환감 잡기</li>
+          <li>클라이언트 선택을 유도하는 영상 컷 순서</li>
+          <li>릴스·쇼츠용 짧은 공간 영상으로 재편집하는 방식</li>
+          <li>깨지는 장면, 어색한 움직임, 과한 효과를 줄이는 보정 기준</li>
+        </ul>
+        <p class="outcome"><strong>Outcome</strong>클라이언트 제안용 AI 공간 영상 1편 완성</p>
+      </div>
+    </article>
+
+    <article class="week">
+      <div class="meta">
+        <span class="week-num">Session 05</span>
+        <span class="mode">같은 주제 · 별도 라이브</span>
+        <span class="place">스튜디오반 오프라인 / 온라인반 Zoom</span>
+      </div>
+      <div class="body">
+        <h3>자동화 워크플로우와 내 브랜드 사이트 만들기</h3>
+        <p class="block">수업 결과물을 흩어진 파일로 두지 않고,<br>보여줄 수 있는 브랜드 사이트와 상담 흐름으로 연결합니다.</p>
+          <ul class="items">
+            <li>AI 기반 홈페이지 제작 흐름</li>
+            <li>바이브코딩으로 랜딩페이지를 직접 수정·배포하는 방식</li>
+            <li>GitHub 기반 배포와 도메인 연결 이해</li>
+            <li>상담 폼과 문의 동선 설계</li>
+            <li>시안 이미지를 레이어와 폰트가 분리된 수정 가능한 PPT로 변환하는 흐름</li>
+            <li>프롬프트 생성기와 반복 업무 자동화 시스템 구성</li>
+            <li>내 스타일 릴스 제작을 위한 콘텐츠 자동화 흐름</li>
+            <li>결과물을 포트폴리오 패키지로 정리</li>
+          </ul>
+        <p class="outcome"><strong>Outcome</strong>배포 가능한 브랜드 사이트 + 상담 동선 완성</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- 09 — TAKEAWAY -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Takeaway</span>
+      <span class="idx">04</span>
+    </div>
+    <div class="prose" style="margin-bottom: 28px;">
+      <p>5회 뒤, 손에 들고 있을 것</p>
+    </div>
+    <ul class="dash-list">
+      <li>메인 시안과 서브 시안 시리즈</li>
+      <li>컨셉 합의용 무드보드</li>
+      <li>즉시 수정 가능한 보고서 PPT 템플릿</li>
+      <li>AI 인테리어 영상 클립</li>
+      <li>본인 브랜드 사이트 (URL 발급 완료)</li>
+      <li>프로젝트별 AI 작업 흐름 정리</li>
+      <li>반복 프롬프트를 줄이는 프롬프트 생성기 구조</li>
+      <li>시안 이미지를 수정 가능한 PPT 자료로 변환하는 자동화 흐름</li>
+      <li>내 스타일 릴스 제작을 위한 자동화 흐름</li>
+      <li>통합 클라이언트 제안서 1세트</li>
+      <li>스튜디오반 선택 시 강사가 옆에서 직접 봐주는 오프라인 실습</li>
+      <li>수강생 전용 채널 평생 이용권</li>
+    </ul>
+  </section>
+
+  <!-- 10 — INSTRUCTOR -->
+  <section id="instructor" class="wrap section instructor">
+    <div class="sec-head">
+      <span class="label">Instructor</span>
+      <span class="idx">05</span>
+    </div>
+    <h2 class="name">김예진</h2>
+    <p class="studio">Hueflow Studio</p>
+    <ul class="dash-list credits">
+      <li>20년차 공간 / 건축 설계 실무</li>
+      <li>인테리어 업체 AI 도입 컨설팅 진행 중</li>
+      <li>한솔건축아카데미 특강 강사</li>
+      <li>목포대 건축사회 정규 강좌 진행</li>
+      <li>삼성전자 판매센터 본사 AI 워크플로우 자문 (진행 중)</li>
+      <li>Fastcampus AI 인테리어 강의</li>
+      <li>CAD 리습, 이미지-PPT 변환 프로그램, 프롬프트 생성기, 릴스 제작 자동화 등 1인 실무 자동화 구축</li>
+    </ul>
+    <div class="project-experience">
+      <p class="projects-label">Selected Projects</p>
+      <p class="projects">금융권 · 의료 · 상업공간 · F&amp;B · 해외 골프 리조트</p>
+      <p class="projects-note">국내 다수 프로젝트와 하와이 골프 클럽하우스 설계 참여 경험을 바탕으로,<br>실제 클라이언트 미팅, 시안 정리, 보고서 제작,<br>렌더링 검수까지 이어지는 실무 흐름을 수업에 반영했습니다.<br>여기에 CAD 리습, 레이어와 폰트가 분리되는 이미지-PPT 변환 프로그램,<br>프롬프트 생성기, 릴스 자동화, 바이브코딩 기반 홈페이지 제작처럼 1인 실무자가 직접 만든 업무 시스템을 더해,<br>바로 제안서와 현장 업무에 붙는 AI 워크플로우를 안내합니다.</p>
+    </div>
+  </section>
+
+  <!-- 11 — SCHEDULE -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Schedule</span>
+      <span class="idx">06</span>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>Cohort</dt><dd>스튜디오반 선착순 10명 <span class="note">1기 소수정예</span><br>온라인반 선착순 20명</dd></div>
+      <div class="row"><dt>Start</dt><dd>5월 중순 오픈 예정</dd></div>
+      <div class="row"><dt>Studio Class</dt><dd>오프라인 3회 + Zoom 라이브 2회 <span class="note">오프라인은 토요일 오후 1시-4시 진행되며,<br>정확한 장소는 신청자에게 별도 안내드립니다.</span></dd></div>
+      <div class="row"><dt>Online Class</dt><dd>Zoom 라이브 5회 <span class="note">매주 목요일 저녁 7-10시 진행됩니다.<br>오프라인 회차가 있는 날도 온라인반은 별도 Zoom 수업으로 진행됩니다.</span></dd></div>
+      <div class="row"><dt>Curriculum Fee</dt><dd>스튜디오반 KRW 690,000 / 온라인반 KRW 390,000</dd></div>
+    </dl>
+  </section>
+
+  <!-- 12 — PROGRAM SETUP -->
+  <section id="program-setup" class="wrap section">
+    <div class="sec-head">
+      <span class="label">Program Setup</span>
+      <span class="idx">07</span>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>Required</dt><dd>
+        ChatGPT Plus
+        <span class="note">아이디어 도출, 이미지 프롬프트, 제안서 문구,<br>홈페이지 제작 흐름까지 수업의 기본 도구로 사용합니다.</span>
+      </dd></div>
+      <div class="row"><dt>Subscription</dt><dd>
+        월 $20 수준
+        <span class="note">OpenAI 공식 ChatGPT Plus 기준입니다.<br>결제 시점의 환율과 카드 수수료에 따라 원화 금액은 달라질 수 있습니다.</span>
+      </dd></div>
+      <div class="row"><dt>NotebookLM</dt><dd>
+        프로젝트별 AI 자료 정리
+        <span class="note">Google 계정으로 무료 범위에서 프로젝트 자료, 레퍼런스,<br>상담 메모를 정리하는 실습을 진행합니다.<br>유료 업그레이드는 필수가 아닙니다.</span>
+      </dd></div>
+      <div class="row"><dt>SketchUp</dt><dd>
+        필수 구독 프로그램 아님
+        <span class="note">SketchUp 파일이 있으면 실습에 활용하고,<br>없어도 평면, 사진, 레퍼런스, 간단한 공간 설명만으로 따라올 수 있습니다.</span>
+      </dd></div>
+      <div class="row"><dt>Instructor Demo</dt><dd>
+        ChatGPT/Codex 기반 홈페이지 제작 흐름,<br>AI 이미지·영상 보조 도구, 이미지-PPT 변환 프로그램,<br>자동화 연결 도구
+        <span class="note">추가 도구는 강사가 화면으로 시연합니다.<br>수강생이 모든 프로그램을 별도로 구독할 필요는 없습니다.</span>
+      </dd></div>
+      <div class="row"><dt>Device</dt><dd>
+        노트북 권장 · 패드 참여 가능
+        <span class="note">노트북이 있으면 실습이 가장 편하지만,<br>없으면 iPad 등 태블릿으로도 수업 참여가 가능합니다.<br>홈페이지 제작 파트는 템플릿과 강사 시연을 함께 제공합니다.</span>
+      </dd></div>
+    </dl>
+  </section>
+
+  <!-- 13 — TUITION -->
+  <section class="wrap section tuition">
+    <div class="sec-head">
+      <span class="label">Tuition</span>
+      <span class="idx">08</span>
+    </div>
+    <p class="price">Choose your curriculum</p>
+    <p class="price-note"><span class="accent">스튜디오반과 온라인반 중 선택해 신청합니다.</span><br>스튜디오반은 오프라인 3회 + Zoom 라이브 2회,<br>온라인반은 Zoom 라이브 5회로 진행됩니다.</p>
+    <div class="track-grid">
+      <article class="track-card">
+        <span class="eyebrow">Studio Curriculum</span>
+        <h3>스튜디오반</h3>
+        <p class="track-price">KRW 690,000</p>
+        <p class="track-copy">같은 커리큘럼을 오프라인 3회 + Zoom 라이브 2회로 따라가며, 오프라인 수업에서는 강사가 옆에서 작업 화면을 같이 보며 바로 수정 방향을 잡아줍니다.</p>
+        <ul>
+          <li>같은 주제·같은 진도</li>
+          <li>강사가 옆에서 직접 봐주는 오프라인 실습</li>
+          <li>Zoom 라이브 수업 2회</li>
+          <li>개별 프로젝트 프롬프트·결과물 현장 코칭</li>
+          <li>제안서·사이트·포트폴리오 최종 보정</li>
+        </ul>
+        <div class="apply-actions">
+          <a href="#" class="btn btn-solid" data-soon="스튜디오반 결제 링크 준비중">
+            <span>스튜디오반 결제하기</span><span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+      <article class="track-card">
+        <span class="eyebrow">Online Curriculum</span>
+        <h3>온라인반</h3>
+        <p class="track-price">KRW 390,000</p>
+        <p class="track-copy">지방 거주자, 오프라인 참석이 어려운 분을 위한 목요일 저녁 Zoom 라이브 5회 커리큘럼입니다. 수업 녹화본은 제공하지 않습니다.</p>
+        <ul>
+          <li>온라인 Zoom 라이브 수업 5회</li>
+          <li>매주 목요일 저녁 7-10시</li>
+          <li>실시간 참여 기준</li>
+          <li>수업 녹화본 제공 없음</li>
+          <li>수강생 전용 채널 이용</li>
+          <li>제공 템플릿과 예시 자료로 실습 가능</li>
+        </ul>
+        <div class="apply-actions">
+          <a href="#" class="btn btn-solid" data-soon="온라인반 결제 링크 준비중">
+            <span>온라인반 결제하기</span><span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>Payment</dt><dd>커리큘럼별 결제 링크로 신청 <span class="note">결제 링크는 오픈 시 버튼에 연결됩니다.</span></dd></div>
+      <div class="row"><dt>Included</dt><dd>
+        수강생 전용 채널 평생 이용
+        <span class="note">강사가 직접 모니터링한 AI 도구 · 업데이트 지속 공유</span>
+        <span class="note">이후 출간되는 교재·전자책 무료 제공</span>
+      </dd></div>
+    </dl>
+  </section>
+
+  <!-- 14 — REFUND -->
+  <section class="wrap section">
+    <div class="sec-head">
+      <span class="label">Refund</span>
+      <span class="idx">09</span>
+    </div>
+    <div class="prose" style="margin-bottom: 28px;">
+      <p>첫 회차는 과정의 밀도를 확인하는 시간입니다.<br>수업의 방향과 깊이가 기대와 다르다고 느끼신다면,<br>1회차 이후에도 전액 환불해드립니다.<br>2회차부터는 이미 수강하신 회차만큼 차감하고 남은 금액을 환불해드립니다.</p>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>1회차 시작 전</dt><dd>100% 환불</dd></div>
+      <div class="row"><dt>1회차 종료 후 ~ 2회차 전</dt><dd>100% 환불 <span class="note">과정의 밀도와 방향이 기대와 다를 경우</span></dd></div>
+      <div class="row"><dt>2회차 시작 후</dt><dd>수강 회차 차감 후 환불 <span class="note">스튜디오반은 KRW 690,000, 온라인반은 KRW 390,000을 기준으로<br>이미 수강한 Zoom 회차와 오프라인 실습 참여 여부를 반영해 환불합니다.</span></dd></div>
+    </dl>
+  </section>
+
+  <!-- 15 — FAQ -->
+  <section class="wrap section faq">
+    <div class="sec-head">
+      <span class="label">FAQ</span>
+      <span class="idx">10</span>
+    </div>
+    <dl>
+      <div class="qa">
+        <dt>AI를 한 번도 안 써봤는데 따라갈 수 있을까요.</dt>
+        <dd>1회차에서 도구 세팅부터 같이 합니다.<br>다만 인테리어와 공간 실무 경험이 있는 분께 최적화되어 있습니다.</dd>
+      </div>
+      <div class="qa">
+        <dt>스케치업을 잘 못해도 수강할 수 있나요.</dt>
+        <dd>가능합니다. 이 과정은 SketchUp 모델링 수업이 아니라,<br>공간 자료를 AI 이미지, 영상, 제안서, 홈페이지로 확장하는 실무 워크플로우 수업입니다.<br>SketchUp 파일이 있으면 활용하고,<br>없어도 평면, 사진, 레퍼런스, 간단한 공간 설명만으로 실습할 수 있도록 진행합니다.</dd>
+      </div>
+      <div class="qa">
+        <dt>진행 중인 프로젝트가 없는데 수강 가능한가요.</dt>
+        <dd>네. 강사가 실습용 자료를 제공합니다.<br>5회 동안 동일한 워크플로우를 따라가실 수 있습니다.</dd>
+      </div>
+      <div class="qa">
+        <dt>노트북 사양이 중요한가요.</dt>
+        <dd>대부분 클라우드 기반이라 일반 사무용 노트북으로도 충분합니다.<br>노트북이 없으면 iPad 등 태블릿으로도 수업 참여가 가능하도록 화면 시연과 템플릿을 함께 제공합니다.</dd>
+      </div>
+      <div class="qa">
+        <dt>홈페이지 제작도 ChatGPT만으로 따라갈 수 있나요.</dt>
+        <dd>기본 실습은 ChatGPT Plus 하나를 기준으로 설계합니다.<br>다만 지금 보시는 페이지처럼 파일을 직접 고치고 배포하는 흐름은 강사가 ChatGPT/Codex 기반으로 시연하며,<br>수강생은 제공되는 템플릿을 따라 자신의 브랜드 사이트 구조를 완성합니다.</dd>
+      </div>
+      <div class="qa">
+        <dt>지방이나 해외에 살아도 들을 수 있나요.</dt>
+        <dd>네. 오프라인 참석이 어려운 분은 온라인반으로 수강하시면 됩니다.<br>온라인 수업은 매주 목요일 저녁 7-10시 Zoom 라이브로 진행됩니다.<br>해외 거주자는 시차상 실시간 참여가 가능한지 먼저 확인해 주세요.</dd>
+      </div>
+      <div class="qa">
+        <dt>수업 녹화본이 제공되나요.</dt>
+        <dd>아닙니다. 수업 녹화본은 제공하지 않습니다.<br>오프라인 수업이 있는 회차도 온라인반은 별도 Zoom 라이브로 진행합니다.</dd>
+      </div>
+      <div class="qa">
+        <dt>오프라인 실습은 어디서 진행되나요.</dt>
+        <dd>오프라인 실습은 토요일 오후 1시-4시에 진행됩니다.<br>장소는 용산 인근 예정이며, KTX 접근이 쉬운 위치로 안내드립니다.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- 15 — APPLY -->
+  <section class="wrap section apply-section" id="apply">
+    <div class="sec-head">
+      <span class="label">Apply</span>
+      <span class="idx">11</span>
+    </div>
+    <p class="lead">툴 사용법이 아니라, 내 프로젝트에 적용할 워크플로우를 시작하세요.</p>
+    <p class="copy">아이디어 도출부터 시안, 제안서, 영상, 홈페이지까지.<br>5회 동안 실제로 보여줄 수 있는 결과물로 연결합니다.</p>
+    <p class="meta">Studio 690,000 · Online 390,000</p>
+    <div class="apply-actions">
+      <a href="#" class="btn btn-solid" data-soon="스튜디오반 결제 링크 준비중">
+        <span>스튜디오반 결제하기</span><span class="arrow">→</span>
+      </a>
+      <a href="#" class="btn btn-solid" data-soon="온라인반 결제 링크 준비중">
+        <span>온라인반 결제하기</span><span class="arrow">→</span>
+      </a>
+      <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
+        <span>Inquire on KakaoTalk</span><span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- 16 — FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <p class="brand-large">Hueflow Studio</p>
+    <p class="tag">Spatial design × AI workflow</p>
+    <div class="links">
+      <span>@hueflow_studio</span>
+      <span class="sep">·</span>
+      <a href="https://pf.kakao.com/_LxajxbX" target="_blank" rel="noopener">pf.kakao.com/_LxajxbX</a>
+      <span class="sep">·</span>
+      <a href="mailto:hello@hueflowstudio">hello@hueflowstudio</a>
+    </div>
+  </div>
+</footer>
+
+<!-- 17 — FIXED BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="row">
+    <div class="left">Studio KRW 690,000 · Online KRW 390,000<span class="accent">스튜디오반 / 온라인반 선택 신청</span></div>
+    <div class="right"><a href="#apply">Apply →</a></div>
+  </div>
+</div>
+
+<script>
+  // "준비중" toast
+  (function(){
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    document.body.appendChild(toast);
+    var hideTimer = null;
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+    }
+    document.addEventListener('click', function(e){
+      var el = e.target.closest('[data-soon]');
+      if (!el) return;
+      e.preventDefault();
+      showToast(el.getAttribute('data-soon') || '준비중');
+    });
+  })();
+
+  /* Break to a new line only after sentence-ending periods.
+     Do not insert arbitrary line breaks elsewhere. */
+  (function(){
+    var selectors = [
+      '.week .block',
+      '.week .outcome',
+      '.approach .body',
+      '.statement p',
+      '.faq dd',
+      '.curr-intro',
+      '.prose p',
+      '.dash-list li'
+    ];
+    var nodes = document.querySelectorAll(selectors.join(','));
+    // Turn pre-existing <br> tags into spaces first, so sentences do not get
+    // glued together before punctuation-based line breaks are applied.
+    nodes.forEach(function(p){
+      p.querySelectorAll('br').forEach(function(br){
+        br.replaceWith(document.createTextNode(' '));
+      });
+      p.normalize();
+    });
+    nodes.forEach(function(p){
+      var walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT, null);
+      var texts = [];
+      while (walker.nextNode()) texts.push(walker.currentNode);
+      texts.forEach(function(t){
+        var s = t.nodeValue;
+        // Match . followed by whitespace — split AFTER the punctuation.
+        // Comma-separated short groups should stay together when they fit.
+        if (!/\.\s/.test(s)) return;
+        var parts = s.split(/(\.)\s+/);
+        // parts pattern: [text, punct, text, punct, text, ...]
+        if (parts.length < 3) return;
+        var frag = document.createDocumentFragment();
+        var buf = '';
+        for (var i = 0; i < parts.length; i++) {
+          buf += parts[i];
+          // After capturing punctuation (odd index) and there are more parts to come, break
+          if (i % 2 === 1 && i < parts.length - 1) {
+            frag.appendChild(document.createTextNode(buf));
+            frag.appendChild(document.createElement('br'));
+            buf = '';
+          }
+        }
+        if (buf) frag.appendChild(document.createTextNode(buf));
+        t.parentNode.replaceChild(frag, t);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
