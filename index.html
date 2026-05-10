@@ -117,7 +117,9 @@
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    padding: 0 32px 24px;
+    margin: 24px 40px 0;
+    padding: 18px 0 0;
+    border-top: 1px solid var(--color-line);
     color: var(--color-stone);
     font-size: 12px;
     line-height: 1.5;
@@ -447,16 +449,6 @@
     .brand-line { padding: 20px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
     .brand { font-size: 28px; }
     .meta-links { align-items: flex-start; }
-    .legal-strip {
-      padding: 0 24px 20px;
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 12px;
-    }
-    .legal-strip__links {
-      gap: 10px 14px;
-    }
     .hero-img { display: none; }
 
     /* Single hero image: 4:3 ratio so it always renders. */
@@ -491,6 +483,17 @@
       width: 100vw;
       max-width: 100vw;
       padding: 0 24px;
+    }
+    .legal-strip {
+      margin: 20px 24px 0;
+      padding-top: 16px;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .legal-strip__links {
+      gap: 10px 14px;
     }
     .mobile-original-link {
       position: relative;
@@ -736,15 +739,6 @@
     </nav>
   </div>
 
-  <div class="legal-strip" aria-label="사업자 및 정책 정보">
-    <div><strong>사업자등록번호</strong> 566-25-02364</div>
-    <div class="legal-strip__links">
-      <a href="Terms.html">이용약관</a>
-      <a href="Privacy.html">개인정보처리방침</a>
-      <a href="Refund.html">취소·환불 정책</a>
-    </div>
-  </div>
-
   <!-- Desktop 4-tile grid -->
   <section class="grid" aria-label="Hueflow landing menu">
 
@@ -798,6 +792,15 @@
       <span class="mobile-original-label">플라노 1기<span class="arrow" aria-hidden="true">→</span></span>
     </a>
   </section>
+
+  <div class="legal-strip" aria-label="사업자 및 정책 정보">
+    <div><strong>사업자등록번호</strong> 566-25-02364</div>
+    <div class="legal-strip__links">
+      <a href="Terms.html">이용약관</a>
+      <a href="Privacy.html">개인정보처리방침</a>
+      <a href="Refund.html">취소·환불 정책</a>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
