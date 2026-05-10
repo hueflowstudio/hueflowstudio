@@ -112,44 +112,6 @@
   }
   .meta-links a:hover .arrow { transform: translateX(2px); }
 
-  .legal-strip {
-    position: relative;
-    z-index: 20;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin: 40px 40px 0;
-    padding: 22px 0 18px;
-    border-top: 1px solid var(--color-line);
-    border-bottom: 1px solid var(--color-line);
-    background: var(--color-white);
-    color: var(--color-stone);
-    font-size: 12px;
-    line-height: 1.5;
-    letter-spacing: 0.01em;
-    flex-wrap: wrap;
-  }
-  .legal-strip strong {
-    color: var(--color-graphite);
-    font-weight: 500;
-  }
-  .legal-strip__links {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .legal-strip a {
-    color: var(--color-graphite);
-    border-bottom: 1px solid transparent;
-    transition: border-color 160ms ease, color 160ms ease;
-  }
-  .legal-strip a:hover {
-    color: var(--color-ink);
-    border-bottom-color: var(--color-ink);
-  }
-
   /* ============ Main grid — fits viewport ============ */
   .grid {
     position: relative;
@@ -335,14 +297,14 @@
   /* ============ Footer ============ */
   footer {
     position: relative;
-    z-index: 10;
+    z-index: 20;
     background: var(--color-white);
     flex-shrink: 0;
-    margin-top: 10px;
+    margin-top: 40px;
     border-top: 1px solid var(--color-line);
-    padding: 16px 40px;
+    padding: 20px 40px;
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 11px; color: var(--color-stone);
+    font-size: 12px; color: var(--color-stone);
     letter-spacing: 0.02em;
     gap: 16px;
   }
@@ -495,17 +457,6 @@
       width: 100vw;
       max-width: 100vw;
       padding: 0 24px;
-    }
-    .legal-strip {
-      margin: 32px 24px 0;
-      padding: 18px 0 8px;
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 12px;
-    }
-    .legal-strip__links {
-      gap: 10px 14px;
     }
     .mobile-original-link {
       position: relative;
@@ -805,17 +756,8 @@
     </a>
   </section>
 
-  <div id="business-info" class="legal-strip" aria-label="사업자 및 정책 정보">
-    <div><strong>사업자등록번호</strong> 566-25-02364</div>
-    <div class="legal-strip__links">
-      <a href="Terms.html">이용약관</a>
-      <a href="Privacy.html">개인정보처리방침</a>
-      <a href="Refund.html">취소·환불 정책</a>
-    </div>
-  </div>
-
   <!-- Footer -->
-  <footer>
+  <footer id="business-info">
     <div class="l">
       <span>Hueflow Studio</span>
       <span>·</span>
