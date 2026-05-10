@@ -126,7 +126,7 @@
   }
   .col-right {
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
     gap: 40px;
     min-height: 0;
   }
@@ -207,11 +207,11 @@
     cursor: pointer;
     position: relative;
     display: flex; align-items: center; justify-content: center;
-    padding: 3% 1%;
+    padding: 2% 6%;
     overflow: hidden;
   }
   .book {
-    width: 100%;
+    width: min(74%, 480px);
     aspect-ratio: 2 / 3;
     height: auto;
     max-height: 100%;
@@ -247,7 +247,7 @@
   }
   .book img {
     width: 100%; height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     display: block;
   }
@@ -265,9 +265,9 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: left bottom;
-    transform: scale(1.3);
-    transform-origin: left bottom;
+    object-position: center center;
+    transform: none;
+    transform-origin: center center;
     display: block;
   }
 
@@ -277,8 +277,9 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: auto;
     width: 100%;
+    height: 100%;
   }
   .tile-interior img {
     position: absolute; inset: 0;
