@@ -214,14 +214,14 @@
     cursor: pointer;
     position: relative;
     display: flex; align-items: center; justify-content: center;
-    padding: 0 1%;
+    padding: 0;
     overflow: hidden;
   }
   .book {
-    width: min(96%, 600px);
+    height: min(100%, 900px);
+    width: auto;
+    max-width: 100%;
     aspect-ratio: 2 / 3;
-    height: auto;
-    max-height: 100%;
     background: #F4EDE4;
     position: relative;
     overflow: hidden;
@@ -272,7 +272,7 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: center 56%;
+    object-position: center 64%;
     transform: none;
     transform-origin: center center;
     display: block;
@@ -584,6 +584,7 @@
       width: 55%;
       max-width: 200px;
       aspect-ratio: 2 / 3;
+      height: auto;
       max-height: none;
       margin: 0 auto;
     }
