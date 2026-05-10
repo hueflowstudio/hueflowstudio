@@ -108,7 +108,17 @@
   }
 
   /* Identity card */
-  .identity { padding-top: 24px; padding-bottom: 96px; }
+  .identity {
+    padding-top: 24px;
+    padding-bottom: 96px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .identity-copy {
+    min-width: 0;
+  }
   .identity .name {
     font-family: var(--hf-font-kr); font-weight: 300;
     font-size: clamp(28px, 4vw, 44px);
@@ -126,6 +136,39 @@
     font-size: 13px; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--ink);
     margin: 0;
+  }
+  .lecture-badge {
+    width: 118px;
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    margin: 0 0 6px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ebe8df;
+    border: 0.5px solid rgba(31,31,31,0.1);
+    box-shadow: 0 16px 32px rgba(31,31,31,0.12);
+  }
+  .lecture-badge img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 640px) {
+    .identity {
+      align-items: flex-start;
+      padding-bottom: 72px;
+    }
+    .lecture-badge {
+      width: 104px;
+      margin-bottom: 0;
+    }
+  }
+  @media (max-width: 440px) {
+    .identity {
+      flex-direction: column-reverse;
+      gap: 18px;
+    }
   }
 
   /* About / Approach prose */
@@ -233,9 +276,14 @@
 
   <!-- Identity -->
   <section class="wrap identity">
-    <h1 class="name">김예진</h1>
-    <p class="role">Founder &amp; Director</p>
-    <p class="studio">Hueflow Studio</p>
+    <div class="identity-copy">
+      <h1 class="name">김예진</h1>
+      <p class="role">Founder &amp; Director</p>
+      <p class="studio">Hueflow Studio</p>
+    </div>
+    <figure class="lecture-badge" aria-label="강의 현장 사진">
+      <img src="assets/instructor-contact-badge.png" alt="강의 현장에서 발표하는 김예진 강사">
+    </figure>
   </section>
 
   <!-- About -->

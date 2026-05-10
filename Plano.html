@@ -722,6 +722,16 @@
   }
 
   /* ============ Instructor ============ */
+  .instructor .instructor-intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+  .instructor .instructor-copy {
+    min-width: 0;
+  }
   .instructor .name {
     font-family: var(--hf-font-kr);
     font-weight: 400;
@@ -764,6 +774,23 @@
     margin: 0;
     letter-spacing: -0.01em;
   }
+  .lecture-badge {
+    width: 118px;
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    margin: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ebe8df;
+    border: 0.5px solid rgba(31,31,31,0.1);
+    box-shadow: 0 16px 32px rgba(31,31,31,0.12);
+  }
+  .lecture-badge img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   .instructor .projects-note {
     font-family: var(--hf-font-kr);
     font-weight: 300;
@@ -775,6 +802,19 @@
   }
   .instructor .project-experience {
     margin-top: 34px;
+  }
+  @media (max-width: 640px) {
+    .instructor .instructor-intro {
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .instructor .lecture-badge {
+      order: -1;
+    }
+    .lecture-badge {
+      width: 104px;
+    }
   }
 
   /* ============ Apply ============ */
@@ -1280,8 +1320,15 @@
       <span class="label">Instructor</span>
       <span class="idx">06</span>
     </div>
-    <h2 class="name">김예진</h2>
-    <p class="studio">Hueflow Studio</p>
+    <div class="instructor-intro">
+      <div class="instructor-copy">
+        <h2 class="name">김예진</h2>
+        <p class="studio">Hueflow Studio</p>
+      </div>
+      <figure class="lecture-badge" aria-label="강의 현장 사진">
+        <img src="assets/instructor-plano-badge.png" alt="강의 현장에서 수업을 진행하는 김예진 강사">
+      </figure>
+    </div>
     <ul class="dash-list credits">
       <li>20년차 공간 / 건축 설계 실무</li>
       <li>인테리어 업체 AI 도입 컨설팅 진행 중</li>
