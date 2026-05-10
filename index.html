@@ -113,13 +113,17 @@
   .meta-links a:hover .arrow { transform: translateX(2px); }
 
   .legal-strip {
+    position: relative;
+    z-index: 20;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    margin: 24px 40px 0;
-    padding: 18px 0 0;
+    margin: 40px 40px 0;
+    padding: 22px 0 18px;
     border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-white);
     color: var(--color-stone);
     font-size: 12px;
     line-height: 1.5;
@@ -148,12 +152,15 @@
 
   /* ============ Main grid — fits viewport ============ */
   .grid {
+    position: relative;
+    z-index: 1;
     flex: 1 1 auto;
     display: grid;
     grid-template-columns: 33fr 34fr 33fr;
     gap: 40px;
     padding: 0 40px;
     min-height: 0;
+    overflow: hidden;
   }
   .col-right {
     display: grid;
@@ -166,6 +173,8 @@
   }
   .mobile-original-stack {
     display: none;
+    position: relative;
+    z-index: 1;
   }
 
   .tile {
@@ -243,7 +252,7 @@
     position: relative;
     display: flex; align-items: center; justify-content: center;
     padding: 3% 1%;
-    overflow: visible;
+    overflow: hidden;
   }
   .book {
     width: 100%;
@@ -325,8 +334,11 @@
 
   /* ============ Footer ============ */
   footer {
+    position: relative;
+    z-index: 10;
+    background: var(--color-white);
     flex-shrink: 0;
-    margin-top: 24px;
+    margin-top: 10px;
     border-top: 1px solid var(--color-line);
     padding: 16px 40px;
     display: flex; justify-content: space-between; align-items: center;
@@ -485,8 +497,8 @@
       padding: 0 24px;
     }
     .legal-strip {
-      margin: 20px 24px 0;
-      padding-top: 16px;
+      margin: 32px 24px 0;
+      padding: 18px 0 8px;
       align-items: flex-start;
       flex-direction: column;
       gap: 8px;
@@ -793,7 +805,7 @@
     </a>
   </section>
 
-  <div class="legal-strip" aria-label="사업자 및 정책 정보">
+  <div id="business-info" class="legal-strip" aria-label="사업자 및 정책 정보">
     <div><strong>사업자등록번호</strong> 566-25-02364</div>
     <div class="legal-strip__links">
       <a href="Terms.html">이용약관</a>
