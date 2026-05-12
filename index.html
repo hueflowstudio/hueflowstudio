@@ -404,7 +404,7 @@
   }
   .portfolio__grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 16px;
   }
   .portfolio-card {
@@ -414,6 +414,12 @@
   }
   .portfolio-card--featured {
     grid-column: 1 / -1;
+  }
+  .portfolio-card--compact {
+    display: grid;
+    grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: stretch;
   }
   .portfolio-card__media {
     position: relative;
@@ -429,6 +435,9 @@
     object-fit: contain;
     background: #11110f;
   }
+  .portfolio-card--compact .portfolio-card__media {
+    aspect-ratio: 3 / 4;
+  }
   .portfolio-card__body {
     display: flex;
     justify-content: space-between;
@@ -443,7 +452,12 @@
     line-height: 1.35;
   }
   .portfolio-card--compact .portfolio-card__name {
-    font-size: 15px;
+    font-size: 17px;
+  }
+  .portfolio-card--compact .portfolio-card__body {
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 4px 4px 0;
   }
   .portfolio-card__meta {
     margin: 6px 0 0;
@@ -460,6 +474,13 @@
     text-transform: uppercase;
     line-height: 1.8;
     white-space: nowrap;
+  }
+  .portfolio-card__comment {
+    max-width: 340px;
+    margin: 18px 0 0;
+    color: var(--color-stone);
+    font-size: 14px;
+    line-height: 1.7;
   }
 
   /* ============ Toast (preparing) ============ */
@@ -496,7 +517,6 @@
     .col-right { grid-column: span 2; grid-template-rows: auto auto; grid-template-columns: 1fr 1fr; }
     .col-right > * { min-height: 260px; }
     .portfolio__title { font-size: 44px; }
-    .portfolio__grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 900px) {
     .top { padding: 20px 24px 0; }
@@ -810,6 +830,16 @@
       display: block;
       padding: 16px 2px 2px;
     }
+    .portfolio-card--compact {
+      display: block;
+    }
+    .portfolio-card--compact .portfolio-card__media {
+      aspect-ratio: 3 / 4;
+    }
+    .portfolio-card__comment {
+      max-width: none;
+      margin-top: 12px;
+    }
     .portfolio-card__tag {
       display: block;
       margin-top: 12px;
@@ -905,11 +935,11 @@
       <div class="portfolio__grid">
         <article class="portfolio-card portfolio-card--featured">
           <div class="portfolio-card__media">
-            <video controls playsinline preload="metadata" src="assets/portfolio-yongin-completion.mp4" aria-label="오늘 용인 현장 준공영상"></video>
+            <video controls playsinline preload="metadata" src="assets/portfolio-yongin-completion.mp4" aria-label="용인 현장 준공영상"></video>
           </div>
           <div class="portfolio-card__body">
             <div>
-              <h3 class="portfolio-card__name">오늘 용인 현장 준공영상</h3>
+              <h3 class="portfolio-card__name">용인 현장 준공영상</h3>
               <p class="portfolio-card__meta">Yongin site · 2026.05.12</p>
             </div>
             <span class="portfolio-card__tag">Completion Film</span>
@@ -924,6 +954,7 @@
             <div>
               <h3 class="portfolio-card__name">현장 포트폴리오 01</h3>
               <p class="portfolio-card__meta">Site film · 2026.05.01</p>
+              <p class="portfolio-card__comment">현장 분위기와 마감 디테일이 자연스럽게 보이도록 세로 비율 그대로 정리했습니다.</p>
             </div>
             <span class="portfolio-card__tag">Field Film</span>
           </div>
@@ -937,6 +968,7 @@
             <div>
               <h3 class="portfolio-card__name">현장 포트폴리오 02</h3>
               <p class="portfolio-card__meta">Site film · 2026.05.01</p>
+              <p class="portfolio-card__comment">공간의 깊이감과 동선이 읽히는 짧은 기록입니다.</p>
             </div>
             <span class="portfolio-card__tag">Field Film</span>
           </div>
@@ -950,6 +982,7 @@
             <div>
               <h3 class="portfolio-card__name">현장 포트폴리오 03</h3>
               <p class="portfolio-card__meta">Site film · 2026.05.05</p>
+              <p class="portfolio-card__comment">준공 후 조명, 소재, 가구의 균형을 확인할 수 있는 컷입니다.</p>
             </div>
             <span class="portfolio-card__tag">Field Film</span>
           </div>
@@ -963,6 +996,7 @@
             <div>
               <h3 class="portfolio-card__name">현장 포트폴리오 04</h3>
               <p class="portfolio-card__meta">Site film · 2026.05.09</p>
+              <p class="portfolio-card__comment">완성된 공간의 표정이 간결하게 드러나는 현장 영상입니다.</p>
             </div>
             <span class="portfolio-card__tag">Field Film</span>
           </div>
