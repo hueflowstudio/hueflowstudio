@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portfolio | Hueflow Studio</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans-kr: 'General Sans', 'Pretendard', -apple-system, sans-serif;
+    --color-white: #FFFFFF;
+    --color-cream: #F8F6F2;
+    --color-canvas: #F2EFE9;
+    --color-ink: #0E0E0C;
+    --color-graphite: #1F1F1D;
+    --color-stone: #6B6862;
+    --color-line: #E5E1D8;
+    --hf-base: #FAF9F5;
+    --hf-inkwell: #1F1F1F;
+    --hf-taupe: #A88975;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; min-height: 100%; overflow-x: hidden; }
+  body {
+    background: var(--hf-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans-kr);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px 0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-graphite);
+  }
+  .top__right {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+  }
+  .top a { transition: color 160ms ease; }
+  .top a:hover { color: var(--hf-taupe); }
+
+  .portfolio {
+    position: relative;
+    z-index: 1;
+    padding: 76px 40px 112px;
+  }
+  .portfolio__inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.65fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .portfolio__eyebrow {
+    margin: 0 0 20px;
+    color: var(--color-stone);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .portfolio__title {
+    margin: 0;
+    color: var(--hf-inkwell);
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: 0;
+  }
+  .portfolio__note {
+    max-width: 320px;
+    margin: 22px 0 0;
+    color: var(--color-stone);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .portfolio__back {
+    display: inline-block;
+    margin-top: 28px;
+    color: var(--hf-inkwell);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-bottom: 1px solid currentColor;
+  }
+  .portfolio__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .portfolio-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    padding: 16px;
+  }
+  .portfolio-card--featured { grid-column: 1 / -1; }
+  .portfolio-card--compact {
+    display: grid;
+    grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+  .portfolio-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #11110f;
+  }
+  .portfolio-card__media video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #11110f;
+  }
+  .portfolio-card--compact .portfolio-card__media { aspect-ratio: 3 / 4; }
+  .portfolio-card__body {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 18px 4px 0;
+  }
+  .portfolio-card__name {
+    margin: 0;
+    color: var(--hf-inkwell);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+  .portfolio-card--compact .portfolio-card__name { font-size: 17px; }
+  .portfolio-card--compact .portfolio-card__body {
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 4px 4px 0;
+  }
+  .portfolio-card__meta {
+    margin: 6px 0 0;
+    color: var(--color-stone);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .portfolio-card__tag {
+    flex: 0 0 auto;
+    color: var(--color-stone);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.8;
+    white-space: nowrap;
+  }
+  .portfolio-card__comment {
+    max-width: 340px;
+    margin: 18px 0 0;
+    color: var(--color-stone);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  footer {
+    position: relative;
+    z-index: 20;
+    background: var(--color-white);
+    border-top: 1px solid var(--color-line);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--color-stone);
+    letter-spacing: 0.02em;
+    gap: 16px;
+  }
+  footer .l, footer .r { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  footer .b2b { color: var(--color-graphite); }
+  footer .b2b:hover { color: var(--color-ink); }
+
+  @media (max-width: 1024px) and (min-width: 901px) {
+    .portfolio__title { font-size: 44px; }
+  }
+  @media (max-width: 900px) {
+    .top {
+      width: 100vw;
+      max-width: 100vw;
+      padding: 20px 24px 0;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .top__right {
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+    }
+    .portfolio {
+      padding: 56px 24px 72px;
+    }
+    .portfolio__inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .portfolio__title { font-size: 34px; }
+    .portfolio__note {
+      max-width: none;
+      margin-top: 16px;
+    }
+    .portfolio-card { padding: 10px; }
+    .portfolio__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .portfolio-card__body {
+      display: block;
+      padding: 16px 2px 2px;
+    }
+    .portfolio-card--compact { display: block; }
+    .portfolio-card--compact .portfolio-card__media { aspect-ratio: 3 / 4; }
+    .portfolio-card__comment {
+      max-width: none;
+      margin-top: 12px;
+    }
+    .portfolio-card__tag {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+    footer {
+      width: 100vw;
+      max-width: 100vw;
+      padding: 16px 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    footer .l,
+    footer .r {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    footer .l span:nth-child(2),
+    footer .r span { display: none; }
+    footer a,
+    footer span { overflow-wrap: anywhere; }
+  }
+</style>
+</head>
+<body>
+  <nav class="top">
+    <a href="index.html">Hueflow Studio</a>
+    <div class="top__right">
+      <a href="Contact.html">Contact</a>
+      <a href="FreeLibrary.html">Free Library</a>
+    </div>
+  </nav>
+
+  <main class="portfolio" aria-labelledby="portfolio-title">
+    <div class="portfolio__inner">
+      <div>
+        <p class="portfolio__eyebrow">Portfolio</p>
+        <h1 class="portfolio__title" id="portfolio-title">Selected Field Work</h1>
+        <p class="portfolio__note">공간의 완성도와 현장 분위기가 잘 보이도록 영상은 원본 비율을 유지해 배치했습니다.</p>
+        <a class="portfolio__back" href="index.html">← Back to landing</a>
+      </div>
+
+      <div class="portfolio__grid">
+        <article class="portfolio-card portfolio-card--featured">
+          <div class="portfolio-card__media">
+            <video controls playsinline preload="metadata" src="assets/portfolio-yongin-completion.mp4" aria-label="용인 현장 준공영상"></video>
+          </div>
+          <div class="portfolio-card__body">
+            <div>
+              <h2 class="portfolio-card__name">용인 현장 준공영상</h2>
+              <p class="portfolio-card__meta">Yongin site · 2026.05.12</p>
+            </div>
+            <span class="portfolio-card__tag">Completion Film</span>
+          </div>
+        </article>
+
+        <article class="portfolio-card portfolio-card--compact">
+          <div class="portfolio-card__media">
+            <video controls playsinline preload="metadata" src="assets/portfolio-site-20260501-01.mp4" aria-label="01 카페 AI 영상"></video>
+          </div>
+          <div class="portfolio-card__body">
+            <div>
+              <h2 class="portfolio-card__name">01</h2>
+              <p class="portfolio-card__meta">Cafe · AI concept film</p>
+              <p class="portfolio-card__comment">카페 공간의 따뜻한 채광과 재료감을 바탕으로 AI로 만든 무드 영상입니다.</p>
+            </div>
+            <span class="portfolio-card__tag">Made with AI</span>
+          </div>
+        </article>
+
+        <article class="portfolio-card portfolio-card--compact">
+          <div class="portfolio-card__media">
+            <video controls playsinline preload="metadata" src="assets/portfolio-site-20260501-02.mp4" aria-label="02 스터디카페 AI 영상"></video>
+          </div>
+          <div class="portfolio-card__body">
+            <div>
+              <h2 class="portfolio-card__name">02</h2>
+              <p class="portfolio-card__meta">Study cafe · AI concept film</p>
+              <p class="portfolio-card__comment">스터디카페의 조용한 집중감과 정돈된 동선을 상상해 AI로 만든 콘셉트 영상입니다.</p>
+            </div>
+            <span class="portfolio-card__tag">Made with AI</span>
+          </div>
+        </article>
+
+        <article class="portfolio-card portfolio-card--compact">
+          <div class="portfolio-card__media">
+            <video controls playsinline preload="metadata" src="assets/portfolio-site-20260505-01.mp4" aria-label="03 리조트 AI 영상"></video>
+          </div>
+          <div class="portfolio-card__body">
+            <div>
+              <h2 class="portfolio-card__name">03</h2>
+              <p class="portfolio-card__meta">Resort · AI concept film</p>
+              <p class="portfolio-card__comment">리조트의 여유로운 체류감과 자연스러운 빛의 흐름을 AI로 시각화한 영상입니다.</p>
+            </div>
+            <span class="portfolio-card__tag">Made with AI</span>
+          </div>
+        </article>
+
+        <article class="portfolio-card portfolio-card--compact">
+          <div class="portfolio-card__media">
+            <video controls playsinline preload="metadata" src="assets/portfolio-site-20260509-01.mp4" aria-label="04 리조트 AI 영상"></video>
+          </div>
+          <div class="portfolio-card__body">
+            <div>
+              <h2 class="portfolio-card__name">04</h2>
+              <p class="portfolio-card__meta">Resort · AI concept film</p>
+              <p class="portfolio-card__comment">리조트 공간의 휴식감과 장면 전환을 부드럽게 연결해 AI로 만든 영상입니다.</p>
+            </div>
+            <span class="portfolio-card__tag">Made with AI</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer id="business-info">
+    <div class="l">
+      <span>Hueflow Studio</span>
+      <span>·</span>
+      <span>사업자등록번호 566-25-02364</span>
+    </div>
+    <div class="r">
+      <a href="Terms.html">이용약관</a>
+      <a href="Privacy.html">개인정보처리방침</a>
+      <a href="Refund.html">취소·환불 정책</a>
+      <span style="opacity:0.4">·</span>
+      <a class="b2b" href="Contact.html">B2B inquiries → contact</a>
+      <span style="opacity:0.4">·</span>
+      <a href="https://instagram.com/hueflow_studio">@hueflow_studio</a>
+      <a href="mailto:hello@hueflow.studio">hello@hueflow.studio</a>
+    </div>
+  </footer>
+</body>
+</html>
