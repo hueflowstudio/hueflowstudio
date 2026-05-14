@@ -6,213 +6,7 @@
 <title>Free Library - Hueflow Studio</title>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<style>
-  :root {
-    --bg: #FAF9F5;
-    --paper: #FFFFFF;
-    --ink: #1F1F1F;
-    --mid: #77736B;
-    --soft: #E7E1D7;
-    --line: rgba(31,31,31,0.14);
-    --accent: #A88975;
-    --font-kr: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-    --font-en: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  }
-  *, *::before, *::after { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-kr);
-    font-weight: 300;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-  a { color: inherit; text-decoration: none; }
-  .topnav {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: rgba(250,249,245,0.94);
-    border-bottom: 0.5px solid var(--line);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  .topnav .row {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 22px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-  }
-  .brand,
-  .navlinks a {
-    font-family: var(--font-en);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-  .navlinks {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    color: var(--mid);
-  }
-  .navlinks a:hover { color: var(--ink); }
-  main {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 88px 32px 120px;
-  }
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-    gap: 48px;
-    align-items: end;
-    padding-bottom: 56px;
-    border-bottom: 0.5px solid var(--line);
-  }
-  .eyebrow {
-    margin: 0 0 18px;
-    font-family: var(--font-en);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  h1 {
-    margin: 0;
-    font-family: var(--font-en);
-    font-size: clamp(42px, 7vw, 88px);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: 0;
-  }
-  .intro {
-    margin: 0;
-    color: var(--mid);
-    font-size: 15px;
-    word-break: keep-all;
-    overflow-wrap: anywhere;
-  }
-  .library-list {
-    display: grid;
-    gap: 0;
-    margin-top: 40px;
-    border-top: 0.5px solid var(--line);
-  }
-  .library-item {
-    display: grid;
-    grid-template-columns: 140px minmax(0, 1fr) 220px 150px;
-    gap: 24px;
-    align-items: center;
-    padding: 28px 0;
-    border-bottom: 0.5px solid var(--line);
-  }
-  .item-kicker {
-    font-family: var(--font-en);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .item-title {
-    margin: 0 0 6px;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1.3;
-    letter-spacing: 0;
-    word-break: keep-all;
-    overflow-wrap: anywhere;
-  }
-  .item-desc {
-    margin: 0;
-    color: var(--mid);
-    font-size: 14px;
-    word-break: keep-all;
-    overflow-wrap: anywhere;
-  }
-  .item-meta {
-    color: var(--mid);
-    font-family: var(--font-en);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .download {
-    justify-self: end;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 40px;
-    padding: 10px 16px;
-    border: 0.5px solid var(--ink);
-    background: var(--ink);
-    color: var(--paper);
-    font-family: var(--font-en);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    transition: background 180ms ease, color 180ms ease;
-  }
-  .download:hover {
-    background: transparent;
-    color: var(--ink);
-  }
-  .foot {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 32px;
-    border-top: 0.5px solid var(--line);
-    color: var(--mid);
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-size: 12px;
-  }
-  .foot a { color: var(--ink); }
-  @media (max-width: 760px) {
-    .topnav .row {
-      padding: 18px 24px;
-      align-items: flex-start;
-    }
-    .navlinks {
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    main {
-      padding: 64px 24px 88px;
-    }
-    .hero {
-      grid-template-columns: 1fr;
-      gap: 22px;
-      padding-bottom: 40px;
-    }
-    .library-item {
-      grid-template-columns: 1fr;
-      gap: 10px;
-      padding: 26px 0;
-    }
-    .download {
-      justify-self: start;
-      margin-top: 4px;
-    }
-    .foot {
-      padding: 24px;
-      flex-direction: column;
-    }
-  }
-</style>
+<link rel="stylesheet" href="assets/free-library.css">
 </head>
 <body>
   <nav class="topnav" aria-label="Primary">
@@ -232,36 +26,44 @@
         <p class="eyebrow">Free Library</p>
         <h1>Download<br>Resources</h1>
       </div>
-      <p class="intro">Hueflow Studio에서 공개하는 실무용 자료를 모아둔 공간입니다. 새 자료가 생기면 이 목록에 이어서 추가됩니다.</p>
+      <p class="intro">Hueflow Studio에서 공개하는 실무용 무료 자료를 모아둔 공간입니다. 자료를 선택하면 안쪽 페이지에서 최신 버전, 이전 버전, 패치 노트를 확인하고 원하는 파일을 다운로드할 수 있습니다.</p>
     </section>
 
     <section class="library-list" aria-label="무료 자료 목록">
       <article class="library-item">
         <div class="item-kicker">Tool 01</div>
         <div>
-          <h2 class="item-title">PPT 이미지 → 수정 가능한 PPT 변환기</h2>
-          <p class="item-desc">이미지 기반 PPT를 편집 가능한 도형/텍스트 중심 파일로 다시 만드는 Windows용 작업 도구입니다.</p>
+          <a class="item-title-link" href="FreeLibrary-PPT-Editable.html">
+            <h2 class="item-title">PPT 이미지 → 수정 가능한 PPT 변환기</h2>
+          </a>
+          <p class="item-desc">이미지 기반 PPT를 편집 가능한 도형과 텍스트 중심 파일로 다시 만드는 Windows 작업 도구입니다.</p>
         </div>
-        <div class="item-meta">ZIP · 20 KB</div>
-        <a class="download" href="assets/Hueflow_PPT_Image_to_Editable_Tool.zip" download>Download ZIP</a>
+        <div class="item-meta">Latest · ZIP · 20 KB</div>
+        <a class="view-link" href="FreeLibrary-PPT-Editable.html">View Versions</a>
       </article>
+
       <article class="library-item">
         <div class="item-kicker">Tool 02</div>
         <div>
-          <h2 class="item-title">CAD LISP — 입면 왁구 리딩</h2>
-          <p class="item-desc">CAD에서 입면 기준선과 벽 꺾임 마커를 빠르게 생성하는 AutoLISP 도구입니다.</p>
+          <a class="item-title-link" href="FreeLibrary-CAD-Elev.html">
+            <h2 class="item-title">CAD LISP 입면 기준선 리습</h2>
+          </a>
+          <p class="item-desc">CAD에서 입면 기준선과 번호 마커를 빠르게 생성하는 AutoLISP 도구입니다.</p>
         </div>
-        <div class="item-meta">LSP · 9 KB · Command (HF)</div>
-        <a class="download" href="assets/HUEFLOW_ELEV.lsp" download>Download LSP</a>
+        <div class="item-meta">v1.0 · LSP · Command HF</div>
+        <a class="view-link" href="FreeLibrary-CAD-Elev.html">View Versions</a>
       </article>
+
       <article class="library-item">
         <div class="item-kicker">Tool 03</div>
         <div>
-          <h2 class="item-title">CAD LISP — 면적 원클릭 리습</h2>
-          <p class="item-desc">닫힌 폴리라인을 선택하면 면적/평수 표기와 합계표를 자동 생성하는 AutoLISP 도구입니다.</p>
+          <a class="item-title-link" href="FreeLibrary-CAD-Area.html">
+            <h2 class="item-title">CAD LISP 면적/평수 자동 표기 리습</h2>
+          </a>
+          <p class="item-desc">닫힌 폴리라인을 선택하면 면적, 평수 표기와 합계표를 자동 생성하는 AutoLISP 도구입니다.</p>
         </div>
-        <div class="item-meta">LSP · 11 KB · Command (HFA)</div>
-        <a class="download" href="assets/HF_AREA.lsp" download>Download LSP</a>
+        <div class="item-meta">v2.0 · LSP · Command HFA</div>
+        <a class="view-link" href="FreeLibrary-CAD-Area.html">View Versions</a>
       </article>
     </section>
   </main>
