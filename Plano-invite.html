@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano 1기 우선 신청 안내 · Hueflow Studio</title>
+<meta name="description" content="Plano 1기 우선 신청 안내. AI 기반 설계 워크플로우를 실제 프로젝트 흐름에 맞춰 배우는 과정입니다.">
+<meta property="og:title" content="Plano 1기 우선 신청 안내">
+<meta property="og:description" content="AI 기반 설계 워크플로우를 실제 프로젝트 흐름에 맞춰 배우는 과정입니다.">
+<meta property="og:image" content="https://www.hueflowstudio.com/assets/corp-meeting.png">
+<meta property="og:url" content="https://www.hueflowstudio.com/Plano-invite.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root {
+    --bg: #f7f5ef;
+    --paper: #fffdfa;
+    --ink: #171713;
+    --muted: #68665e;
+    --line: rgba(23, 23, 19, 0.14);
+    --line-strong: rgba(23, 23, 19, 0.26);
+    --olive: #59654a;
+    --olive-soft: #e8ecdf;
+    --clay: #b5a48c;
+    --dark: #23231f;
+    --font-kr: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    --font-en: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-kr);
+    font-weight: 300;
+    line-height: 1.65;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  p, h1, h2, h3, li, dd, span { overflow-wrap: anywhere; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; height: auto; }
+  button, summary { font: inherit; }
+  ::selection { background: var(--olive); color: #fff; }
+
+  .wrap {
+    width: min(100%, 1120px);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(247, 245, 239, 0.9);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(14px);
+  }
+  .topbar .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    height: 64px;
+  }
+  .brand, .nav-link {
+    font-family: var(--font-en);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .brand { font-weight: 600; }
+  .nav-link { color: var(--muted); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+    gap: 48px;
+    align-items: stretch;
+    min-height: calc(100svh - 64px);
+    padding-top: 56px;
+    padding-bottom: 48px;
+  }
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 560px;
+  }
+  .kicker {
+    margin: 0 0 28px;
+    font-family: var(--font-en);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--olive);
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(44px, 7vw, 88px);
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: 0;
+  }
+  .lead {
+    max-width: 520px;
+    margin: 30px 0 0;
+    font-size: clamp(17px, 2vw, 22px);
+    line-height: 1.55;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+    margin-top: 42px;
+  }
+  .meta-item {
+    padding: 18px 16px 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .meta-item:nth-child(odd) { border-right: 1px solid var(--line); }
+  .meta-item:nth-child(even) { padding-left: 16px; }
+  .meta-item strong {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .meta-item span {
+    display: block;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .hero-visual {
+    position: relative;
+    margin: 0;
+    min-height: 560px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--dark);
+  }
+  .hero-visual img {
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    object-fit: cover;
+  }
+  .hero-badge {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: end;
+    padding: 20px;
+    border-radius: 8px;
+    background: rgba(255, 253, 250, 0.88);
+    backdrop-filter: blur(10px);
+  }
+  .hero-badge p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .hero-badge .num {
+    font-family: var(--font-en);
+    font-size: 40px;
+    line-height: 1;
+    color: var(--olive);
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 20px;
+    border-radius: 6px;
+    border: 1px solid var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary {
+    background: var(--ink);
+    color: #fff;
+  }
+  .btn-soft {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .section {
+    padding: 76px 0;
+    border-top: 1px solid var(--line);
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: baseline;
+    margin-bottom: 28px;
+  }
+  .section-head p {
+    margin: 0;
+    font-family: var(--font-en);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--olive);
+  }
+  .section-head span {
+    font-family: var(--font-en);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+  }
+  .summary-item {
+    min-height: 190px;
+    padding: 22px 18px 22px 0;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .summary-item:last-child { border-right: 0; }
+  .summary-item strong {
+    display: block;
+    margin-bottom: 18px;
+    font-family: var(--font-en);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .summary-item p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .summary-item small {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .notice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .notice h2 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300;
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+  .notice p {
+    margin: 0 0 18px;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .notice .muted { color: var(--muted); }
+
+  .accordion {
+    display: grid;
+    gap: 12px;
+  }
+  details {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    min-height: 64px;
+    padding: 0 20px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: var(--olive-soft);
+    color: var(--olive);
+    font-family: var(--font-en);
+  }
+  details[open] summary::after { content: "-"; }
+  .panel {
+    padding: 0 20px 22px;
+    border-top: 1px solid var(--line);
+  }
+  .panel dl {
+    margin: 0;
+  }
+  .panel-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel-row:last-child { border-bottom: 0; }
+  .panel dt {
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .panel dd {
+    margin: 0;
+    font-size: 15px;
+  }
+  .panel .note {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .apply-block {
+    background: var(--dark);
+    color: #fff;
+    border-radius: 8px;
+    padding: 34px;
+  }
+  .apply-block h2 {
+    margin: 0 0 16px;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 300;
+    line-height: 1.12;
+  }
+  .apply-block p {
+    max-width: 720px;
+    margin: 0;
+    color: rgba(255,255,255,0.76);
+    font-size: 16px;
+  }
+  .apply-block .btn {
+    border-color: #fff;
+    color: #fff;
+  }
+  .apply-block .btn-primary {
+    background: #fff;
+    color: var(--dark);
+  }
+
+  .foot {
+    padding: 44px 0 88px;
+    color: var(--muted);
+  }
+  .foot .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    font-size: 13px;
+  }
+
+  .bottom-cta {
+    position: fixed;
+    left: 0;
+    right: auto;
+    bottom: 0;
+    z-index: 30;
+    display: none;
+    width: 100vw;
+    background: rgba(247, 245, 239, 0.92);
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(14px);
+  }
+  .bottom-cta .inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .bottom-cta p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.35;
+    display: none;
+  }
+  .bottom-cta a {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 16px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      padding-top: 34px;
+    }
+    .hero-copy { min-height: 0; }
+    .hero-visual, .hero-visual img { min-height: 420px; }
+    .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .summary-item:nth-child(2) { border-right: 0; }
+    .notice { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 620px) {
+    body { padding-bottom: 72px; }
+    .wrap { padding: 0 20px; }
+    .topbar .row { height: 58px; }
+    .nav-link { display: none; }
+    .hero {
+      gap: 26px;
+      padding-top: 28px;
+      padding-bottom: 34px;
+    }
+    h1 { font-size: clamp(42px, 16vw, 64px); }
+    .lead { margin-top: 22px; font-size: 17px; }
+    .lead { word-break: normal; overflow-wrap: anywhere; }
+    .hero-meta { grid-template-columns: 1fr; margin-top: 28px; }
+    .meta-item,
+    .meta-item:nth-child(even) {
+      padding: 15px 0;
+      border-right: 0;
+    }
+    .hero-visual,
+    .hero-visual img {
+      min-height: 360px;
+      aspect-ratio: 4 / 5;
+    }
+    .hero-badge {
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      padding: 16px;
+    }
+    .hero-badge .num { font-size: 34px; }
+    .cta-row { display: grid; grid-template-columns: 1fr; }
+    .section { padding: 52px 0; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .summary-item {
+      min-height: 0;
+      padding: 18px 0;
+      border-right: 0;
+    }
+    .panel-row { grid-template-columns: 1fr; gap: 6px; }
+    .apply-block { padding: 26px 20px; }
+    .foot { padding-bottom: 96px; }
+    .foot .row { display: grid; }
+    .bottom-cta { display: block; }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="index.html">Hueflow Studio</a>
+    <a class="nav-link" href="Plano.html">Curriculum</a>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero" aria-label="Plano 1기 초대장">
+    <div class="hero-copy">
+      <p class="kicker">Plano 01 · Priority Invitation</p>
+      <h1>Plano 1기<br>우선 신청 안내</h1>
+      <p class="lead">AI 기반 설계 워크플로우를<br>실제 프로젝트 흐름에 맞춰<br>배워보는 과정입니다.</p>
+      <div class="hero-meta" aria-label="주요 일정">
+        <div class="meta-item">
+          <strong>Start</strong>
+          <span>2026.05.30 Sat</span>
+        </div>
+        <div class="meta-item">
+          <strong>Time</strong>
+          <span>Studio 13:30-16:30</span>
+        </div>
+        <div class="meta-item">
+          <strong>Track</strong>
+          <span>Studio / Online</span>
+        </div>
+        <div class="meta-item">
+          <strong>Apply</strong>
+          <span>입금 확인 순 확정</span>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#apply">신청 안내 보기</a>
+        <a class="btn btn-soft" href="Plano.html#curriculum">커리큘럼 보기</a>
+      </div>
+    </div>
+    <figure class="hero-visual">
+      <img src="assets/corp-meeting.png" alt="회의실과 설계 미팅을 연상시키는 공간 이미지">
+      <figcaption class="hero-badge">
+        <p>공간 설계자가 실제 업무에 붙여 쓰는 AI 워크플로우</p>
+        <span class="num">01</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p>Invitation Summary</p>
+        <span>01</span>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <strong>Studio</strong>
+          <p>690,000원</p>
+          <small>1기 특별가 · 부가세 포함</small>
+        </div>
+        <div class="summary-item">
+          <strong>Online</strong>
+          <p>390,000원</p>
+          <small>1기 특별가 · 부가세 포함</small>
+        </div>
+        <div class="summary-item">
+          <strong>Venue</strong>
+          <p>용산 또는 서울역 인근</p>
+          <small>노트북 실습이 편한 공간 기준으로 확정 후 안내</small>
+        </div>
+        <div class="summary-item">
+          <strong>Benefit</strong>
+          <p>전자책 · 베타 앱</p>
+          <small>준비되는 대로 1기 수강생에게 우선 안내</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap notice">
+      <h2>툴 소개보다,<br>실제 설계 흐름에 붙는 방식을 다룹니다.</h2>
+      <div>
+        <p>Plano는 공간 자료를 정리하고, AI 이미지와 영상, 제안서, 홈페이지 제작 흐름까지 연결해보는 실무형 과정입니다.</p>
+        <p class="muted">1기는 소규모로 운영하며, 먼저 문의주셨던 분들께 우선 안내드린 뒤 공개 모집으로 전환할 예정입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="apply">
+    <div class="wrap">
+      <div class="section-head">
+        <p>Apply Guide</p>
+        <span>02</span>
+      </div>
+      <div class="accordion">
+        <details open>
+          <summary>수강료와 신청 방식</summary>
+          <div class="panel">
+            <dl>
+              <div class="panel-row">
+                <dt>Tuition</dt>
+                <dd>스튜디오반 690,000원 / 온라인반 390,000원 <span class="note">1기 특별가이며 부가세 포함 금액입니다.</span></dd>
+              </div>
+              <div class="panel-row">
+                <dt>Payment</dt>
+                <dd>현재 카드 결제 심사 진행 중이라 1기는 계좌이체·무통장입금으로 먼저 신청받습니다.</dd>
+              </div>
+              <div class="panel-row">
+                <dt>Confirm</dt>
+                <dd>입금 확인 순으로 자리가 확정됩니다. <span class="note">계좌는 카카오톡 신청 후 개별 안내드립니다.</span></dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+
+        <details>
+          <summary>장소와 수업 시간</summary>
+          <div class="panel">
+            <dl>
+              <div class="panel-row">
+                <dt>Studio</dt>
+                <dd>스튜디오반은 용산 또는 서울역 인근 회의실에서 진행될 예정입니다.</dd>
+              </div>
+              <div class="panel-row">
+                <dt>Time</dt>
+                <dd>토요일 오후 1:30-4:30 기준으로 준비 중입니다. <span class="note">노트북 실습이 편한 공간을 기준으로 확정 후 안내드립니다.</span></dd>
+              </div>
+              <div class="panel-row">
+                <dt>Online</dt>
+                <dd>온라인반은 Zoom 라이브로 같은 커리큘럼을 따라갑니다.</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+
+        <details>
+          <summary>1기 수강생 혜택</summary>
+          <div class="panel">
+            <dl>
+              <div class="panel-row">
+                <dt>E-book</dt>
+                <dd>준비 중인 Plano 전자책이 완성되는 대로 1기 수강생분들께 보내드릴 예정입니다.</dd>
+              </div>
+              <div class="panel-row">
+                <dt>Beta Apps</dt>
+                <dd>현재 개발 중인 AI 설계 보조 앱들도 베타 버전으로 먼저 사용해보실 수 있도록 안내드릴 예정입니다.</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+
+        <details>
+          <summary>환불과 현금영수증</summary>
+          <div class="panel">
+            <dl>
+              <div class="panel-row">
+                <dt>Refund</dt>
+                <dd>첫 수업 시작 전까지는 전액 환불 가능합니다.</dd>
+              </div>
+              <div class="panel-row">
+                <dt>Receipt</dt>
+                <dd>현금영수증 발급 가능하며, 사업자 지출증빙용 현금영수증도 가능합니다.</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="apply-block">
+        <h2>신청을 원하시면<br>카카오톡으로 남겨주세요.</h2>
+        <p>성함 / 신청 과정 / 연락처를 보내주시면 수강료 입금 안내와 확정 절차를 안내드립니다.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener">카카오톡으로 신청하기</a>
+          <a class="btn btn-soft" href="Plano.html">커리큘럼 자세히 보기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap row">
+    <span>Hueflow Studio · Spatial design × AI workflow</span>
+    <a href="https://pf.kakao.com/_LxajxbX" target="_blank" rel="noopener">pf.kakao.com/_LxajxbX</a>
+  </div>
+</footer>
+
+<aside class="bottom-cta" aria-label="모바일 신청 버튼">
+  <div class="inner">
+    <p>Plano 1기<br>2026.05.30 시작</p>
+    <a class="btn btn-primary" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener">신청하기</a>
+  </div>
+</aside>
+</body>
+</html>
