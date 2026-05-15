@@ -135,7 +135,7 @@
 
   .label-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 18px;
     align-items: center;
     padding-bottom: 20px;
@@ -145,19 +145,6 @@
     font-size: 12px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-  }
-  .seal {
-    width: 52px;
-    height: 52px;
-    display: grid;
-    place-items: center;
-    flex: 0 0 auto;
-    border-radius: 999px;
-    background: var(--olive);
-    color: #fff;
-    font-family: var(--font-en);
-    font-size: 13px;
-    letter-spacing: 0.08em;
   }
   .title-lockup {
     display: flex;
@@ -178,8 +165,7 @@
     display: grid;
     gap: 5px;
     min-width: 120px;
-    padding: 0 0 8px 14px;
-    border-left: 1px solid var(--line-strong);
+    padding: 0 0 8px;
   }
   .invite-name strong {
     font-size: 20px;
@@ -497,11 +483,6 @@
       font-size: 10px;
       letter-spacing: 0.14em;
     }
-    .seal {
-      width: 46px;
-      height: 46px;
-      font-size: 12px;
-    }
     .title-lockup {
       gap: 9px;
       margin-top: 34px;
@@ -514,7 +495,6 @@
     .invite-name {
       min-width: 82px;
       padding-bottom: 6px;
-      padding-left: 11px;
       flex: 0 0 82px;
     }
     .invite-name strong {
@@ -583,7 +563,6 @@
       <div>
         <div class="label-row">
           <span>Priority Invitation</span>
-          <span class="seal">P01</span>
         </div>
         <div class="title-lockup" aria-label="Plano 1기 우선 신청 안내">
           <span class="plano-script">Plano</span>
