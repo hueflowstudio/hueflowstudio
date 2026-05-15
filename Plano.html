@@ -506,6 +506,35 @@
     margin: -16px 0 34px;
     max-width: 58ch;
   }
+  .cohort-banner {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    border-top: 0.5px solid var(--line-soft);
+    border-bottom: 0.5px solid var(--line-soft);
+    margin: 0 0 26px;
+  }
+  .cohort-banner .item {
+    padding: 18px 0;
+  }
+  .cohort-banner strong {
+    display: block;
+    font-family: var(--hf-font-en);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .cohort-banner span {
+    display: block;
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
   .conversion-points {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -544,6 +573,14 @@
     .conversion-points {
       grid-template-columns: 1fr;
     }
+    .cohort-banner {
+      grid-template-columns: 1fr;
+    }
+    .cohort-banner .item {
+      border-bottom: 0.5px solid var(--line-soft);
+      padding: 18px 0;
+    }
+    .cohort-banner .item:last-child { border-bottom: 0; }
     .conversion-points .point,
     .conversion-points .point:last-child {
       border-right: 0;
@@ -683,6 +720,19 @@
   .track-card li::before {
     content: "—";
     color: var(--mid);
+  }
+  .bank-note {
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--mid);
+    margin: 24px 0 0;
+    max-width: 58ch;
+  }
+  .bank-note strong {
+    color: var(--ink);
+    font-weight: 400;
   }
   @media (max-width: 768px) {
     .track-grid { grid-template-columns: 1fr; }
@@ -846,6 +896,39 @@
     margin: 0 0 26px;
     max-width: 58ch;
   }
+  .apply-section .process {
+    list-style: none;
+    margin: 0 0 30px;
+    padding: 0;
+    max-width: 62ch;
+  }
+  .apply-section .process li {
+    display: grid;
+    grid-template-columns: 78px 1fr;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 0.5px solid var(--line-soft);
+    font-family: var(--hf-font-kr);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .apply-section .process li:last-child { border-bottom: 0; }
+  .apply-section .process strong {
+    font-family: var(--hf-font-en);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding-top: 3px;
+  }
+  @media (max-width: 520px) {
+    .apply-section .process li {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
   .apply-actions {
     display: flex;
     flex-wrap: wrap;
@@ -975,20 +1058,16 @@
     border-bottom-color: var(--terracotta);
   }
   @media (max-width: 768px) {
-    .bottom-bar .row { position: relative; padding-right: 96px; }
-    .bottom-bar .left { font-size: 12px; }
+    .bottom-bar .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      padding-right: 28px;
+    }
+    .bottom-bar .left { font-size: 12px; min-width: 0; }
     .bottom-bar .left .accent { display: block; margin: 2px 0 0; }
     .bottom-bar .right {
-      position: absolute;
-      right: 28px;
-      top: 50%;
-      transform: translateY(-50%);
-      flex: 0 0 auto;
+      display: none;
     }
-    .bottom-bar .right a { font-size: 12px; letter-spacing: 0.12em; }
-  }
-  @media (max-width: 380px) {
-    .bottom-bar .right { right: 24px; }
   }
 
   /* ============ Toast ============ */
@@ -1064,23 +1143,37 @@
 
   <!-- 04 — STATEMENT -->
   <section class="wrap section statement">
-    <p>20년차 공간 설계자가 직접 가르치는,<br>실무에 바로 쓰는 AI 워크플로우 정규 과정.</p>
+    <p>20년차 공간 설계자가 직접 가르치는,<br>실무에 바로 쓰는<br>AI 워크플로우 정규 과정.</p>
   </section>
 
   <!-- 04-1 — CONVERSION CTA -->
   <section class="wrap section conversion">
     <p class="kicker">Plano 1st Cohort</p>
-    <h2><span class="no-orphan">스튜디오반과 온라인반,</span><br><span class="no-orphan">두 가지 방식으로 운영합니다.</span></h2>
-    <p class="lead">툴 사용법만 알려드리는 수업이 아닙니다.<br>AI를 보조로 아이디어를 도출하고, 시안·제안서·영상·홈페이지까지 실무 결과물로 연결하는 프로그램입니다.</p>
-    <p class="track-note">두 반 모두 같은 진도와 같은 커리큘럼으로 진행됩니다.<br>스튜디오반은 오프라인 3회 + Zoom 라이브 2회로 진행하고,<br>온라인반은 Zoom 라이브 5회로 참여합니다.<br>Zoom 라이브 수업은 매주 목요일 저녁 7-10시에 진행됩니다.<br>1·3·5회차는 스튜디오반은 오프라인 장소에서, 온라인반은 별도 Zoom 라이브로 진행됩니다.<br>수업 녹화본은 제공하지 않습니다.</p>
+    <h2><span class="no-orphan">1기 모집을 시작합니다.</span><br><span class="no-orphan">5월 26일 첫 수업.</span></h2>
+    <p class="lead">툴 사용법만 알려드리는 수업이 아닙니다.<br>AI를 보조로 아이디어를 도출하고,<br>시안·제안서·영상·홈페이지까지<br>실무 결과물로 연결하는 프로그램입니다.</p>
+    <div class="cohort-banner" aria-label="1기 모집 일정">
+      <div class="item">
+        <strong>Open</strong>
+        <span>2026년 5월 15일부터 1기 신청을 받습니다.</span>
+      </div>
+      <div class="item">
+        <strong>Start</strong>
+        <span>2026년 5월 26일 화요일 첫 수업을 시작합니다.</span>
+      </div>
+      <div class="item">
+        <strong>Payment</strong>
+        <span>카드 결제 심사 전까지 계좌이체·무통장입금으로 확정합니다.</span>
+      </div>
+    </div>
+    <p class="track-note">두 반 모두 같은 진도와 같은 커리큘럼으로 진행됩니다.<br>스튜디오반은 오프라인 3회 + Zoom 라이브 2회로 진행하고,<br>온라인반은 Zoom 라이브 5회로 참여합니다.<br>Zoom 라이브 수업은 매주 목요일 저녁 7-10시에 진행됩니다.<br>1·3·5회차는 스튜디오반은 오프라인 장소에서,<br>온라인반은 별도 Zoom 라이브로 진행됩니다.<br>수업 녹화본은 제공하지 않습니다.</p>
     <div class="conversion-points" aria-label="신청 이유">
         <div class="point">
           <strong>Studio Curriculum</strong>
-          <span>스튜디오반은 오프라인 회차마다 강사가 옆에서 작업물을 같이 보며, 바로 수정 방향을 잡아줍니다.</span>
+          <span>스튜디오반은 오프라인 회차마다<br>강사가 옆에서 작업물을 같이 보며,<br>바로 수정 방향을 잡아줍니다.</span>
       </div>
       <div class="point">
         <strong>Online Curriculum</strong>
-        <span>온라인반은 같은 커리큘럼을 Zoom 라이브 5회로 끝까지 따라갑니다.</span>
+        <span>온라인반은 같은 커리큘럼을<br>Zoom 라이브 5회로 끝까지 따라갑니다.</span>
       </div>
       <div class="point">
         <strong>Curriculum Price</strong>
@@ -1088,11 +1181,11 @@
       </div>
     </div>
     <div class="apply-actions">
-      <a href="#" class="btn btn-solid" data-soon="스튜디오반 결제 링크 준비중">
-        <span>스튜디오반 결제하기</span><span class="arrow">→</span>
+      <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-solid">
+        <span>스튜디오반 신청하기</span><span class="arrow">→</span>
       </a>
-      <a href="#" class="btn btn-solid" data-soon="온라인반 결제 링크 준비중">
-        <span>온라인반 결제하기</span><span class="arrow">→</span>
+      <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-solid">
+        <span>온라인반 신청하기</span><span class="arrow">→</span>
       </a>
       <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
         <span>카카오톡 문의</span><span class="arrow">→</span>
@@ -1353,7 +1446,8 @@
     </div>
     <dl class="deflist">
       <div class="row"><dt>Cohort</dt><dd>스튜디오반 선착순 10명 <span class="note">1기 소수정예</span><br>온라인반 선착순 20명</dd></div>
-      <div class="row"><dt>Start</dt><dd>5월 중순 오픈 예정</dd></div>
+      <div class="row"><dt>Recruiting</dt><dd>2026년 5월 15일 모집 시작 <span class="note">정원 마감 시 조기 마감됩니다.</span></dd></div>
+      <div class="row"><dt>Start</dt><dd>2026년 5월 26일 화요일 시작</dd></div>
       <div class="row"><dt>Studio Class</dt><dd>오프라인 3회 + Zoom 라이브 2회 <span class="note">오프라인은 토요일 오후 1시-4시 진행되며,<br>정확한 장소는 신청자에게 별도 안내드립니다.</span></dd></div>
       <div class="row"><dt>Online Class</dt><dd>Zoom 라이브 5회 <span class="note">매주 목요일 저녁 7-10시 진행됩니다.<br>오프라인 회차가 있는 날도 온라인반은 별도 Zoom 수업으로 진행됩니다.</span></dd></div>
       <div class="row"><dt>Curriculum Fee</dt><dd>스튜디오반 KRW 690,000 / 온라인반 KRW 390,000</dd></div>
@@ -1401,7 +1495,7 @@
       <span class="idx">09</span>
     </div>
     <p class="price">Choose your curriculum</p>
-    <p class="price-note"><span class="accent">스튜디오반과 온라인반 중 선택해 신청합니다.</span><br>스튜디오반은 오프라인 3회 + Zoom 라이브 2회,<br>온라인반은 Zoom 라이브 5회로 진행됩니다.</p>
+    <p class="price-note"><span class="accent">1기는 계좌이체·무통장입금으로 먼저 신청을 받습니다.</span><br>입금 확인 순으로 자리가 확정되며, 카드 결제는 심사 완료 후 제공됩니다.</p>
     <div class="track-grid">
       <article class="track-card">
         <span class="eyebrow">Studio Curriculum</span>
@@ -1416,8 +1510,8 @@
           <li>제안서·사이트·포트폴리오 최종 보정</li>
         </ul>
         <div class="apply-actions">
-          <a href="#" class="btn btn-solid" data-soon="스튜디오반 결제 링크 준비중">
-            <span>스튜디오반 결제하기</span><span class="arrow">→</span>
+          <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-solid">
+            <span>스튜디오반 무통장입금 신청</span><span class="arrow">→</span>
           </a>
         </div>
       </article>
@@ -1435,14 +1529,15 @@
           <li>제공 템플릿과 예시 자료로 실습 가능</li>
         </ul>
         <div class="apply-actions">
-          <a href="#" class="btn btn-solid" data-soon="온라인반 결제 링크 준비중">
-            <span>온라인반 결제하기</span><span class="arrow">→</span>
+          <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-solid">
+            <span>온라인반 무통장입금 신청</span><span class="arrow">→</span>
           </a>
         </div>
       </article>
     </div>
     <dl class="deflist">
-      <div class="row"><dt>Payment</dt><dd>커리큘럼별 결제 링크로 신청 <span class="note">결제 링크는 오픈 시 버튼에 연결됩니다.</span></dd></div>
+      <div class="row"><dt>Payment</dt><dd>계좌이체·무통장입금으로 신청 <span class="note">카카오톡으로 신청 과정과 입금자명을 남겨주시면 입금 확인 후 자리가 확정됩니다.</span></dd></div>
+      <div class="row"><dt>Card</dt><dd>카드 결제 심사 진행 중 <span class="note">심사 완료 후 카드 결제 버튼으로 전환됩니다.</span></dd></div>
       <div class="row"><dt>Included</dt><dd>
         수강생 전용 채널 평생 이용
         <span class="note">강사가 직접 모니터링한 AI 도구 · 업데이트 지속 공유</span>
@@ -1451,11 +1546,34 @@
     </dl>
   </section>
 
-  <!-- 14 — REFUND -->
+  <!-- 14 — BANK TRANSFER -->
+  <section class="wrap section" id="bank-transfer">
+    <div class="sec-head">
+      <span class="label">Bank Transfer</span>
+      <span class="idx">10</span>
+    </div>
+    <dl class="deflist">
+      <div class="row"><dt>Method</dt><dd>계좌이체 · 무통장입금 <span class="note">현재 카드 결제 심사 진행 중으로, 1기 모집은 계좌이체와 무통장입금으로 먼저 신청받습니다.</span></dd></div>
+      <div class="row"><dt>Confirm</dt><dd>입금 확인 순으로 자리 확정 <span class="note">신청 과정, 성함, 연락처, 입금자명을 카카오톡으로 보내주세요.</span></dd></div>
+      <div class="row"><dt>Account</dt><dd>카카오톡 신청 후 입금 계좌 안내 <span class="note">계좌 안내를 받은 뒤 입금해 주시면 확인 후 수강 확정 메시지를 보내드립니다.</span></dd></div>
+      <div class="row"><dt>Receipt</dt><dd>현금영수증 또는 세금계산서 요청 가능 <span class="note">필요한 경우 신청 시 함께 말씀해주세요.</span></dd></div>
+    </dl>
+    <p class="bank-note"><strong>카드 결제는 PG 심사 완료 후 제공됩니다.</strong><br>그 전까지는 계좌이체·무통장입금으로 신청을 확정하며, 1회차 시작 전 취소 시 전액 환불됩니다.</p>
+    <div class="apply-actions" style="margin-top: 28px;">
+      <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-solid">
+        <span>카카오톡으로 신청하기</span><span class="arrow">→</span>
+      </a>
+      <a href="Refund.html" class="btn btn-outline">
+        <span>환불 정책 보기</span><span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 15 — REFUND -->
   <section class="wrap section">
     <div class="sec-head">
       <span class="label">Refund</span>
-      <span class="idx">10</span>
+      <span class="idx">11</span>
     </div>
     <div class="prose" style="margin-bottom: 28px;">
       <p>첫 회차는 과정의 밀도를 확인하는 시간입니다.<br>수업의 방향과 깊이가 기대와 다르다고 느끼신다면,<br>1회차 이후에도 전액 환불해드립니다.<br>2회차부터는 이미 수강하신 회차만큼 차감하고 남은 금액을 환불해드립니다.</p>
@@ -1467,11 +1585,11 @@
     </dl>
   </section>
 
-  <!-- 15 — FAQ -->
+  <!-- 16 — FAQ -->
   <section class="wrap section faq">
     <div class="sec-head">
       <span class="label">FAQ</span>
-      <span class="idx">11</span>
+      <span class="idx">12</span>
     </div>
     <dl>
       <div class="qa">
@@ -1509,24 +1627,29 @@
     </dl>
   </section>
 
-  <!-- 15 — APPLY -->
+  <!-- 17 — APPLY -->
   <section class="wrap section apply-section" id="apply">
     <div class="sec-head">
       <span class="label">Apply</span>
-      <span class="idx">12</span>
+      <span class="idx">13</span>
     </div>
-    <p class="lead">툴 사용법이 아니라, 내 프로젝트에 적용할 워크플로우를 시작하세요.</p>
-    <p class="copy">아이디어 도출부터 시안, 제안서, 영상, 홈페이지까지.<br>5회 동안 실제로 보여줄 수 있는 결과물로 연결합니다.</p>
-    <p class="meta">Studio 690,000 · Online 390,000</p>
+    <p class="lead">1기 신청은 입금 확인 순으로 확정됩니다.</p>
+    <p class="copy">카카오톡으로 신청 과정과 입금자명을 보내주세요.<br>계좌 안내 후 입금이 확인되면 5월 26일 시작 안내와 준비물을 전달드립니다.</p>
+    <p class="meta">Start 2026.05.26 · Studio 690,000 · Online 390,000</p>
+    <ol class="process" aria-label="신청 절차">
+      <li><strong>Step 01</strong><span>스튜디오반 또는 온라인반을 선택해 카카오톡으로 신청합니다.</span></li>
+      <li><strong>Step 02</strong><span>성함, 연락처, 입금자명, 현금영수증 또는 세금계산서 필요 여부를 남깁니다.</span></li>
+      <li><strong>Step 03</strong><span>계좌 안내 후 입금이 확인되면 1기 자리가 확정됩니다.</span></li>
+    </ol>
     <div class="apply-actions">
-      <a href="#" class="btn btn-solid" data-soon="스튜디오반 결제 링크 준비중">
-        <span>스튜디오반 결제하기</span><span class="arrow">→</span>
+      <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-solid">
+        <span>스튜디오반 신청하기</span><span class="arrow">→</span>
       </a>
-      <a href="#" class="btn btn-solid" data-soon="온라인반 결제 링크 준비중">
-        <span>온라인반 결제하기</span><span class="arrow">→</span>
+      <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-solid">
+        <span>온라인반 신청하기</span><span class="arrow">→</span>
       </a>
       <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
-        <span>Inquire on KakaoTalk</span><span class="arrow">→</span>
+        <span>카카오톡 문의</span><span class="arrow">→</span>
       </a>
     </div>
   </section>
@@ -1551,8 +1674,8 @@
 <!-- 17 — FIXED BOTTOM BAR -->
 <div class="bottom-bar">
   <div class="row">
-    <div class="left">Studio KRW 690,000 · Online KRW 390,000<span class="accent">스튜디오반 / 온라인반 선택 신청</span></div>
-    <div class="right"><a href="#apply">Apply →</a></div>
+    <div class="left">1기 2026.05.26 시작<span class="accent">무통장입금 신청 가능</span></div>
+    <div class="right"><a href="#bank-transfer">Apply →</a></div>
   </div>
 </div>
 
@@ -1586,7 +1709,6 @@
       '.week .block',
       '.week .outcome',
       '.approach .body',
-      '.statement p',
       '.faq dd',
       '.curr-intro',
       '.prose p',
