@@ -7,7 +7,7 @@
 <meta name="description" content="Plano 1기 우선 신청 안내. AI 기반 설계 워크플로우를 실제 프로젝트 흐름에 맞춰 배워보는 과정입니다.">
 <meta property="og:title" content="Plano 1기 우선 신청 안내">
 <meta property="og:description" content="먼저 문의주셨던 분들께 보내드리는 Plano 1기 우선 신청 안내입니다.">
-<meta property="og:image" content="https://www.hueflowstudio.com/assets/corp-meeting.png">
+<meta property="og:image" content="https://www.hueflowstudio.com/assets/interior.png">
 <meta property="og:url" content="https://www.hueflowstudio.com/Plano-invite.html">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="colors_and_type.css">
@@ -68,8 +68,8 @@
     inset: 0;
     z-index: -2;
     background:
-      linear-gradient(90deg, rgba(18,18,15,0.58), rgba(18,18,15,0.18) 48%, rgba(18,18,15,0.5)),
-      url("assets/corp-meeting.png") center / cover no-repeat;
+      linear-gradient(90deg, rgba(28,43,27,0.54), rgba(28,43,27,0.18) 48%, rgba(28,43,27,0.46)),
+      url("assets/interior.png") center / cover no-repeat;
     transform: scale(1.02);
   }
   .invite-shell::after {
@@ -138,8 +138,7 @@
     justify-content: flex-start;
     gap: 18px;
     align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--line);
+    padding-bottom: 0;
     color: var(--muted);
     font-family: var(--font-en);
     font-size: 12px;
@@ -191,15 +190,12 @@
   .date-strip {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 36px;
-    border-top: 1px solid var(--line-strong);
+    gap: 18px 28px;
+    margin-top: 34px;
   }
   .date-strip div {
-    padding: 18px 14px 18px 0;
-    border-bottom: 1px solid var(--line);
+    padding: 0;
   }
-  .date-strip div:nth-child(odd) { border-right: 1px solid var(--line); }
-  .date-strip div:nth-child(even) { padding-left: 14px; }
   .date-strip strong {
     display: block;
     margin-bottom: 4px;
@@ -295,19 +291,19 @@
   .tabs {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    border-bottom: 1px solid var(--line);
+    gap: 4px;
+    padding: 10px;
   }
   .tab {
     min-height: 58px;
     border: 0;
-    border-right: 1px solid var(--line);
+    border-radius: 6px;
     background: transparent;
     color: var(--muted);
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
   }
-  .tab:last-child { border-right: 0; }
   .tab.is-active {
     background: var(--olive-soft);
     color: var(--ink);
@@ -355,8 +351,7 @@
     display: grid;
     grid-template-columns: 92px 1fr;
     gap: 14px;
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
+    padding-top: 0;
     color: var(--graphite);
     font-size: 15px;
   }
@@ -454,8 +449,8 @@
       padding: 76px 16px 20px;
     }
     .stage {
-      width: min(320px, calc(100vw - 64px));
-      max-width: calc(100% - 32px);
+      width: calc(100vw - 32px);
+      max-width: 390px;
       margin-left: 0;
       margin-right: 0;
     }
@@ -463,8 +458,8 @@
     .invite-panel,
     .mini-note,
     .detail-card {
-      width: 320px;
-      max-width: calc(100vw - 64px);
+      width: 100%;
+      max-width: 100%;
       margin-left: auto;
       margin-right: auto;
     }
@@ -513,11 +508,12 @@
     }
     .date-strip {
       grid-template-columns: 1fr;
+      gap: 16px;
       margin-top: 28px;
     }
     .date-strip div,
     .date-strip div:nth-child(even) {
-      padding: 14px 0;
+      padding: 0;
       border-right: 0;
     }
     .open-button {
