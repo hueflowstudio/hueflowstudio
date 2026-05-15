@@ -376,6 +376,7 @@
     padding: 0 18px;
     border-radius: 8px;
     border: 1px solid var(--ink);
+    cursor: pointer;
     font-size: 14px;
     font-weight: 500;
   }
@@ -386,6 +387,69 @@
   .action.secondary {
     background: transparent;
     color: var(--ink);
+  }
+  .choice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .track-choice {
+    display: grid;
+    gap: 6px;
+    min-height: 82px;
+    padding: 14px;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(89,101,74,0.1);
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+  }
+  .track-choice.is-active {
+    background: var(--ink);
+    color: #fff;
+  }
+  .track-choice strong {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .track-choice span {
+    color: inherit;
+    font-size: 13px;
+    opacity: 0.72;
+  }
+  .payment-card {
+    display: grid;
+    gap: 16px;
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 8px;
+    background: rgba(89,101,74,0.08);
+  }
+  .payment-card p {
+    margin: 0;
+  }
+  .payment-card .selected {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .payment-card .selected strong {
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .account-lines {
+    display: grid;
+    gap: 6px;
+    color: var(--graphite);
+    font-size: 15px;
+  }
+  .copy-status {
+    min-height: 20px;
+    margin: 12px 0 0;
+    color: var(--olive);
+    font-size: 13px;
   }
 
   @keyframes sheen {
@@ -546,6 +610,9 @@
     .mini-note {
       padding: 18px;
     }
+    .choice-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
@@ -642,17 +709,34 @@
 
           <section class="panel" data-panel="apply" aria-label="신청 안내">
             <p class="eyebrow">Apply</p>
-            <h2>신청은 카카오톡으로<br>받고 있습니다.</h2>
+            <h2>과정 선택 후<br>계좌번호를 복사해 주세요.</h2>
+            <div class="choice-grid" aria-label="신청 과정 선택">
+              <button class="track-choice is-active" type="button" data-track="studio">
+                <strong>스튜디오반</strong>
+                <span>690,000원</span>
+              </button>
+              <button class="track-choice" type="button" data-track="online">
+                <strong>온라인반</strong>
+                <span>390,000원</span>
+              </button>
+            </div>
+            <div class="payment-card" aria-live="polite">
+              <p class="selected"><span data-selected-track>스튜디오반</span> 신청 금액 <strong data-selected-amount>690,000원</strong></p>
+              <div class="account-lines">
+                <span>국민은행 021937-04-003958</span>
+                <span>예금주 김예진(휴플로우스튜디오)</span>
+              </div>
+              <p>입금자명은 수강생 성함으로 입금해 주세요. 입금 확인 순으로 자리가 확정됩니다.</p>
+            </div>
+            <div class="actions">
+              <button class="action secondary" type="button" data-copy-account>계좌번호 복사</button>
+              <a class="action primary" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" data-kakao-notify>입금 후 카카오톡으로 알리기</a>
+            </div>
+            <p class="copy-status" data-copy-status></p>
             <ul>
-              <li><strong>Step 01</strong><span>성함 / 신청 과정 / 연락처를 보내주세요.</span></li>
-              <li><strong>Step 02</strong><span>계좌 안내 후 입금 확인 순으로 자리가 확정됩니다.</span></li>
               <li><strong>Refund</strong><span>첫 수업 시작 전까지는 전액 환불 가능합니다.</span></li>
               <li><strong>Receipt</strong><span>현금영수증 및 사업자 지출증빙용 현금영수증 발급 가능합니다.</span></li>
             </ul>
-            <div class="actions">
-              <a class="action primary" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener">카카오톡으로 신청하기</a>
-              <a class="action secondary" href="Plano.html">커리큘럼 보기</a>
-            </div>
           </section>
         </div>
       </article>
@@ -665,6 +749,18 @@
   const openButton = document.querySelector("[data-open-invite]");
   const tabs = Array.from(document.querySelectorAll("[data-tab]"));
   const panels = Array.from(document.querySelectorAll("[data-panel]"));
+  const trackButtons = Array.from(document.querySelectorAll("[data-track]"));
+  const selectedTrack = document.querySelector("[data-selected-track]");
+  const selectedAmount = document.querySelector("[data-selected-amount]");
+  const copyAccountButton = document.querySelector("[data-copy-account]");
+  const kakaoNotify = document.querySelector("[data-kakao-notify]");
+  const copyStatus = document.querySelector("[data-copy-status]");
+  const accountNumber = "02193704003958";
+  const tracks = {
+    studio: { label: "스튜디오반", amount: "690,000원" },
+    online: { label: "온라인반", amount: "390,000원" }
+  };
+  let currentTrack = "studio";
 
   function openInvite() {
     body.classList.add("is-open");
@@ -676,11 +772,68 @@
     panels.forEach((panel) => panel.classList.toggle("is-active", panel.dataset.panel === name));
   }
 
+  function selectTrack(track) {
+    currentTrack = track;
+    const data = tracks[track];
+    selectedTrack.textContent = data.label;
+    selectedAmount.textContent = data.amount;
+    trackButtons.forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.track === track);
+    });
+  }
+
+  function setStatus(message) {
+    copyStatus.textContent = message;
+    window.clearTimeout(setStatus.timer);
+    setStatus.timer = window.setTimeout(() => {
+      copyStatus.textContent = "";
+    }, 2600);
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const helper = document.createElement("textarea");
+    helper.value = text;
+    helper.setAttribute("readonly", "");
+    helper.style.position = "fixed";
+    helper.style.top = "-999px";
+    document.body.appendChild(helper);
+    helper.select();
+    document.execCommand("copy");
+    document.body.removeChild(helper);
+  }
+
+  function notifyMessage() {
+    const data = tracks[currentTrack];
+    return [
+      "Plano 1기 입금 완료했습니다.",
+      "신청 과정: " + data.label,
+      "입금 금액: " + data.amount,
+      "입금자명:",
+      "현금영수증: 필요 / 불필요"
+    ].join("\n");
+  }
+
   openButton.addEventListener("click", openInvite);
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       openInvite();
       activateTab(tab.dataset.tab);
+    });
+  });
+  trackButtons.forEach((button) => {
+    button.addEventListener("click", () => selectTrack(button.dataset.track));
+  });
+  copyAccountButton.addEventListener("click", async () => {
+    await copyText(accountNumber);
+    setStatus("계좌번호가 복사되었습니다. 은행앱에 붙여넣어 주세요.");
+  });
+  kakaoNotify.addEventListener("click", () => {
+    copyText(notifyMessage()).then(() => {
+      setStatus("입금 알림 문구가 복사되었습니다. 카카오톡에 붙여넣어 주세요.");
     });
   });
 
