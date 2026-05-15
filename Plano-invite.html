@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plano 1기 초대장 · Hueflow Studio</title>
-<meta name="description" content="Plano 1기 우선 신청 초대장. AI 기반 설계 워크플로우를 실제 프로젝트 흐름에 맞춰 배워보는 과정입니다.">
-<meta property="og:title" content="Plano 1기 우선 신청 초대장">
+<title>Plano 1기 우선 신청 안내 · Hueflow Studio</title>
+<meta name="description" content="Plano 1기 우선 신청 안내. AI 기반 설계 워크플로우를 실제 프로젝트 흐름에 맞춰 배워보는 과정입니다.">
+<meta property="og:title" content="Plano 1기 우선 신청 안내">
 <meta property="og:description" content="먼저 문의주셨던 분들께 보내드리는 Plano 1기 우선 신청 안내입니다.">
 <meta property="og:image" content="https://www.hueflowstudio.com/assets/corp-meeting.png">
 <meta property="og:url" content="https://www.hueflowstudio.com/Plano-invite.html">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="colors_and_type.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&display=swap">
 <style>
   :root {
     --cream: #f5f1e8;
@@ -158,12 +159,41 @@
     font-size: 13px;
     letter-spacing: 0.08em;
   }
-  h1 {
-    margin: 48px 0 0;
-    font-size: clamp(46px, 7vw, 78px);
-    font-weight: 300;
-    line-height: 0.98;
+  .title-lockup {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 14px;
+    margin: 44px 0 0;
+  }
+  .plano-script {
+    font-family: "Allura", "Segoe Script", "Brush Script MT", "Lucida Handwriting", cursive;
+    font-size: clamp(76px, 8vw, 104px);
+    font-weight: 400;
+    line-height: 0.78;
     letter-spacing: 0;
+    color: var(--ink);
+  }
+  .invite-name {
+    display: grid;
+    gap: 5px;
+    min-width: 120px;
+    padding: 0 0 8px 14px;
+    border-left: 1px solid var(--line-strong);
+  }
+  .invite-name strong {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .invite-name span {
+    color: var(--muted);
+    font-family: var(--font-en);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
   .intro {
     margin: 28px 0 0;
@@ -472,9 +502,28 @@
       height: 46px;
       font-size: 12px;
     }
-    h1 {
+    .title-lockup {
+      gap: 9px;
       margin-top: 34px;
-      font-size: clamp(44px, 15vw, 66px);
+      flex-wrap: nowrap;
+    }
+    .plano-script {
+      font-size: clamp(70px, 19vw, 76px);
+      flex: 0 1 auto;
+    }
+    .invite-name {
+      min-width: 82px;
+      padding-bottom: 6px;
+      padding-left: 11px;
+      flex: 0 0 82px;
+    }
+    .invite-name strong {
+      font-size: 14px;
+      line-height: 1.24;
+    }
+    .invite-name span {
+      font-size: 8px;
+      letter-spacing: 0.12em;
     }
     .intro {
       margin-top: 22px;
@@ -529,14 +578,20 @@
 <a class="curriculum-link" href="Plano.html">Curriculum</a>
 
 <main class="invite-shell">
-  <section class="stage" aria-label="Plano 1기 초대장">
+  <section class="stage" aria-label="Plano 1기 우선 신청 안내">
     <article class="envelope">
       <div>
         <div class="label-row">
           <span>Priority Invitation</span>
           <span class="seal">P01</span>
         </div>
-        <h1>Plano 1기<br>초대장</h1>
+        <div class="title-lockup" aria-label="Plano 1기 우선 신청 안내">
+          <span class="plano-script">Plano</span>
+          <span class="invite-name">
+            <strong>1기<br>우선 신청 안내</strong>
+            <span>First Cohort</span>
+          </span>
+        </div>
         <p class="intro">먼저 문의주셨던 분들께<br>보내드리는 우선 신청 안내입니다.</p>
         <div class="date-strip" aria-label="핵심 안내">
           <div>
@@ -557,7 +612,7 @@
           </div>
         </div>
       </div>
-      <button class="open-button" type="button" data-open-invite>초대장 열기</button>
+      <button class="open-button" type="button" data-open-invite>안내 열기</button>
     </article>
 
     <div class="invite-panel reveal">
@@ -567,7 +622,7 @@
       </aside>
 
       <article class="detail-card">
-        <nav class="tabs" aria-label="초대장 내용 선택">
+        <nav class="tabs" aria-label="안내 내용 선택">
           <button class="tab is-active" type="button" data-tab="schedule">일정</button>
           <button class="tab" type="button" data-tab="price">수강료</button>
           <button class="tab" type="button" data-tab="venue">장소</button>
@@ -638,7 +693,7 @@
 
   function openInvite() {
     body.classList.add("is-open");
-    openButton.textContent = "초대장 열림";
+    openButton.textContent = "안내 열림";
   }
 
   function activateTab(name) {
