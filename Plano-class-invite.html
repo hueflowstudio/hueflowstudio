@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano 첫 강의 초대장 · Hueflow Studio</title>
+<meta name="description" content="Plano 첫 강의 장소, 준비물, 주차 안내를 담은 초대장입니다.">
+<meta property="og:title" content="Plano 첫 강의 초대장">
+<meta property="og:description" content="서울역 도보권 비지티플레이스에서 만나요. 노트북과 ChatGPT 계정을 준비해주세요.">
+<meta property="og:image" content="https://www.hueflowstudio.com/assets/interior.png">
+<meta property="og:url" content="https://www.hueflowstudio.com/Plano-class-invite.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root {
+    --paper: #fffaf0;
+    --paper-deep: #f4eadb;
+    --ink: #181612;
+    --muted: #756b5f;
+    --line: rgba(24, 22, 18, 0.16);
+    --line-strong: rgba(24, 22, 18, 0.28);
+    --green: #435242;
+    --green-soft: #dfe7d6;
+    --brick: #a8664f;
+    --plum: #6e5368;
+    --gold: #c3a15e;
+    --shadow: 0 28px 80px rgba(31, 27, 21, 0.22);
+    --font: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html {
+    width: 100%;
+    min-height: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    background:
+      linear-gradient(120deg, rgba(67, 82, 66, 0.82), rgba(110, 83, 104, 0.42)),
+      url("assets/interior.png") center / cover fixed no-repeat;
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 300;
+    word-break: keep-all;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 22% 18%, rgba(255, 250, 240, 0.28), transparent 36%),
+      linear-gradient(180deg, rgba(24, 22, 18, 0.12), rgba(24, 22, 18, 0.48));
+    pointer-events: none;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; }
+  ::selection { background: var(--green); color: #fff; }
+
+  .site-mark {
+    position: fixed;
+    top: 22px;
+    left: 24px;
+    z-index: 10;
+    color: rgba(255, 250, 240, 0.88);
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .top-actions {
+    position: fixed;
+    top: 16px;
+    right: 18px;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+  }
+  .top-actions a {
+    display: inline-flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    color: rgba(255, 250, 240, 0.92);
+    background: rgba(24, 22, 18, 0.28);
+    backdrop-filter: blur(14px);
+    font-size: 12px;
+    font-weight: 520;
+  }
+
+  .page {
+    min-height: 100svh;
+    padding: 76px 22px 34px;
+  }
+  .invite {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+    gap: 20px;
+    align-items: stretch;
+  }
+  .cover,
+  .details {
+    border: 1px solid rgba(255, 250, 240, 0.38);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+  }
+  .cover {
+    min-height: 720px;
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgba(255, 250, 240, 0.93);
+  }
+  .eyebrow {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 680;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .title {
+    margin: 44px 0 0;
+  }
+  .title small {
+    display: block;
+    color: var(--green);
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 250;
+    line-height: 0.98;
+    letter-spacing: 0;
+  }
+  .title strong {
+    display: block;
+    margin-top: 10px;
+    max-width: 420px;
+    color: var(--ink);
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 520;
+    line-height: 0.96;
+    letter-spacing: 0;
+  }
+  .intro {
+    margin: 26px 0 0;
+    max-width: 430px;
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.68;
+  }
+  .quick-info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 34px;
+  }
+  .info-item {
+    min-height: 88px;
+    padding: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .info-item span {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .info-item strong {
+    display: block;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 480;
+    line-height: 1.35;
+  }
+  .open-note {
+    margin: 28px 0 0;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(67, 82, 66, 0.08);
+    color: var(--green);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .details {
+    min-height: 720px;
+    background: rgba(255, 250, 240, 0.96);
+    overflow: hidden;
+  }
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-bottom: 1px solid var(--line);
+    background: rgba(244, 234, 219, 0.74);
+  }
+  .tab {
+    min-height: 54px;
+    border: 0;
+    border-right: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 620;
+  }
+  .tab:last-child { border-right: 0; }
+  .tab.is-active {
+    background: var(--ink);
+    color: #fffaf0;
+  }
+  .panel {
+    display: none;
+    padding: 34px;
+  }
+  .panel.is-active {
+    display: block;
+    animation: fadeIn 220ms ease both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .panel h2 {
+    margin: 12px 0 20px;
+    max-width: 560px;
+    color: var(--ink);
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+  .panel p {
+    margin: 0;
+    max-width: 620px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  .list {
+    display: grid;
+    gap: 0;
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .list li {
+    display: grid;
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .list strong {
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 760;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .list span {
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .mini-card {
+    min-height: 160px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255, 253, 248, 0.68);
+  }
+  .mini-card.full { grid-column: 1 / -1; }
+  .mini-card strong {
+    display: block;
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 580;
+    line-height: 1.35;
+  }
+  .mini-card span {
+    display: block;
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    border: 1px solid var(--ink);
+    border-radius: 8px;
+    background: var(--ink);
+    color: #fffaf0;
+    font-size: 14px;
+    font-weight: 620;
+  }
+  .button.secondary {
+    background: transparent;
+    color: var(--ink);
+  }
+  .notice {
+    margin-top: 28px;
+    padding: 18px;
+    border-radius: 8px;
+    background: var(--green-soft);
+    color: var(--green);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .parking-note {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .footer-note {
+    width: min(1120px, 100%);
+    margin: 18px auto 0;
+    padding: 18px 4px 0;
+    color: rgba(255, 250, 240, 0.78);
+    font-size: 12px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  @media (max-width: 940px) {
+    body {
+      background-attachment: scroll;
+    }
+    .site-mark,
+    .top-actions {
+      position: absolute;
+    }
+    .top-actions a:not(:first-child) {
+      display: none;
+    }
+    .page {
+      padding-top: 72px;
+    }
+    .invite {
+      grid-template-columns: 1fr;
+    }
+    .cover,
+    .details {
+      min-height: auto;
+    }
+    .cover,
+    .panel {
+      padding: 26px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .page {
+      padding: 68px 12px 28px;
+    }
+    .site-mark {
+      left: 16px;
+      top: 20px;
+    }
+    .top-actions {
+      right: 12px;
+      top: 14px;
+    }
+    .top-actions a {
+      min-height: 34px;
+      padding: 0 10px;
+      font-size: 11px;
+    }
+    .cover,
+    .panel {
+      padding: 22px;
+    }
+    .title {
+      margin-top: 34px;
+    }
+    .intro {
+      font-size: 16px;
+    }
+    .quick-info,
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+    .tabs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .tab {
+      min-height: 48px;
+      font-size: 12px;
+    }
+    .list li {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .button {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<a class="site-mark" href="index.html">Hueflow Studio</a>
+<div class="top-actions">
+  <a href="https://map.naver.com/p/search/%EB%B9%84%EC%A7%80%ED%8B%B0%ED%94%8C%EB%A0%88%EC%9D%B4%EC%8A%A4" target="_blank" rel="noopener">지도 보기</a>
+  <a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a>
+</div>
+
+<main class="page">
+  <section class="invite" aria-label="Plano 첫 강의 초대장">
+    <article class="cover">
+      <div>
+        <p class="eyebrow">Plano Studio Class</p>
+        <h1 class="title">
+          <small>첫 강의에</small>
+          <strong>초대합니다</strong>
+        </h1>
+        <p class="intro">
+          서울역 가까이에 있는 따뜻한 공간에서 첫 수업을 시작합니다.
+          노트북을 펴고 직접 실습하며, AI를 내 일에 붙이는 흐름을 함께 만들어볼 예정입니다.
+        </p>
+        <div class="quick-info" aria-label="강의 핵심 정보">
+          <div class="info-item">
+            <span>Date</span>
+            <strong>2026.05.30 Sat<br>13:00 - 16:00</strong>
+          </div>
+          <div class="info-item">
+            <span>Venue</span>
+            <strong>비지티플레이스<br>서울역 13번 출구 도보 약 3분</strong>
+          </div>
+          <div class="info-item">
+            <span>Format</span>
+            <strong>노트북 실습형<br>오프라인 클래스</strong>
+          </div>
+          <div class="info-item">
+            <span>Prepare</span>
+            <strong>노트북 · 충전기<br>ChatGPT 계정</strong>
+          </div>
+        </div>
+      </div>
+      <p class="open-note">
+        멀리서 오시는 분들도 계셔서 서울역 도보권 장소로 준비했습니다.
+        서울역 내부 이동 시간이 있을 수 있으니 조금 여유 있게 도착해주세요.
+      </p>
+    </article>
+
+    <article class="details">
+      <nav class="tabs" aria-label="초대장 상세 정보">
+        <button class="tab is-active" type="button" data-tab="venue">장소</button>
+        <button class="tab" type="button" data-tab="prepare">준비물</button>
+        <button class="tab" type="button" data-tab="parking">주차</button>
+        <button class="tab" type="button" data-tab="chatgpt">ChatGPT</button>
+        <button class="tab" type="button" data-tab="note">안내</button>
+      </nav>
+
+      <section class="panel is-active" data-panel="venue" aria-label="장소 안내">
+        <p class="eyebrow">Venue</p>
+        <h2>서울역에서 가까운<br>비지티플레이스에서 만나요.</h2>
+        <p>
+          KTX, 지하철, 공항철도 이용 후 이동하기 편한 서울역 도보권 공간입니다.
+          처음 오시는 분들은 서울역 13번 출구를 기준으로 찾아오시면 가장 쉽습니다.
+        </p>
+        <ul class="list">
+          <li><strong>Address</strong><span>서울 용산구 한강대로 373-2, 3층</span></li>
+          <li><strong>Subway</strong><span>서울역 13번 출구에서 도보 약 3분</span></li>
+          <li><strong>KTX</strong><span>서울역 도착 후 13번 출구 방향으로 이동해주세요. 역사 안 이동 시간이 있어 여유 있게 출발하시면 좋습니다.</span></li>
+        </ul>
+        <div class="button-row">
+          <a class="button" href="https://map.naver.com/p/search/%EB%B9%84%EC%A7%80%ED%8B%B0%ED%94%8C%EB%A0%88%EC%9D%B4%EC%8A%A4" target="_blank" rel="noopener">네이버지도 열기</a>
+          <a class="button secondary" href="https://map.kakao.com/?q=%EC%84%9C%EC%9A%B8%20%EC%9A%A9%EC%82%B0%EA%B5%AC%20%ED%95%9C%EA%B0%95%EB%8C%80%EB%A1%9C%20373-2" target="_blank" rel="noopener">카카오맵 열기</a>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="prepare" aria-label="준비물 안내">
+        <p class="eyebrow">Before Class</p>
+        <h2>노트북 실습으로 진행됩니다.<br>충전기까지 꼭 챙겨주세요.</h2>
+        <p>
+          첫 시간에는 앞으로의 수업 흐름을 잡고, 바로 따라 해볼 수 있는 실습을 함께 진행합니다.
+          수업 전 기본 준비만 해두면 현장에서 훨씬 편하게 따라오실 수 있습니다.
+        </p>
+        <div class="card-grid">
+          <div class="mini-card">
+            <strong>개인 노트북</strong>
+            <span>Windows 또는 Mac 모두 괜찮습니다. 평소 작업하시는 노트북을 가져오시면 됩니다.</span>
+          </div>
+          <div class="mini-card">
+            <strong>충전기</strong>
+            <span>실습 시간이 길어질 수 있어 노트북 충전기를 꼭 챙겨주세요.</span>
+          </div>
+          <div class="mini-card">
+            <strong>필기구</strong>
+            <span>중간중간 본인 작업에 맞는 메모를 남길 수 있도록 간단히 준비해주세요.</span>
+          </div>
+          <div class="mini-card">
+            <strong>ChatGPT 계정</strong>
+            <span>수업에서 자주 활용할 예정이라 미리 가입과 로그인을 마쳐두시면 좋습니다.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="parking" aria-label="주차 안내">
+        <p class="eyebrow">Parking</p>
+        <h2>자차 이용 시<br>인근 유료주차장을 이용해주세요.</h2>
+        <p>
+          강의장 건물 전용 주차는 여유가 많지 않을 수 있습니다.
+          자차로 오시는 분들은 아래 주차장을 후보로 잡고, 출발 전 내비에서 만차 여부를 한 번 확인해주세요.
+        </p>
+        <ul class="list">
+          <li><strong>Nearest</strong><span>KDB생명타워 주차장 · 서울 용산구 한강대로 372 · 서울역 12번 출구 인근 대형 주차장</span></li>
+          <li><strong>Station</strong><span>서울역 KTX빌딩 주차장 · 서울 용산구 청파로 378 · 서울역 내/인근 주차장</span></li>
+          <li><strong>Backup</strong><span>롯데마트/롯데아울렛 서울역점 주차장 · 만차 시 대안으로 참고해주세요.</span></li>
+        </ul>
+        <div class="button-row">
+          <a class="button" href="https://map.naver.com/p/search/KDB%EC%83%9D%EB%AA%85%ED%83%80%EC%9B%8C%20%EC%A3%BC%EC%B0%A8%EC%9E%A5" target="_blank" rel="noopener">KDB 주차장 검색</a>
+          <a class="button secondary" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%97%AD%20KTX%EB%B9%8C%EB%94%A9%20%EC%A3%BC%EC%B0%A8%EC%9E%A5" target="_blank" rel="noopener">KTX빌딩 주차장 검색</a>
+        </div>
+        <p class="parking-note">
+          주차요금과 운영 여부는 현장 사정에 따라 달라질 수 있습니다.
+          주말 서울역 주변은 혼잡할 수 있어 대중교통 이용도 함께 권장드립니다.
+        </p>
+      </section>
+
+      <section class="panel" data-panel="chatgpt" aria-label="ChatGPT 준비 안내">
+        <p class="eyebrow">AI Tool</p>
+        <h2>수업에서는 ChatGPT를<br>올라운더 도구처럼 활용합니다.</h2>
+        <p>
+          ChatGPT는 글쓰기, 기획, 정리, 아이디어 확장, 자료 구성, 실습 보조까지 폭넓게 활용할 수 있는 도구입니다.
+          미리 계정을 만들어두면 수업 중 로그인과 설정에 시간을 쓰지 않고 바로 실습에 들어갈 수 있습니다.
+        </p>
+        <ul class="list">
+          <li><strong>Account</strong><span>수업 전 ChatGPT 회원가입 및 로그인을 미리 준비해주세요.</span></li>
+          <li><strong>Use</strong><span>무료 계정으로도 참여 가능합니다. 더 많이 활용하실 분들은 유료 플랜을 선택할 수 있지만 필수는 아닙니다.</span></li>
+          <li><strong>Link</strong><span>공식 사이트는 chatgpt.com 입니다. 다른 유사 사이트와 헷갈리지 않게 확인해주세요.</span></li>
+        </ul>
+        <div class="button-row">
+          <a class="button" href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT 열기</a>
+          <a class="button secondary" href="https://help.openai.com/en/articles/4936824-can-i-use-chatgpt-for-free" target="_blank" rel="noopener">무료 사용 안내</a>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="note" aria-label="수업 안내">
+        <p class="eyebrow">Class Note</p>
+        <h2>첫 시간에는<br>수업 흐름과 실습 방향을 함께 잡습니다.</h2>
+        <p>
+          너무 어렵게 준비하지 않으셔도 됩니다. 각자 하시는 일과 작업 방식에 AI를 어떻게 붙일 수 있는지,
+          실제 예시를 보면서 차근차근 따라가볼 예정입니다.
+        </p>
+        <div class="notice">
+          오시는 길에 어려움이 있으시면 편하게 연락주세요.
+          먼 길 오시는 분들도 계셔서 최대한 이동 편한 곳으로 준비했습니다.
+          첫 수업 때 반갑게 뵙겠습니다.
+        </div>
+      </section>
+    </article>
+  </section>
+  <p class="footer-note">Hueflow Studio · Plano Studio Class Invitation</p>
+</main>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll("[data-tab]"));
+  const panels = Array.from(document.querySelectorAll("[data-panel]"));
+
+  function activateTab(name) {
+    tabs.forEach((tab) => tab.classList.toggle("is-active", tab.dataset.tab === name));
+    panels.forEach((panel) => panel.classList.toggle("is-active", panel.dataset.panel === name));
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => activateTab(tab.dataset.tab));
+  });
+</script>
+</body>
+</html>
