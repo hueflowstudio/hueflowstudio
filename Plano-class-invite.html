@@ -7,7 +7,7 @@
 <meta name="description" content="Plano 첫 강의 장소, 준비물, 주차 안내를 담은 초대장입니다.">
 <meta property="og:title" content="Plano 첫 강의 초대장">
 <meta property="og:description" content="서울역 도보권 비지티플레이스에서 만나요. 노트북과 ChatGPT 계정을 준비해주세요.">
-<meta property="og:image" content="https://www.hueflowstudio.com/assets/interior.png">
+<meta property="og:image" content="https://www.hueflowstudio.com/assets/plano-bgt-place.jpg">
 <meta property="og:url" content="https://www.hueflowstudio.com/Plano-class-invite.html">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="colors_and_type.css">
@@ -41,7 +41,7 @@
     margin: 0;
     background:
       linear-gradient(120deg, rgba(67, 82, 66, 0.82), rgba(110, 83, 104, 0.42)),
-      url("assets/interior.png") center / cover fixed no-repeat;
+      url("assets/plano-bgt-place.jpg") center / cover fixed no-repeat;
     color: var(--ink);
     font-family: var(--font);
     font-weight: 300;
@@ -166,6 +166,36 @@
     gap: 16px;
     margin-top: 34px;
   }
+  .hero-photo {
+    margin: 28px 0 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--paper-deep);
+  }
+  .hero-photo img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+  .photo-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .photo-caption strong {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 760;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
   .info-item {
     min-height: 88px;
     padding: 16px;
@@ -277,6 +307,35 @@
     color: var(--ink);
     font-size: 15px;
     line-height: 1.65;
+  }
+  .venue-map {
+    margin-top: 28px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 253, 248, 0.72);
+  }
+  .venue-map img {
+    width: 100%;
+    aspect-ratio: 1.15 / 1;
+    object-fit: cover;
+  }
+  .map-copy {
+    padding: 16px 18px 18px;
+  }
+  .map-copy strong {
+    display: block;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 560;
+    line-height: 1.35;
+  }
+  .map-copy span {
+    display: block;
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
   }
   .card-grid {
     display: grid;
@@ -509,6 +568,13 @@
           서울역 가까이에 있는 따뜻한 공간에서 첫 수업을 시작합니다.
           노트북을 펴고 직접 실습하며, AI를 내 일에 붙이는 흐름을 함께 만들어볼 예정입니다.
         </p>
+        <figure class="hero-photo">
+          <img src="assets/plano-bgt-place.jpg" alt="비지티플레이스 강의 공간">
+          <figcaption class="photo-caption">
+            <span>밝은 자연광이 들어오는 노트북 실습형 공간입니다.</span>
+            <strong>BGT Place</strong>
+          </figcaption>
+        </figure>
         <div class="quick-info" aria-label="강의 핵심 정보">
           <div class="info-item">
             <span>Date</span>
@@ -551,6 +617,13 @@
           KTX, 지하철, 공항철도 이용 후 이동하기 편한 서울역 도보권 공간입니다.
           처음 오시는 분들은 서울역 13번 출구를 기준으로 찾아오시면 가장 쉽습니다.
         </p>
+        <figure class="venue-map">
+          <img src="assets/plano-bgt-map.png" alt="서울역에서 비지티플레이스까지의 네이버지도 약도">
+          <figcaption class="map-copy">
+            <strong>서울역 13번 출구에서 도보 약 3분</strong>
+            <span>서울역 내부 이동 시간이 있을 수 있어 KTX 이용 시 조금 여유 있게 이동해주세요.</span>
+          </figcaption>
+        </figure>
         <ul class="list">
           <li><strong>Address</strong><span>서울 용산구 한강대로 373-2, 3층</span></li>
           <li><strong>Subway</strong><span>서울역 13번 출구에서 도보 약 3분</span></li>
