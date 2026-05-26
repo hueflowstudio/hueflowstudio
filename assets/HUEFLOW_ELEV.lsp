@@ -1,7 +1,7 @@
 (vl-load-com)
 
 ;; =====================================================
-;; HUEFLOW_ELEV.lsp  —  명령어: HF
+;; HUEFLOW_ELEV.lsp  —  명령어: HF2
 ;; 개구부 입력 제거 / 시작점 클릭 한 번으로 즉시 생성
 ;; 벽 꺾임 지점에 ▽ 삼각형 마커 표시
 ;; =====================================================
@@ -160,9 +160,9 @@
 )
 
 ;; =========================
-;; 메인 명령어 HF
+;; 메인 명령어 HF2
 ;; =========================
-(defun c:HF ( / oldlay oldos oldcmdecho
+(defun c:HF2 ( / oldlay oldos oldcmdecho
                 ent verts vcount startpt sidx
                 i pt1 pt2 wall-len
                 dimsty ceilh basept curx basey
@@ -298,6 +298,6 @@
   (setvar "CLAYER" oldlay)
   (setvar "OSMODE" oldos)
   (setvar "CMDECHO" oldcmdecho)
-  (princ "\n\n✔ HF 입면 생성 완료")
+  (princ "\n\n✔ HF2 입면 생성 완료")
   (princ)
 )
