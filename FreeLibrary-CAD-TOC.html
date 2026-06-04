@@ -33,6 +33,79 @@
       </div>
     </section>
 
+    <p class="section-heading">Package Contents</p>
+    <section class="version-list" aria-label="CAD 도면 리스트 자동화 리습 구성 파일">
+      <article class="version-item">
+        <div class="version-label">
+          <span>File 01</span>
+          <span class="version-date">LSP</span>
+        </div>
+        <div>
+          <span class="latest-note">Main File</span>
+          <h2 class="version-title">cad_toc_auto.lsp</h2>
+          <p class="version-desc">AutoCAD에서 로드해 사용하는 도면 리스트 반자동 생성 리습 파일입니다.</p>
+        </div>
+      </article>
+
+      <article class="version-item">
+        <div class="version-label">
+          <span>File 02</span>
+          <span class="version-date">Guide</span>
+        </div>
+        <div>
+          <h2 class="version-title">README_KR.md</h2>
+          <p class="version-desc">리습 설치, 로드, 기본 사용 흐름을 정리한 한국어 사용법 문서입니다.</p>
+        </div>
+      </article>
+
+      <article class="version-item">
+        <div class="version-label">
+          <span>File 03</span>
+          <span class="version-date">Page</span>
+        </div>
+        <div>
+          <h2 class="version-title">index.html</h2>
+          <p class="version-desc">사이트 업로드용 소개 페이지 파일입니다. Free Library에는 핵심 명령어와 사용 순서를 요약해 정리했습니다.</p>
+        </div>
+      </article>
+    </section>
+
+    <p class="section-heading">Basic Flow</p>
+    <section class="version-list" aria-label="CAD 도면 리스트 자동화 리습 기본 사용 순서">
+      <article class="version-item">
+        <div class="version-label">
+          <span>01</span>
+          <span class="version-date">Load</span>
+        </div>
+        <div>
+          <h2 class="version-title">리습 로드</h2>
+          <p class="version-desc">AutoCAD에서 APPLOAD를 실행한 뒤 cad_toc_auto.lsp 파일을 선택해 로드합니다.</p>
+        </div>
+      </article>
+
+      <article class="version-item">
+        <div class="version-label">
+          <span>02</span>
+          <span class="version-date">Set</span>
+        </div>
+        <div>
+          <h2 class="version-title">시트폼 기준 설정</h2>
+          <p class="version-desc">TOCFORMSET 명령으로 도면 리스트를 만들 기준 시트폼을 먼저 지정합니다.</p>
+        </div>
+      </article>
+
+      <article class="version-item">
+        <div class="version-label">
+          <span>03</span>
+          <span class="version-date">Scan</span>
+        </div>
+        <div>
+          <h2 class="version-title">도면 리스트 생성</h2>
+          <p class="version-desc">TOCFORMSCAN 명령으로 같은 폼들을 스캔해 도면 리스트를 생성합니다.</p>
+        </div>
+      </article>
+    </section>
+
     <p class="section-heading">Command Summary</p>
     <section class="version-list" aria-label="CAD 도면 리스트 자동화 리습 명령어 요약">
       <article class="version-item">
