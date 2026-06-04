@@ -196,6 +196,23 @@ h1 {
   background: transparent;
   color: var(--ink);
 }
+.download-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+.download-row .download {
+  justify-self: start;
+}
+.secondary-download {
+  background: transparent;
+  color: var(--ink);
+}
+.secondary-download:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
 .disabled-download,
 .disabled-download:hover {
   border-color: var(--line);
@@ -239,6 +256,27 @@ h1 {
   word-break: keep-all;
 }
 .patch-list li + li { margin-top: 4px; }
+.guide-list {
+  margin: 14px 0 0;
+  padding-left: 20px;
+  color: var(--mid);
+  font-size: 14px;
+  word-break: keep-all;
+}
+.guide-list li + li { margin-top: 4px; }
+pre {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 0.5px solid var(--line);
+  background: #1F1F1F;
+  color: var(--paper);
+  font-size: 13px;
+  line-height: 1.65;
+}
+code {
+  font-family: Consolas, "Courier New", monospace;
+}
 .latest-note {
   display: inline-flex;
   width: fit-content;
