@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAD 도면 리스트 자동화 리습 - Free Library</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="assets/free-library.css">
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary">
+    <div class="row">
+      <a class="brand" href="index.html">Hueflow Studio</a>
+      <div class="navlinks">
+        <a href="Plano.html">Plano</a>
+        <a href="Lab.html">Lab</a>
+        <a href="Shop.html">Shop</a>
+        <a href="Contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="detail-hero">
+      <div>
+        <p class="eyebrow">Free Library · Tool 04</p>
+        <h1 class="detail-title">CAD LISP<br>도면 리스트 자동화</h1>
+      </div>
+      <div class="detail-summary">
+        <a class="back-link" href="FreeLibrary.html">← Back to Library</a>
+        <p>시트폼 기준을 먼저 설정한 다음 같은 폼을 스캔해 도면 리스트를 반자동으로 생성하는 AutoLISP 도구입니다. 핵심 명령어는 <strong>TOCFORMSET</strong>, <strong>TOCFORMSCAN</strong>입니다.</p>
+      </div>
+    </section>
+
+    <p class="section-heading">Command Summary</p>
+    <section class="version-list" aria-label="CAD 도면 리스트 자동화 리습 명령어 요약">
+      <article class="version-item">
+        <div class="version-label">
+          <span>Step 01</span>
+          <span class="version-date">Command</span>
+        </div>
+        <div>
+          <span class="latest-note">Setup</span>
+          <h2 class="version-title">TOCFORMSET</h2>
+          <p class="version-desc">도면 리스트를 만들 기준 시트폼을 선택해 폼 기준을 저장합니다. 같은 프로젝트에서 한 번 먼저 실행한 뒤 스캔 명령으로 넘어갑니다.</p>
+          <ul class="patch-list">
+            <li>명령창에 TOCFORMSET 입력</li>
+            <li>기준이 될 시트폼을 선택</li>
+            <li>폼 기준 저장 후 스캔 준비</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="version-item">
+        <div class="version-label">
+          <span>Step 02</span>
+          <span class="version-date">Command</span>
+        </div>
+        <div>
+          <span class="latest-note">Scan</span>
+          <h2 class="version-title">TOCFORMSCAN</h2>
+          <p class="version-desc">저장된 시트폼 기준과 같은 폼들을 찾아 도면 리스트를 생성합니다. 도면명이 정리된 상태에서 실행하면 리스트 작성 시간을 줄일 수 있습니다.</p>
+          <ul class="patch-list">
+            <li>명령창에 TOCFORMSCAN 입력</li>
+            <li>같은 폼 영역을 스캔</li>
+            <li>스캔 결과로 도면 리스트 생성</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Hueflow Studio · 사업자등록번호 566-25-02364</span>
+    <span><a href="Terms.html">이용약관</a> · <a href="Privacy.html">개인정보처리방침</a> · <a href="Refund.html">취소·환불 정책</a></span>
+  </footer>
+</body>
+</html>
