@@ -196,6 +196,13 @@ h1 {
   background: transparent;
   color: var(--ink);
 }
+.disabled-download,
+.disabled-download:hover {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--mid);
+  cursor: not-allowed;
+}
 
 .section-heading {
   margin: 56px 0 0;
