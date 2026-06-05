@@ -235,6 +235,79 @@
   )
 )
 
+(defun toc:get-prop-default (obj prop fallback / val)
+  (setq val (vl-catch-all-apply 'vlax-get (list obj prop)))
+  (if (vl-catch-all-error-p val) fallback val)
+)
+
+(defun toc:block-ref-point (blk pt / ins sx sy rot x y)
+  (setq ins (toc:variant->list (toc:get-prop-default blk 'InsertionPoint '(0.0 0.0 0.0))))
+  (setq sx (toc:get-prop-default blk 'XScaleFactor 1.0))
+  (setq sy (toc:get-prop-default blk 'YScaleFactor 1.0))
+  (setq rot (toc:get-prop-default blk 'Rotation 0.0))
+  (setq x (* sx (car pt)))
+  (setq y (* sy (cadr pt)))
+  (list
+    (+ (car ins) (- (* x (cos rot)) (* y (sin rot))))
+    (+ (cadr ins) (+ (* x (sin rot)) (* y (cos rot))))
+    0.0
+  )
+)
+
+(defun toc:block-def-object (blk / doc blocks name obj)
+  (setq doc (vla-get-Document blk))
+  (setq blocks (vla-get-Blocks doc))
+  (setq name (toc:effective-name blk))
+  (setq obj (vl-catch-all-apply 'vla-Item (list blocks name)))
+  (if (vl-catch-all-error-p obj)
+    (progn
+      (setq name (toc:get-prop-default blk 'Name ""))
+      (setq obj (vl-catch-all-apply 'vla-Item (list blocks name)))
+    )
+  )
+  (if (vl-catch-all-error-p obj) nil obj)
+)
+
+(defun toc:item-from-block-def-object (blk obj / txt pt ht wpt)
+  (if (vlax-property-available-p obj 'TextString)
+    (progn
+      (setq txt (vlax-get obj 'TextString))
+      (setq pt (toc:get-point obj))
+      (setq ht (toc:get-height obj))
+      (if (and pt (/= (toc:clean txt) ""))
+        (progn
+          (setq wpt (toc:block-ref-point blk pt))
+          (toc:make-item txt wpt ht)
+        )
+      )
+    )
+  )
+)
+
+(defun toc:items-from-block-reference (blk / def items atts item obj)
+  (setq items '())
+  (if (and
+        (vlax-property-available-p blk 'HasAttributes)
+        (= (vla-get-HasAttributes blk) :vlax-true)
+      )
+    (progn
+      (setq atts (vlax-invoke blk 'GetAttributes))
+      (foreach att atts
+        (setq item (toc:item-from-object att))
+        (if item (setq items (cons item items)))
+      )
+    )
+  )
+  (setq def (toc:block-def-object blk))
+  (if def
+    (vlax-for obj def
+      (setq item (toc:item-from-block-def-object blk obj))
+      (if item (setq items (cons item items)))
+    )
+  )
+  (reverse items)
+)
+
 (defun toc:table-cell-center (ext / xs ys)
   (setq xs (list (nth 0 ext) (nth 3 ext) (nth 6 ext) (nth 9 ext)))
   (setq ys (list (nth 1 ext) (nth 4 ext) (nth 7 ext) (nth 10 ext)))
@@ -1371,6 +1444,74 @@
   )
 )
 
+(defun toc:assoc-set (key val alist / out done)
+  (setq out '())
+  (setq done nil)
+  (foreach p alist
+    (if (= (car p) key)
+      (progn
+        (setq out (cons (cons key val) out))
+        (setq done T)
+      )
+      (setq out (cons p out))
+    )
+  )
+  (if (not done)
+    (setq out (cons (cons key val) out))
+  )
+  (reverse out)
+)
+
+(defun toc:field-label-kind (s / u)
+  (setq u (strcase (toc:clean s)))
+  (cond
+    ((wcmatch u "*DRAWING TITLE*") "TITLE")
+    ((or (wcmatch u "*DRAWING NO*") (wcmatch u "*DWG NO*")) "DWG")
+    ((wcmatch u "*SHEET NO*") "SHEET")
+    ((wcmatch u "*SCALE*") "SCALE")
+    (T nil)
+  )
+)
+
+(defun toc:strip-field-label (s)
+  (setq s (toc:clean s))
+  (setq s (toc:str-replace "DRAWING TITLE" "" s))
+  (setq s (toc:str-replace "DRAWING NO." "" s))
+  (setq s (toc:str-replace "DRAWING NO" "" s))
+  (setq s (toc:str-replace "DWG NO." "" s))
+  (setq s (toc:str-replace "DWG NO" "" s))
+  (setq s (toc:str-replace "SHEET NO." "" s))
+  (setq s (toc:str-replace "SHEET NO" "" s))
+  (setq s (toc:str-replace "SCALE" "" s))
+  (setq s (toc:str-replace ":" " " s))
+  (setq s (toc:str-replace "." " " s))
+  (toc:clean s)
+)
+
+(defun toc:normalize-form-values (sheet dwg title scale / vals raw key kind val)
+  (setq vals (list (cons "SHEET" "") (cons "DWG" "") (cons "TITLE" "") (cons "SCALE" "")))
+  (foreach raw (list (cons "SHEET" sheet) (cons "DWG" dwg) (cons "TITLE" title) (cons "SCALE" scale))
+    (setq key (car raw))
+    (setq val (cdr raw))
+    (if (/= (toc:clean val) "")
+      (progn
+        (setq kind (toc:field-label-kind val))
+        (if kind
+          (setq vals (toc:assoc-set kind (toc:strip-field-label val) vals))
+        )
+      )
+    )
+  )
+  (foreach raw (list (cons "SHEET" sheet) (cons "DWG" dwg) (cons "TITLE" title) (cons "SCALE" scale))
+    (setq key (car raw))
+    (setq val (toc:strip-field-label (cdr raw)))
+    (if (and (/= val "") (= (cdr (assoc key vals)) ""))
+      (setq vals (toc:assoc-set key val vals))
+    )
+  )
+  vals
+)
+
 (defun toc:form-blocks (/ ss i obj name bb out dxftype)
   (setq out '())
   (cond
@@ -1428,7 +1569,7 @@
   (reverse out)
 )
 
-(defun toc:scan-form-rows (/ ss items blocks bb sheet dwg title scale rows)
+(defun toc:scan-form-rows (/ ss items blocks bb sheet dwg title scale vals rows form-items read-items)
   (setq rows '())
   (setq ss (toc:ss-text-all))
   (if ss
@@ -1440,10 +1581,17 @@
     (setq bb (toc:get-bbox blk))
     (if bb
       (progn
-        (setq sheet (toc:best-field-text "SHEET" bb items))
-        (setq dwg (toc:best-field-text "DWG" bb items))
-        (setq title (toc:best-field-text "TITLE" bb items))
-        (setq scale (toc:best-field-text "SCALE" bb items))
+        (setq form-items (if (= (vla-get-ObjectName blk) "AcDbBlockReference") (toc:items-from-block-reference blk) '()))
+        (setq read-items (append form-items items))
+        (setq sheet (toc:best-field-text "SHEET" bb read-items))
+        (setq dwg (toc:best-field-text "DWG" bb read-items))
+        (setq title (toc:best-field-text "TITLE" bb read-items))
+        (setq scale (toc:best-field-text "SCALE" bb read-items))
+        (setq vals (toc:normalize-form-values sheet dwg title scale))
+        (setq sheet (cdr (assoc "SHEET" vals)))
+        (setq dwg (cdr (assoc "DWG" vals)))
+        (setq title (cdr (assoc "TITLE" vals)))
+        (setq scale (cdr (assoc "SCALE" vals)))
         (if (or (/= sheet "") (/= dwg "") (/= title "") (/= scale ""))
           (setq rows
             (cons
