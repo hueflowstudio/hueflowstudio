@@ -916,11 +916,106 @@
   (setq bs (atoi (toc:row-sheet b)))
   (cond
     ((and (> as 0) (> bs 0) (/= as bs)) (< as bs))
+    ((and (> as 0) (= bs 0)) T)
+    ((and (= as 0) (> bs 0)) nil)
     ((and (/= (toc:row-y a) (toc:row-y b)) (or (= as 0) (= bs 0)))
       (> (toc:row-y a) (toc:row-y b))
     )
     ((/= (toc:row-x a) (toc:row-x b)) (< (toc:row-x a) (toc:row-x b)))
     (T (toc:string< (toc:row-dwg a) (toc:row-dwg b)))
+  )
+)
+
+(defun toc:any-numbered-sheet-p (rows / found)
+  (setq found nil)
+  (foreach r rows
+    (if (> (atoi (toc:row-sheet r)) 0)
+      (setq found T)
+    )
+  )
+  found
+)
+
+(defun toc:row-y-near-p (a b tol)
+  (<= (abs (- (toc:row-y a) (toc:row-y b))) tol)
+)
+
+(defun toc:add-row-group (row groups tol / out placed group rows minx gy)
+  (setq out '())
+  (setq placed nil)
+  (foreach group groups
+    (setq minx (nth 0 group))
+    (setq gy (nth 1 group))
+    (setq rows (nth 2 group))
+    (if (and (not placed) (<= (abs (- (toc:row-y row) gy)) tol))
+      (progn
+        (setq rows (cons row rows))
+        (setq minx (min minx (toc:row-x row)))
+        (setq gy (max gy (toc:row-y row)))
+        (setq out (cons (list minx gy rows) out))
+        (setq placed T)
+      )
+      (setq out (cons group out))
+    )
+  )
+  (if (not placed)
+    (setq out (cons (list (toc:row-x row) (toc:row-y row) (list row)) out))
+  )
+  (reverse out)
+)
+
+(defun toc:position-x-bucket-size (/ w)
+  (setq w *toc-form-w*)
+  (if (and w (> w 0.0))
+    (* w 1.2)
+    1.0
+  )
+)
+
+(defun toc:position-y-tolerance (/ h)
+  (setq h *toc-form-h*)
+  (if (and h (> h 0.0))
+    (max 1.0 (* h 0.2))
+    1.0
+  )
+)
+
+(defun toc:group-x-bucket (group / x bucket)
+  (setq x (nth 0 group))
+  (setq bucket (toc:position-x-bucket-size))
+  (fix (/ (+ x (* bucket 0.1)) bucket))
+)
+
+(defun toc:group-sort< (a b / ab bb)
+  (setq ab (toc:group-x-bucket a))
+  (setq bb (toc:group-x-bucket b))
+  (cond
+    ((/= ab bb) (< ab bb))
+    ((/= (nth 1 a) (nth 1 b)) (> (nth 1 a) (nth 1 b)))
+    (T (< (nth 0 a) (nth 0 b)))
+  )
+)
+
+(defun toc:sort-position-rows (rows / groups sorted out ytol)
+  (setq ytol (toc:position-y-tolerance))
+  (setq groups '())
+  (foreach r rows
+    (setq groups (toc:add-row-group r groups ytol))
+  )
+  (setq sorted (vl-sort groups 'toc:group-sort<))
+  (setq out '())
+  (foreach group sorted
+    (foreach r (vl-sort (nth 2 group) '(lambda (a b) (< (toc:row-x a) (toc:row-x b))))
+      (setq out (append out (list r)))
+    )
+  )
+  out
+)
+
+(defun toc:sort-form-rows (rows)
+  (if (toc:any-numbered-sheet-p rows)
+    (vl-sort rows 'toc:row-sort<)
+    (toc:sort-position-rows rows)
   )
 )
 
@@ -1713,7 +1808,7 @@
       )
     )
   )
-  (vl-sort (toc:dedupe-rows rows) 'toc:row-sort<)
+  (toc:sort-form-rows (toc:dedupe-rows rows))
 )
 
 (defun toc:scan-form-rows (/ profiles old rows)
@@ -1735,7 +1830,7 @@
     )
   )
   (if old (toc:apply-form-profile old))
-  (vl-sort (toc:dedupe-rows rows) 'toc:row-sort<)
+  (toc:sort-form-rows (toc:dedupe-rows rows))
 )
 
 (defun toc:form-ready-p ()
