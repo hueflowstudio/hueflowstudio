@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -46,11 +46,11 @@
           <span class="version-date">Flow</span>
         </div>
         <div>
-          <h2 class="version-title">APPLOAD → HF1 → HF2</h2>
+          <h2 class="version-title">APPLOAD → TSET → TLIST</h2>
           <pre><code>APPLOAD로 cad_toc_auto.lsp 불러오기
-→ HF1으로 기준 폼 1개 선택
+→ TSET으로 기준 폼 1개 선택
 → 번호/제목/스케일 값 칸을 작은 사각형 선택창으로 지정
-→ HF2 실행
+→ TLIST 실행
 → 도면 리스트 자동 생성</code></pre>
         </div>
       </article>
@@ -68,10 +68,10 @@
           <ol class="guide-list">
             <li>AutoCAD에서 APPLOAD 입력</li>
             <li>cad_toc_auto.lsp 파일 불러오기</li>
-            <li>명령어 HF1 입력</li>
+            <li>명령어 TSET 입력</li>
             <li>기준이 되는 시트폼/도곽 블록, TABLE 객체, 또는 도곽선 폴리라인 1개 선택</li>
             <li>화면 안내에 따라 SHEET NO, 도면번호, 도면제목, SCALE 값이 들어있는 칸을 각각 작은 사각형 창처럼 드래그해 감싸서 지정</li>
-            <li>명령어 HF2 입력</li>
+            <li>명령어 TLIST 입력</li>
             <li>도면 안의 같은 시트폼들을 자동으로 읽어서 도면 리스트 생성</li>
           </ol>
         </div>
@@ -86,7 +86,7 @@
           <span class="version-date">Set</span>
         </div>
         <div>
-          <h2 class="version-title">HF1 / TOCFORMSET</h2>
+          <h2 class="version-title">TSET / TOCFORMSET</h2>
           <ul class="patch-list">
             <li>기준 시트폼을 등록하는 명령어</li>
             <li>한 번만 세팅하면 같은 폼의 도면번호, 제목, 스케일 위치를 기억함</li>
@@ -100,7 +100,7 @@
           <span class="version-date">Scan</span>
         </div>
         <div>
-          <h2 class="version-title">HF2 / TOCFORMSCAN</h2>
+          <h2 class="version-title">TLIST / TOCFORMSCAN</h2>
           <ul class="patch-list">
             <li>등록된 시트폼을 기준으로 전체 도면 리스트를 자동 생성하는 명령어</li>
             <li>같은 블록/폼 안의 텍스트를 읽어서 표 형태로 정리함</li>
@@ -114,7 +114,7 @@
           <span class="version-date">Config</span>
         </div>
         <div>
-          <h2 class="version-title">HF3 / TOCCFG</h2>
+          <h2 class="version-title">TCFG / TOCCFG</h2>
           <ul class="patch-list">
             <li>도면번호 패턴, 스케일 인식 등 기본 설정을 조정하는 명령어</li>
           </ul>
@@ -131,8 +131,8 @@
         </div>
         <div>
           <pre><code>APPLOAD → cad_toc_auto.lsp 불러오기
-→ HF1으로 기준 폼 1개 세팅
-→ HF2로 전체 리스트 생성
+→ TSET으로 기준 폼 1개 세팅
+→ TLIST로 전체 리스트 생성
 → 빠진 항목이나 상세도는 수동 보정</code></pre>
         </div>
       </article>
@@ -198,8 +198,8 @@
         </div>
         <div>
           <h2 class="version-title">폼 기준 설정</h2>
-          <pre><code>HF1</code></pre>
-          <p class="version-desc">긴 명령어는 TOCFORMSET입니다. 짧게는 HF1만 입력하면 됩니다.</p>
+          <pre><code>TSET</code></pre>
+          <p class="version-desc">긴 명령어는 TOCFORMSET입니다. 짧게는 TSET만 입력하면 됩니다.</p>
           <ol class="guide-list">
             <li>반복되는 시트폼 블록, TABLE 객체, 또는 도곽선 폴리라인 하나 선택</li>
             <li>SHEET NO 값이 들어있는 칸만 작은 사각형으로 드래그해 지정</li>
@@ -218,7 +218,7 @@
         </div>
         <div>
           <h2 class="version-title">리스트 생성</h2>
-          <pre><code>HF2</code></pre>
+          <pre><code>TLIST</code></pre>
           <p class="version-desc">긴 명령어는 TOCFORMSCAN입니다.</p>
           <pre><code>Create output? → Yes
 Output mode → Table
@@ -258,7 +258,7 @@ Table insertion point → 빈 곳 클릭</code></pre>
         </div>
         <div>
           <h2 class="version-title">TOCCFG</h2>
-          <p class="version-desc">도면번호 패턴, 축척 패턴, 출력 기본값 등을 설정합니다. 짧은 명령어는 HF3입니다.</p>
+          <p class="version-desc">도면번호 패턴, 축척 패턴, 출력 기본값 등을 설정합니다. 짧은 명령어는 TCFG입니다.</p>
         </div>
       </article>
     </section>
@@ -290,7 +290,7 @@ Table insertion point → 빈 곳 클릭</code></pre>
         </div>
         <div>
           <ul class="patch-list">
-            <li>폼 블록 이름이나 TABLE 크기가 여러 종류면 종류별로 HF1을 다시 설정해야 합니다.</li>
+            <li>폼 블록 이름이나 TABLE 크기가 여러 종류면 종류별로 TSET을 다시 설정해야 합니다.</li>
             <li>표지처럼 다른 폼을 쓰는 항목은 수동 추가가 더 빠를 수 있습니다.</li>
             <li>도면명 텍스트가 칸 밖에 있거나 여러 객체로 너무 흩어져 있으면 일부 수정이 필요할 수 있습니다.</li>
           </ul>
@@ -306,8 +306,8 @@ Table insertion point → 빈 곳 클릭</code></pre>
           <span class="version-date">Flow</span>
         </div>
         <div>
-          <pre><code>HF1
-→ HF2
+          <pre><code>TSET
+→ TLIST
 → 생성된 Table 확인
 → 누락/예외 항목만 수동 보정</code></pre>
         </div>
@@ -322,10 +322,10 @@ Table insertion point → 빈 곳 클릭</code></pre>
           <span class="version-date">HF</span>
         </div>
         <div>
-          <pre><code>HF1 = 폼 기준 설정
-HF2 = 도면 리스트 생성
-HF0 = 현재 폼 설정 확인
-HF3 = 설정값 조정</code></pre>
+          <pre><code>TSET = 폼 기준 설정
+TLIST = 도면 리스트 생성
+TSTAT = 현재 폼 설정 확인
+TCFG = 설정값 조정</code></pre>
         </div>
       </article>
     </section>
