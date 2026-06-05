@@ -49,7 +49,7 @@
           <h2 class="version-title">APPLOAD → TOCFORMSET → TOCFORMSCAN</h2>
           <pre><code>APPLOAD로 cad_toc_auto.lsp 불러오기
 → TOCFORMSET으로 기준 폼 1개 선택
-→ 번호/제목/스케일 위치 지정
+→ 번호/제목/스케일 값 칸을 작은 사각형 선택창으로 지정
 → TOCFORMSCAN 실행
 → 도면 리스트 자동 생성</code></pre>
         </div>
@@ -70,7 +70,7 @@
             <li>cad_toc_auto.lsp 파일 불러오기</li>
             <li>명령어 TOCFORMSET 입력</li>
             <li>기준이 되는 시트폼/도곽 블록 1개 선택</li>
-            <li>화면 안내에 따라 SHEET NO, 도면번호, 도면제목, SCALE 위치를 각각 지정</li>
+            <li>화면 안내에 따라 SHEET NO, 도면번호, 도면제목, SCALE 값이 들어있는 칸을 각각 작은 사각형 창처럼 드래그해 감싸서 지정</li>
             <li>명령어 TOCFORMSCAN 입력</li>
             <li>도면 안의 같은 시트폼들을 자동으로 읽어서 도면 리스트 생성</li>
           </ol>
@@ -201,12 +201,12 @@
           <pre><code>TOCFORMSET</code></pre>
           <ol class="guide-list">
             <li>반복되는 시트폼 블록 하나 선택</li>
-            <li>SHEET NO 값 칸을 박스로 지정</li>
-            <li>DWG NO 값 칸을 박스로 지정</li>
-            <li>TITLE 값 칸을 박스로 지정</li>
-            <li>SCALE 값 칸을 박스로 지정</li>
+            <li>SHEET NO 값이 들어있는 칸만 작은 사각형으로 드래그해 지정</li>
+            <li>DWG NO 값이 들어있는 칸만 작은 사각형으로 드래그해 지정</li>
+            <li>TITLE 값이 들어있는 칸만 작은 사각형으로 드래그해 지정</li>
+            <li>SCALE 값이 들어있는 칸만 작은 사각형으로 드래그해 지정</li>
           </ol>
-          <p class="version-desc">주의: 2~5번은 폼 전체가 아니라 값이 들어가는 칸만 작게 지정합니다.</p>
+          <p class="version-desc">주의: 2~5번은 폼 전체를 선택하는 단계가 아닙니다. 윈도우 선택창처럼 마우스로 사각형을 그려서, 실제 값 텍스트가 들어있는 작은 칸만 감싸 주세요.</p>
         </div>
       </article>
 
