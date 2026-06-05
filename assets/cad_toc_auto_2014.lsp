@@ -204,6 +204,23 @@
   (and (>= x minx) (<= x maxx) (>= y miny) (<= y maxy))
 )
 
+(defun toc:item-in-expanded-box-p (it box pad / minx miny maxx maxy x y)
+  (setq minx (- (min (nth 0 box) (nth 2 box)) pad))
+  (setq maxx (+ (max (nth 0 box) (nth 2 box)) pad))
+  (setq miny (- (min (nth 1 box) (nth 3 box)) pad))
+  (setq maxy (+ (max (nth 1 box) (nth 3 box)) pad))
+  (setq x (toc:x it))
+  (setq y (toc:y it))
+  (and (>= x minx) (<= x maxx) (>= y miny) (<= y maxy))
+)
+
+(defun toc:items-in-expanded-box (items box pad)
+  (vl-remove-if-not
+    '(lambda (it) (toc:item-in-expanded-box-p it box pad))
+    items
+  )
+)
+
 (defun toc:get-point (obj / p)
   (cond
     ((vlax-property-available-p obj 'InsertionPoint)
@@ -1618,6 +1635,38 @@
   )
 )
 
+(defun toc:field-box-union (bb / fields boxes box minx miny maxx maxy)
+  (setq fields '("SHEET" "DWG" "TITLE" "SCALE"))
+  (setq boxes '())
+  (foreach f fields
+    (setq box (toc:form-field-box f))
+    (if box
+      (setq boxes (cons (toc:denorm-box bb box) boxes))
+    )
+  )
+  (if boxes
+    (progn
+      (setq minx (apply 'min (mapcar '(lambda (b) (min (nth 0 b) (nth 2 b))) boxes)))
+      (setq miny (apply 'min (mapcar '(lambda (b) (min (nth 1 b) (nth 3 b))) boxes)))
+      (setq maxx (apply 'max (mapcar '(lambda (b) (max (nth 0 b) (nth 2 b))) boxes)))
+      (setq maxy (apply 'max (mapcar '(lambda (b) (max (nth 1 b) (nth 3 b))) boxes)))
+      (list minx miny maxx maxy)
+    )
+  )
+)
+
+(defun toc:form-read-items (bb all-items form-items / box pad nearby)
+  (setq box (toc:field-box-union bb))
+  (setq pad (max 1.0 (* (toc:bbox-h bb) 0.04)))
+  (setq nearby
+    (if box
+      (toc:items-in-expanded-box all-items box pad)
+      (toc:items-in-expanded-box all-items (list (toc:bbox-minx bb) (toc:bbox-miny bb) (toc:bbox-maxx bb) (toc:bbox-maxy bb)) pad)
+    )
+  )
+  (append form-items nearby)
+)
+
 (defun toc:best-field-text (field bb items / found filtered)
   (setq found (toc:items-in-form-field field bb items))
   (cond
@@ -1780,7 +1829,7 @@
     (if bb
       (progn
         (setq form-items (if (= (vla-get-ObjectName blk) "AcDbBlockReference") (toc:items-from-block-reference blk) '()))
-        (setq read-items (append form-items items))
+        (setq read-items (toc:form-read-items bb items form-items))
         (setq sheet (toc:best-field-text "SHEET" bb read-items))
         (setq dwg (toc:best-field-text "DWG" bb read-items))
         (setq title (toc:best-field-text "TITLE" bb read-items))
