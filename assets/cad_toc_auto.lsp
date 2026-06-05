@@ -937,6 +937,20 @@
   (setq pairs '())
   (foreach r rows
     (setq key (toc:compact (toc:row-dwg r)))
+    (if (= key "")
+      (setq key
+        (strcat
+          "NO_DWG|"
+          (toc:compact (toc:row-title r))
+          "|"
+          (toc:compact (toc:row-scale r))
+          "|"
+          (rtos (toc:row-x r) 2 3)
+          "|"
+          (rtos (toc:row-y r) 2 3)
+        )
+      )
+    )
     (setq found (assoc key pairs))
     (if found
       (progn
@@ -1554,7 +1568,7 @@
   (setq u (strcase (toc:clean s)))
   (cond
     ((wcmatch u "*DRAWING TITLE*") "TITLE")
-    ((or (wcmatch u "*DRAWING NO*") (wcmatch u "*DWG NO*")) "DWG")
+    ((or (wcmatch u "*DRAWING NO*") (wcmatch u "*DRAWN NO*") (wcmatch u "*DWG NO*")) "DWG")
     ((wcmatch u "*SHEET NO*") "SHEET")
     ((wcmatch u "*SCALE*") "SCALE")
     (T nil)
@@ -1566,6 +1580,8 @@
   (setq s (toc:str-replace "DRAWING TITLE" "" s))
   (setq s (toc:str-replace "DRAWING NO." "" s))
   (setq s (toc:str-replace "DRAWING NO" "" s))
+  (setq s (toc:str-replace "DRAWN NO." "" s))
+  (setq s (toc:str-replace "DRAWN NO" "" s))
   (setq s (toc:str-replace "DWG NO." "" s))
   (setq s (toc:str-replace "DWG NO" "" s))
   (setq s (toc:str-replace "SHEET NO." "" s))
@@ -1584,17 +1600,16 @@
     (if (/= (toc:clean val) "")
       (progn
         (setq kind (toc:field-label-kind val))
-        (if kind
-          (setq vals (toc:assoc-set kind (toc:strip-field-label val) vals))
+        (setq val (toc:strip-field-label val))
+        (cond
+          ((and kind (/= val ""))
+            (setq vals (toc:assoc-set kind val vals))
+          )
+          ((and (null kind) (/= val ""))
+            (setq vals (toc:assoc-set key val vals))
+          )
         )
       )
-    )
-  )
-  (foreach raw (list (cons "SHEET" sheet) (cons "DWG" dwg) (cons "TITLE" title) (cons "SCALE" scale))
-    (setq key (car raw))
-    (setq val (toc:strip-field-label (cdr raw)))
-    (if (and (/= val "") (= (cdr (assoc key vals)) ""))
-      (setq vals (toc:assoc-set key val vals))
     )
   )
   vals
