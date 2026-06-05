@@ -31,6 +31,7 @@
   (if (null *toc-output-mode*) (setq *toc-output-mode* "Table"))
   (if (null *toc-paper-prefix*) (setq *toc-paper-prefix* "A3 : "))
   (if (null *toc-auto-format-scale*) (setq *toc-auto-format-scale* T))
+  (if (null *toc-form-config-key*) (setq *toc-form-config-key* "HUEFLOW_TOC_FORM_CONFIG"))
   (princ)
 )
 
@@ -89,6 +90,20 @@
 (defun toc:x (it) (nth 1 it))
 (defun toc:y (it) (nth 2 it))
 (defun toc:h (it) (nth 3 it))
+
+(defun toc:near-number-p (a b tol)
+  (and a b (<= (abs (- a b)) tol))
+)
+
+(defun toc:similar-size-p (bb)
+  (if (and *toc-form-w* *toc-form-h*)
+    (and
+      (toc:near-number-p (toc:bbox-w bb) *toc-form-w* (max 1.0 (* *toc-form-w* 0.08)))
+      (toc:near-number-p (toc:bbox-h bb) *toc-form-h* (max 1.0 (* *toc-form-h* 0.08)))
+    )
+    T
+  )
+)
 
 (defun toc:make-item (txt pt ht)
   (if (and txt pt)
@@ -220,13 +235,66 @@
   )
 )
 
-(defun toc:items-from-ss (ss / i en obj items atts item)
+(defun toc:table-cell-center (ext / xs ys)
+  (setq xs (list (nth 0 ext) (nth 3 ext) (nth 6 ext) (nth 9 ext)))
+  (setq ys (list (nth 1 ext) (nth 4 ext) (nth 7 ext) (nth 10 ext)))
+  (list
+    (/ (+ (apply 'min xs) (apply 'max xs)) 2.0)
+    (/ (+ (apply 'min ys) (apply 'max ys)) 2.0)
+    0.0
+  )
+)
+
+(defun toc:table-cell-height (ext / ys)
+  (setq ys (list (nth 1 ext) (nth 4 ext) (nth 7 ext) (nth 10 ext)))
+  (abs (- (apply 'max ys) (apply 'min ys)))
+)
+
+(defun toc:items-from-table (obj / rows cols r c txt ext pt ht items)
+  (setq items '())
+  (setq rows (vl-catch-all-apply 'vla-get-Rows (list obj)))
+  (setq cols (vl-catch-all-apply 'vla-get-Columns (list obj)))
+  (if (and (not (vl-catch-all-error-p rows)) (not (vl-catch-all-error-p cols)))
+    (progn
+      (setq r 0)
+      (while (< r rows)
+        (setq c 0)
+        (while (< c cols)
+          (setq txt (vl-catch-all-apply 'vla-GetText (list obj r c)))
+          (if (and (not (vl-catch-all-error-p txt)) (/= (toc:clean txt) ""))
+            (progn
+              (setq ext (vl-catch-all-apply 'vlax-invoke (list obj 'GetCellExtents r c :vlax-false)))
+              (if (not (vl-catch-all-error-p ext))
+                (progn
+                  (setq pt (toc:table-cell-center ext))
+                  (setq ht (toc:table-cell-height ext))
+                  (setq items (cons (toc:make-item txt pt ht) items))
+                )
+              )
+            )
+          )
+          (setq c (1+ c))
+        )
+        (setq r (1+ r))
+      )
+    )
+  )
+  (reverse items)
+)
+
+(defun toc:items-from-ss (ss / i en obj items atts item table-items)
   (setq i 0)
   (setq items '())
   (while (< i (sslength ss))
     (setq en (ssname ss i))
     (setq obj (vlax-ename->vla-object en))
     (cond
+      ((= (vla-get-ObjectName obj) "AcDbTable")
+        (setq table-items (toc:items-from-table obj))
+        (foreach item table-items
+          (if item (setq items (cons item items)))
+        )
+      )
       ((= (vla-get-ObjectName obj) "AcDbBlockReference")
         (if (and
               (vlax-property-available-p obj 'HasAttributes)
@@ -365,6 +433,111 @@
     (princ (strcat "\nForm block       : " *toc-form-block-name*))
   )
   (princ)
+)
+
+(defun toc:join-strings (lst / out)
+  (setq out "")
+  (foreach s lst
+    (if s (setq out (strcat out s)))
+  )
+  out
+)
+
+(defun toc:chunk-string (s n / out start len)
+  (setq out '())
+  (setq start 1)
+  (setq len (strlen s))
+  (while (<= start len)
+    (setq out (cons (substr s start n) out))
+    (setq start (+ start n))
+  )
+  (reverse out)
+)
+
+(defun toc:form-calibrated-p ()
+  (and
+    *toc-form-object-type*
+    (toc:form-field-box "SHEET")
+    (toc:form-field-box "DWG")
+    (toc:form-field-box "TITLE")
+    (toc:form-field-box "SCALE")
+  )
+)
+
+(defun toc:save-form-config (/ nod old payload chunks xrec data)
+  (toc:init-config)
+  (if (toc:form-calibrated-p)
+    (progn
+      (setq payload
+        (vl-prin1-to-string
+          (list
+            (cons "VERSION" 1)
+            (cons "TYPE" *toc-form-object-type*)
+            (cons "BLOCK" *toc-form-block-name*)
+            (cons "WIDTH" *toc-form-w*)
+            (cons "HEIGHT" *toc-form-h*)
+            (cons "FIELDS" *toc-form-fields*)
+          )
+        )
+      )
+      (setq chunks (toc:chunk-string payload 240))
+      (setq data
+        (append
+          '((0 . "XRECORD") (100 . "AcDbXrecord") (280 . 1))
+          (mapcar '(lambda (s) (cons 1 s)) chunks)
+        )
+      )
+      (setq nod (namedobjdict))
+      (if (dictsearch nod *toc-form-config-key*)
+        (dictremove nod *toc-form-config-key*)
+      )
+      (setq xrec (entmakex data))
+      (if xrec
+        (progn
+          (dictadd nod *toc-form-config-key* xrec)
+          T
+        )
+        nil
+      )
+    )
+  )
+)
+
+(defun toc:load-form-config (/ rec chunks payload parsed objtype block w h fields)
+  (toc:init-config)
+  (setq rec (dictsearch (namedobjdict) *toc-form-config-key*))
+  (if rec
+    (progn
+      (setq chunks
+        (mapcar
+          'cdr
+          (vl-remove-if-not '(lambda (x) (= (car x) 1)) rec)
+        )
+      )
+      (setq payload (toc:join-strings chunks))
+      (setq parsed (vl-catch-all-apply 'read (list payload)))
+      (if (vl-catch-all-error-p parsed)
+        nil
+        (progn
+          (setq objtype (cdr (assoc "TYPE" parsed)))
+          (setq block (cdr (assoc "BLOCK" parsed)))
+          (setq w (cdr (assoc "WIDTH" parsed)))
+          (setq h (cdr (assoc "HEIGHT" parsed)))
+          (setq fields (cdr (assoc "FIELDS" parsed)))
+          (if (and fields (or objtype block))
+            (progn
+              (setq *toc-form-object-type* (if objtype objtype "AcDbBlockReference"))
+              (setq *toc-form-block-name* block)
+              (setq *toc-form-w* w)
+              (setq *toc-form-h* h)
+              (setq *toc-form-fields* fields)
+              (toc:form-calibrated-p)
+            )
+          )
+        )
+      )
+    )
+  )
 )
 
 (defun toc:nearest-sheet (dwg items radius / best bestd d)
@@ -1044,29 +1217,34 @@
 )
 
 (defun toc:ss-all-current (/ ss)
-  (ssget "_X" '((0 . "TEXT,MTEXT,ATTRIB,INSERT")))
+  (ssget "_X" '((0 . "TEXT,MTEXT,ATTRIB,INSERT,ACAD_TABLE")))
 )
 
 (defun toc:ss-text-all (/ ss)
-  (ssget "_X" '((0 . "TEXT,MTEXT,ATTRIB,INSERT")))
+  (ssget "_X" '((0 . "TEXT,MTEXT,ATTRIB,INSERT,ACAD_TABLE")))
 )
 
 (defun toc:ss-insert-all (/ ss)
   (ssget "_X" '((0 . "INSERT")))
 )
 
-(defun toc:pick-form-block (/ en obj)
+(defun toc:ss-table-all (/ ss)
+  (ssget "_X" '((0 . "ACAD_TABLE")))
+)
+
+(defun toc:pick-form-object (/ en obj bb)
   (while
     (progn
-      (setq en (car (entsel "\nStep 1/5: Select one repeated sheet/title form BLOCK: ")))
+      (setq en (car (entsel "\nStep 1/5: Select one repeated sheet/title form object (BLOCK or TABLE): ")))
       (cond
         ((null en) nil)
         (T
           (setq obj (vlax-ename->vla-object en))
-          (if (= (vla-get-ObjectName obj) "AcDbBlockReference")
+          (setq bb (toc:get-bbox obj))
+          (if bb
             nil
             (progn
-              (princ "\nSelected object is not a block reference.")
+              (princ "\nSelected object has no readable boundary. Pick a title block/table/form object.")
               T
             )
           )
@@ -1163,18 +1341,38 @@
   )
 )
 
-(defun toc:form-blocks (/ ss i obj name out)
+(defun toc:form-blocks (/ ss i obj name bb out)
   (setq out '())
-  (if (and *toc-form-block-name* (setq ss (toc:ss-insert-all)))
-    (progn
-      (setq i 0)
-      (while (< i (sslength ss))
-        (setq obj (vlax-ename->vla-object (ssname ss i)))
-        (setq name (toc:effective-name obj))
-        (if (= (strcase name) (strcase *toc-form-block-name*))
-          (setq out (cons obj out))
+  (cond
+    ((= *toc-form-object-type* "AcDbBlockReference")
+      (if (and *toc-form-block-name* (setq ss (toc:ss-insert-all)))
+        (progn
+          (setq i 0)
+          (while (< i (sslength ss))
+            (setq obj (vlax-ename->vla-object (ssname ss i)))
+            (setq name (toc:effective-name obj))
+            (setq bb (toc:get-bbox obj))
+            (if (and (= (strcase name) (strcase *toc-form-block-name*)) bb (toc:similar-size-p bb))
+              (setq out (cons obj out))
+            )
+            (setq i (1+ i))
+          )
         )
-        (setq i (1+ i))
+      )
+    )
+    ((= *toc-form-object-type* "AcDbTable")
+      (if (setq ss (toc:ss-table-all))
+        (progn
+          (setq i 0)
+          (while (< i (sslength ss))
+            (setq obj (vlax-ename->vla-object (ssname ss i)))
+            (setq bb (toc:get-bbox obj))
+            (if (and bb (toc:similar-size-p bb))
+              (setq out (cons obj out))
+            )
+            (setq i (1+ i))
+          )
+        )
       )
     )
   )
@@ -1219,13 +1417,10 @@
 )
 
 (defun toc:form-ready-p ()
-  (and
-    *toc-form-block-name*
-    (toc:form-field-box "SHEET")
-    (toc:form-field-box "DWG")
-    (toc:form-field-box "TITLE")
-    (toc:form-field-box "SCALE")
+  (if (not (toc:form-calibrated-p))
+    (toc:load-form-config)
   )
+  (toc:form-calibrated-p)
 )
 
 (defun c:TOCAUTO (/ ss items)
@@ -1332,17 +1527,23 @@
   (princ)
 )
 
-(defun c:TOCFORMSET (/ blk bb sheet dwg title scale)
+(defun c:TOCFORMSET (/ frm bb sheet dwg title scale)
   (vl-load-com)
   (toc:init-config)
-  (setq blk (toc:pick-form-block))
-  (if blk
+  (setq frm (toc:pick-form-object))
+  (if frm
     (progn
-      (setq bb (toc:get-bbox blk))
+      (setq bb (toc:get-bbox frm))
       (if bb
         (progn
-          (setq *toc-form-block-name* (toc:effective-name blk))
-          (princ (strcat "\nSheet form block: " *toc-form-block-name*))
+          (setq *toc-form-object-type* (vla-get-ObjectName frm))
+          (setq *toc-form-block-name* (if (= *toc-form-object-type* "AcDbBlockReference") (toc:effective-name frm) ""))
+          (setq *toc-form-w* (toc:bbox-w bb))
+          (setq *toc-form-h* (toc:bbox-h bb))
+          (princ (strcat "\nSheet form object: " *toc-form-object-type*))
+          (if (/= *toc-form-block-name* "")
+            (princ (strcat " / " *toc-form-block-name*))
+          )
           (setq sheet (toc:pick-field-box "SHEET NO" bb))
           (setq dwg (toc:pick-field-box "DWG NO" bb))
           (setq title (toc:pick-field-box "TITLE" bb))
@@ -1357,7 +1558,10 @@
                   (cons "SCALE" scale)
                 )
               )
-              (princ "\nTOCFORMSET complete. Run TOCFORMSCAN.")
+              (if (toc:save-form-config)
+                (princ "\nTOCFORMSET complete. Calibration saved in this DWG. Save the DWG, then other PCs can use TOCFORMSCAN.")
+                (princ "\nTOCFORMSET complete. Run TOCFORMSCAN. Warning: DWG calibration save failed.")
+              )
             )
             (princ "\nTOCFORMSET canceled or incomplete.")
           )
@@ -1366,6 +1570,21 @@
       )
     )
     (princ "\nNothing selected.")
+  )
+  (princ)
+)
+
+(defun c:TOCFORMSTATUS ()
+  (vl-load-com)
+  (toc:init-config)
+  (if (toc:form-ready-p)
+    (progn
+      (princ "\nTOCFORM calibration is ready.")
+      (princ (strcat "\nForm object: " *toc-form-object-type*))
+      (if *toc-form-block-name* (princ (strcat "\nForm block/name: " *toc-form-block-name*)))
+      (princ "\nSaved fields: SHEET, DWG, TITLE, SCALE")
+    )
+    (princ "\nNo TOCFORM calibration found in memory or in this DWG. Run TOCFORMSET first.")
   )
   (princ)
 )
@@ -1455,5 +1674,5 @@
   (princ)
 )
 
-(princ "\nLoaded cad_toc_auto.lsp. Commands: TOCFORMSET, TOCFORMSCAN, TOCSEMI, TOCSEMIALL, TOCCFG, TOCAUTO, TOCAUTOALL, TOCTABLESCAN, TOCNEARSCAN")
+(princ "\nLoaded cad_toc_auto.lsp. Commands: TOCFORMSET, TOCFORMSTATUS, TOCFORMSCAN, TOCSEMI, TOCSEMIALL, TOCCFG, TOCAUTO, TOCAUTOALL, TOCTABLESCAN, TOCNEARSCAN")
 (princ)
