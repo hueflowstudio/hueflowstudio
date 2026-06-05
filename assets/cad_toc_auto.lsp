@@ -105,6 +105,17 @@
   )
 )
 
+(defun toc:similar-aspect-p (bb / base other)
+  (if (and *toc-form-w* *toc-form-h* (> *toc-form-h* 0.0) bb (> (toc:bbox-h bb) 0.0))
+    (progn
+      (setq base (/ *toc-form-w* *toc-form-h*))
+      (setq other (/ (toc:bbox-w bb) (toc:bbox-h bb)))
+      (toc:near-number-p other base (max 0.01 (* base 0.08)))
+    )
+    T
+  )
+)
+
 (defun toc:make-item (txt pt ht)
   (if (and txt pt)
     (list
@@ -1523,7 +1534,7 @@
             (setq obj (vlax-ename->vla-object (ssname ss i)))
             (setq name (toc:effective-name obj))
             (setq bb (toc:get-bbox obj))
-            (if (and (= (strcase name) (strcase *toc-form-block-name*)) bb (toc:similar-size-p bb))
+            (if (and (= (strcase name) (strcase *toc-form-block-name*)) bb (toc:similar-aspect-p bb))
               (setq out (cons obj out))
             )
             (setq i (1+ i))
