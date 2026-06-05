@@ -473,6 +473,7 @@
           (list
             (cons "VERSION" 1)
             (cons "TYPE" *toc-form-object-type*)
+            (cons "DXF" *toc-form-dxf-type*)
             (cons "BLOCK" *toc-form-block-name*)
             (cons "WIDTH" *toc-form-w*)
             (cons "HEIGHT" *toc-form-h*)
@@ -503,7 +504,7 @@
   )
 )
 
-(defun toc:load-form-config (/ rec chunks payload parsed objtype block w h fields)
+(defun toc:load-form-config (/ rec chunks payload parsed objtype dxftype block w h fields)
   (toc:init-config)
   (setq rec (dictsearch (namedobjdict) *toc-form-config-key*))
   (if rec
@@ -520,6 +521,7 @@
         nil
         (progn
           (setq objtype (cdr (assoc "TYPE" parsed)))
+          (setq dxftype (cdr (assoc "DXF" parsed)))
           (setq block (cdr (assoc "BLOCK" parsed)))
           (setq w (cdr (assoc "WIDTH" parsed)))
           (setq h (cdr (assoc "HEIGHT" parsed)))
@@ -527,6 +529,7 @@
           (if (and fields (or objtype block))
             (progn
               (setq *toc-form-object-type* (if objtype objtype "AcDbBlockReference"))
+              (setq *toc-form-dxf-type* (if dxftype dxftype (toc:object-type-default-dxf *toc-form-object-type*)))
               (setq *toc-form-block-name* block)
               (setq *toc-form-w* w)
               (setq *toc-form-h* h)
@@ -1232,6 +1235,33 @@
   (ssget "_X" '((0 . "ACAD_TABLE")))
 )
 
+(defun toc:ss-form-type-all (dxftype / ss)
+  (if dxftype
+    (ssget "_X" (list (cons 0 dxftype)))
+  )
+)
+
+(defun toc:object-dxf-type (obj / en ed)
+  (setq en (vlax-vla-object->ename obj))
+  (if en
+    (progn
+      (setq ed (entget en))
+      (cdr (assoc 0 ed))
+    )
+  )
+)
+
+(defun toc:object-type-default-dxf (objtype)
+  (cond
+    ((= objtype "AcDbPolyline") "LWPOLYLINE")
+    ((= objtype "AcDb2dPolyline") "POLYLINE")
+    ((= objtype "AcDbLine") "LINE")
+    ((= objtype "AcDbTable") "ACAD_TABLE")
+    ((= objtype "AcDbBlockReference") "INSERT")
+    (T nil)
+  )
+)
+
 (defun toc:pick-form-object (/ en obj bb)
   (while
     (progn
@@ -1341,7 +1371,7 @@
   )
 )
 
-(defun toc:form-blocks (/ ss i obj name bb out)
+(defun toc:form-blocks (/ ss i obj name bb out dxftype)
   (setq out '())
   (cond
     ((= *toc-form-object-type* "AcDbBlockReference")
@@ -1362,6 +1392,25 @@
     )
     ((= *toc-form-object-type* "AcDbTable")
       (if (setq ss (toc:ss-table-all))
+        (progn
+          (setq i 0)
+          (while (< i (sslength ss))
+            (setq obj (vlax-ename->vla-object (ssname ss i)))
+            (setq bb (toc:get-bbox obj))
+            (if (and bb (toc:similar-size-p bb))
+              (setq out (cons obj out))
+            )
+            (setq i (1+ i))
+          )
+        )
+      )
+    )
+    (T
+      (setq dxftype *toc-form-dxf-type*)
+      (if (null dxftype)
+        (setq dxftype (toc:object-type-default-dxf *toc-form-object-type*))
+      )
+      (if (and dxftype (setq ss (toc:ss-form-type-all dxftype)))
         (progn
           (setq i 0)
           (while (< i (sslength ss))
@@ -1537,10 +1586,14 @@
       (if bb
         (progn
           (setq *toc-form-object-type* (vla-get-ObjectName frm))
+          (setq *toc-form-dxf-type* (toc:object-dxf-type frm))
           (setq *toc-form-block-name* (if (= *toc-form-object-type* "AcDbBlockReference") (toc:effective-name frm) ""))
           (setq *toc-form-w* (toc:bbox-w bb))
           (setq *toc-form-h* (toc:bbox-h bb))
           (princ (strcat "\nSheet form object: " *toc-form-object-type*))
+          (if *toc-form-dxf-type*
+            (princ (strcat " / DXF " *toc-form-dxf-type*))
+          )
           (if (/= *toc-form-block-name* "")
             (princ (strcat " / " *toc-form-block-name*))
           )
