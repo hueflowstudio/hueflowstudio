@@ -1727,5 +1727,11 @@
   (princ)
 )
 
-(princ "\nLoaded cad_toc_auto.lsp. Commands: TOCFORMSET, TOCFORMSTATUS, TOCFORMSCAN, TOCSEMI, TOCSEMIALL, TOCCFG, TOCAUTO, TOCAUTOALL, TOCTABLESCAN, TOCNEARSCAN")
+(defun c:HF1 () (c:TOCFORMSET))
+(defun c:HF2 () (c:TOCFORMSCAN))
+(defun c:HF0 () (c:TOCFORMSTATUS))
+(defun c:HF3 () (c:TOCCFG))
+
+(princ "\nLoaded cad_toc_auto.lsp. Easy commands: HF1=set form, HF2=scan/create list, HF0=status, HF3=config.")
+(princ "\nFull commands: TOCFORMSET, TOCFORMSTATUS, TOCFORMSCAN, TOCSEMI, TOCSEMIALL, TOCCFG, TOCAUTO, TOCAUTOALL, TOCTABLESCAN, TOCNEARSCAN")
 (princ)
