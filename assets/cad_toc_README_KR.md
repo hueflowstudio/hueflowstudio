@@ -20,6 +20,7 @@ APPLOAD로 cad_toc_auto.lsp 불러오기
 
 1. AutoCAD에서 APPLOAD 입력
 2. cad_toc_auto.lsp 파일 불러오기
+   - AutoCAD 2014에서 안 되면 cad_toc_auto_2014.lsp 호환판을 불러오기
 3. 명령어 TSET 입력
 4. 기준이 되는 시트폼/도곽 블록, TABLE 객체, 또는 도곽선 폴리라인 1개 선택
 5. 화면 안내에 따라 SHEET NO, 도면번호, 도면제목, SCALE 위치를 각각 지정
@@ -191,6 +192,15 @@ TOCCFG
 - 표지, 상세도, 별도 폼처럼 시트폼 구조가 다른 도면은 별도 `TSET`이 필요할 수 있습니다.
 - 폼 안의 값이 일반 TEXT/MTEXT, 블록 내부 TEXT, ATTRIB, TABLE 셀로 들어있어야 읽을 수 있습니다.
 - 빈 폼이나 도면번호가 없는 폼은 자동 리스트에서 빠질 수 있습니다.
+
+### AutoCAD 2014에서 명령어가 안 먹을 때
+
+- AutoCAD LT 2014는 AutoLISP를 지원하지 않아 `APPLOAD` 자체가 안 될 수 있습니다. 일반 AutoCAD 2014인지 먼저 확인합니다.
+- ZIP 안에서 바로 불러오지 말고 압축을 푼 뒤 `cad_toc_auto_2014.lsp` 또는 `cad_toc_auto.lsp` 파일을 `APPLOAD`로 불러옵니다.
+- `APPLOAD` 후 명령창에 `Loaded cad_toc_auto.lsp` 문구가 떠야 정상입니다. 이 문구가 없으면 리습이 로드되지 않은 상태입니다.
+- 보안 경고나 로드 차단이 뜨면 `SECURELOAD` 값을 `0`으로 바꾼 뒤 다시 `APPLOAD` 해봅니다.
+- `TSET`/`TLIST`가 `Unknown command`로 나오면 리습 로드가 실패한 것이므로 `APPLOAD` 단계부터 다시 확인합니다.
+- TABLE 생성이 실패하는 구버전 환경에서는 자동으로 TEXT 출력 방식으로 대체될 수 있습니다.
 
 ## 권장 워크플로우
 
