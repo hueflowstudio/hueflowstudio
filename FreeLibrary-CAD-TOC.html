@@ -50,6 +50,7 @@
           <h2 class="version-title">APPLOAD → TSET → TLIST</h2>
           <pre><code>APPLOAD로 cad_toc_auto.lsp 불러오기
 → TSET으로 기준 폼 1개 선택
+→ 오른쪽용/아래쪽용처럼 다른 폼 종류가 있으면 TADD로 추가 등록
 → 번호/제목/스케일 값 칸을 작은 사각형 선택창으로 지정
 → TLIST 실행
 → 도면 리스트 자동 생성</code></pre>
@@ -72,6 +73,7 @@
             <li>명령어 TSET 입력</li>
             <li>기준이 되는 시트폼/도곽 블록, TABLE 객체, 또는 도곽선 폴리라인 1개 선택</li>
             <li>화면 안내에 따라 SHEET NO, 도면번호, 도면제목, SCALE 값이 들어있는 칸을 각각 작은 사각형 창처럼 드래그해 감싸서 지정</li>
+            <li>오른쪽용/아래쪽용처럼 폼 종류가 더 있으면 TADD로 다른 폼도 같은 방식으로 추가 등록</li>
             <li>명령어 TLIST 입력</li>
             <li>도면 안의 같은 시트폼들을 자동으로 읽어서 도면 리스트 생성</li>
           </ol>
@@ -89,8 +91,21 @@
         <div>
           <h2 class="version-title">TSET / TOCFORMSET</h2>
           <ul class="patch-list">
-            <li>기준 시트폼을 등록하는 명령어</li>
-            <li>한 번만 세팅하면 같은 폼의 도면번호, 제목, 스케일 위치를 기억함</li>
+            <li>첫 번째 기준 시트폼을 등록하는 명령어</li>
+            <li>오른쪽 제목란용, 아래쪽 제목란용처럼 폼 종류가 여러 개면 먼저 한 종류를 등록함</li>
+          </ul>
+        </div>
+      </article>
+      <article class="version-item">
+        <div class="version-label">
+          <span>Command</span>
+          <span class="version-date">Add</span>
+        </div>
+        <div>
+          <h2 class="version-title">TADD / TOCFORMADD</h2>
+          <ul class="patch-list">
+            <li>다른 위치나 방향의 시트폼을 추가 등록하는 명령어</li>
+            <li>같은 DWG 안에 오른쪽용 폼과 아래쪽용 폼이 같이 있을 때 사용</li>
           </ul>
         </div>
       </article>
@@ -132,7 +147,8 @@
         </div>
         <div>
           <pre><code>APPLOAD → cad_toc_auto.lsp 불러오기
-→ TSET으로 기준 폼 1개 세팅
+→ TSET으로 첫 폼 종류 세팅
+→ 다른 폼 종류가 있으면 TADD로 추가 세팅
 → TLIST로 전체 리스트 생성
 → 빠진 항목이나 상세도는 수동 보정</code></pre>
         </div>
@@ -293,7 +309,7 @@ Table insertion point → 빈 곳 클릭</code></pre>
         </div>
         <div>
           <ul class="patch-list">
-            <li>폼 블록 이름이나 TABLE 크기가 여러 종류면 종류별로 TSET을 다시 설정해야 합니다.</li>
+            <li>폼 블록 이름이나 TABLE 크기가 여러 종류면 첫 종류는 TSET, 추가 종류는 TADD로 등록합니다.</li>
             <li>표지처럼 다른 폼을 쓰는 항목은 수동 추가가 더 빠를 수 있습니다.</li>
             <li>도면명 텍스트가 칸 밖에 있거나 여러 객체로 너무 흩어져 있으면 일부 수정이 필요할 수 있습니다.</li>
           </ul>
@@ -312,7 +328,7 @@ Table insertion point → 빈 곳 클릭</code></pre>
           <h2 class="version-title">한 장만 읽힐 때</h2>
           <ul class="patch-list">
             <li>기준 폼을 도면 안에서 반복되는 시트폼 블록으로 선택했는지 확인합니다.</li>
-            <li>같은 블록 이름의 폼은 크기가 달라도 읽지만, 블록 이름이 다르면 종류별로 TSET을 다시 해야 합니다.</li>
+            <li>같은 블록 이름의 폼은 크기가 달라도 읽지만, 블록 이름이나 방향이 다르면 TADD로 추가 등록합니다.</li>
             <li>이미 만들어진 기존 리스트 표를 기준 폼으로 선택하지 말고, 실제 도면 시트폼/도곽을 선택합니다.</li>
           </ul>
         </div>
@@ -341,7 +357,7 @@ Table insertion point → 빈 곳 클릭</code></pre>
         <div>
           <h2 class="version-title">누락되는 도면이 있을 때</h2>
           <ul class="patch-list">
-            <li>표지, 상세도, 별도 폼처럼 시트폼 구조가 다른 도면은 별도 TSET이 필요할 수 있습니다.</li>
+            <li>표지, 상세도, 별도 폼처럼 시트폼 구조가 다른 도면은 TADD로 추가 등록하거나 수동 보정합니다.</li>
             <li>폼 안의 값이 일반 TEXT/MTEXT, 블록 내부 TEXT, ATTRIB, TABLE 셀로 들어있어야 읽을 수 있습니다.</li>
             <li>빈 폼이나 도면번호가 없는 폼은 자동 리스트에서 빠질 수 있습니다.</li>
           </ul>
@@ -392,6 +408,7 @@ Table insertion point → 빈 곳 클릭</code></pre>
         </div>
         <div>
           <pre><code>TSET = 폼 기준 설정
+TADD = 다른 폼 종류 추가
 TLIST = 도면 리스트 생성
 TSTAT = 현재 폼 설정 확인
 TCFG = 설정값 조정</code></pre>

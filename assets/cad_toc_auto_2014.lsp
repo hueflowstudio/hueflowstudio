@@ -543,10 +543,76 @@
   )
 )
 
-(defun toc:save-form-config (/ nod old payload chunks xrec data)
+(defun toc:form-profile-from-current ()
+  (list
+    (cons "TYPE" *toc-form-object-type*)
+    (cons "DXF" *toc-form-dxf-type*)
+    (cons "BLOCK" *toc-form-block-name*)
+    (cons "WIDTH" *toc-form-w*)
+    (cons "HEIGHT" *toc-form-h*)
+    (cons "FIELDS" *toc-form-fields*)
+  )
+)
+
+(defun toc:apply-form-profile (profile / objtype dxftype)
+  (setq objtype (cdr (assoc "TYPE" profile)))
+  (setq dxftype (cdr (assoc "DXF" profile)))
+  (setq *toc-form-object-type* (if objtype objtype "AcDbBlockReference"))
+  (setq *toc-form-dxf-type* (if dxftype dxftype (toc:object-type-default-dxf *toc-form-object-type*)))
+  (setq *toc-form-block-name* (cdr (assoc "BLOCK" profile)))
+  (setq *toc-form-w* (cdr (assoc "WIDTH" profile)))
+  (setq *toc-form-h* (cdr (assoc "HEIGHT" profile)))
+  (setq *toc-form-fields* (cdr (assoc "FIELDS" profile)))
+  (toc:form-calibrated-p)
+)
+
+(defun toc:form-profile-ready-p (profile / fields)
+  (setq fields (cdr (assoc "FIELDS" profile)))
+  (and
+    (cdr (assoc "TYPE" profile))
+    (cdr (assoc "SHEET" fields))
+    (cdr (assoc "DWG" fields))
+    (cdr (assoc "TITLE" fields))
+    (cdr (assoc "SCALE" fields))
+  )
+)
+
+(defun toc:form-profile-key (profile / fields)
+  (setq fields (cdr (assoc "FIELDS" profile)))
+  (strcat
+    (vl-princ-to-string (cdr (assoc "TYPE" profile))) "|"
+    (vl-princ-to-string (cdr (assoc "DXF" profile))) "|"
+    (vl-princ-to-string (cdr (assoc "BLOCK" profile))) "|"
+    (vl-princ-to-string (cdr (assoc "WIDTH" profile))) "|"
+    (vl-princ-to-string (cdr (assoc "HEIGHT" profile))) "|"
+    (vl-princ-to-string fields)
+  )
+)
+
+(defun toc:add-form-profile (profile profiles / key out replaced)
+  (setq key (toc:form-profile-key profile))
+  (setq out '())
+  (setq replaced nil)
+  (foreach p profiles
+    (if (= key (toc:form-profile-key p))
+      (progn
+        (setq out (cons profile out))
+        (setq replaced T)
+      )
+      (setq out (cons p out))
+    )
+  )
+  (if (not replaced)
+    (setq out (cons profile out))
+  )
+  (reverse out)
+)
+
+(defun toc:save-form-config (/ nod old payload chunks xrec data profiles)
   (toc:init-config)
   (if (toc:form-calibrated-p)
     (progn
+      (setq profiles (if *toc-form-profiles* *toc-form-profiles* (list (toc:form-profile-from-current))))
       (setq payload
         (vl-prin1-to-string
           (list
@@ -557,6 +623,7 @@
             (cons "WIDTH" *toc-form-w*)
             (cons "HEIGHT" *toc-form-h*)
             (cons "FIELDS" *toc-form-fields*)
+            (cons "PROFILES" profiles)
           )
         )
       )
@@ -583,7 +650,7 @@
   )
 )
 
-(defun toc:load-form-config (/ rec chunks payload parsed objtype dxftype block w h fields)
+(defun toc:load-form-config (/ rec chunks payload parsed objtype dxftype block w h fields profiles first)
   (toc:init-config)
   (setq rec (dictsearch (namedobjdict) *toc-form-config-key*))
   (if rec
@@ -605,6 +672,7 @@
           (setq w (cdr (assoc "WIDTH" parsed)))
           (setq h (cdr (assoc "HEIGHT" parsed)))
           (setq fields (cdr (assoc "FIELDS" parsed)))
+          (setq profiles (cdr (assoc "PROFILES" parsed)))
           (if (and fields (or objtype block))
             (progn
               (setq *toc-form-object-type* (if objtype objtype "AcDbBlockReference"))
@@ -613,6 +681,9 @@
               (setq *toc-form-w* w)
               (setq *toc-form-h* h)
               (setq *toc-form-fields* fields)
+              (setq *toc-form-profiles* (if profiles profiles (list (toc:form-profile-from-current))))
+              (setq first (car *toc-form-profiles*))
+              (if first (toc:apply-form-profile first))
               (toc:form-calibrated-p)
             )
           )
@@ -1586,7 +1657,7 @@
   (reverse out)
 )
 
-(defun toc:scan-form-rows (/ ss items blocks bb sheet dwg title scale vals rows form-items read-items)
+(defun toc:scan-form-rows-current (/ ss items blocks bb sheet dwg title scale vals rows form-items read-items)
   (setq rows '())
   (setq ss (toc:ss-text-all))
   (if ss
@@ -1630,11 +1701,33 @@
   (vl-sort (toc:dedupe-rows rows) 'toc:row-sort<)
 )
 
+(defun toc:scan-form-rows (/ profiles old rows)
+  (setq old (if (toc:form-calibrated-p) (toc:form-profile-from-current) nil))
+  (setq profiles
+    (cond
+      (*toc-form-profiles* *toc-form-profiles*)
+      ((toc:form-calibrated-p) (list (toc:form-profile-from-current)))
+      (T nil)
+    )
+  )
+  (setq rows '())
+  (foreach profile profiles
+    (if (toc:form-profile-ready-p profile)
+      (progn
+        (toc:apply-form-profile profile)
+        (setq rows (append (toc:scan-form-rows-current) rows))
+      )
+    )
+  )
+  (if old (toc:apply-form-profile old))
+  (vl-sort (toc:dedupe-rows rows) 'toc:row-sort<)
+)
+
 (defun toc:form-ready-p ()
   (if (not (toc:form-calibrated-p))
     (toc:load-form-config)
   )
-  (toc:form-calibrated-p)
+  (or *toc-form-profiles* (toc:form-calibrated-p))
 )
 
 (defun c:TOCAUTO (/ ss items)
@@ -1741,9 +1834,12 @@
   (princ)
 )
 
-(defun c:TOCFORMSET (/ frm bb sheet dwg title scale)
+(defun toc:run-form-set (appendp / frm bb sheet dwg title scale profile count)
   (vl-load-com)
   (toc:init-config)
+  (if (and appendp (null *toc-form-profiles*))
+    (toc:load-form-config)
+  )
   (setq frm (toc:pick-form-object))
   (if frm
     (progn
@@ -1776,12 +1872,18 @@
                   (cons "SCALE" scale)
                 )
               )
+              (setq profile (toc:form-profile-from-current))
+              (if appendp
+                (setq *toc-form-profiles* (toc:add-form-profile profile *toc-form-profiles*))
+                (setq *toc-form-profiles* (list profile))
+              )
+              (setq count (length *toc-form-profiles*))
               (if (toc:save-form-config)
-                (princ "\nTOCFORMSET complete. Calibration saved in this DWG. Save the DWG, then other PCs can use TOCFORMSCAN.")
-                (princ "\nTOCFORMSET complete. Run TOCFORMSCAN. Warning: DWG calibration save failed.")
+                (princ (strcat "\nForm calibration saved. Registered form types: " (itoa count) ". Save the DWG, then run TLIST."))
+                (princ "\nForm calibration complete. Run TLIST. Warning: DWG calibration save failed.")
               )
             )
-            (princ "\nTOCFORMSET canceled or incomplete.")
+            (princ "\nForm calibration canceled or incomplete.")
           )
         )
         (princ "\nCould not read selected block bounding box.")
@@ -1792,6 +1894,14 @@
   (princ)
 )
 
+(defun c:TOCFORMSET ()
+  (toc:run-form-set nil)
+)
+
+(defun c:TOCFORMADD ()
+  (toc:run-form-set T)
+)
+
 (defun c:TOCFORMSTATUS ()
   (vl-load-com)
   (toc:init-config)
@@ -1800,6 +1910,9 @@
       (princ "\nTOCFORM calibration is ready.")
       (princ (strcat "\nForm object: " *toc-form-object-type*))
       (if *toc-form-block-name* (princ (strcat "\nForm block/name: " *toc-form-block-name*)))
+      (if *toc-form-profiles*
+        (princ (strcat "\nRegistered form types: " (itoa (length *toc-form-profiles*))))
+      )
       (princ "\nSaved fields: SHEET, DWG, TITLE, SCALE")
     )
     (princ "\nNo TOCFORM calibration found in memory or in this DWG. Run TOCFORMSET first.")
@@ -1893,10 +2006,11 @@
 )
 
 (defun c:TSET () (c:TOCFORMSET))
+(defun c:TADD () (c:TOCFORMADD))
 (defun c:TLIST () (c:TOCFORMSCAN))
 (defun c:TSTAT () (c:TOCFORMSTATUS))
 (defun c:TCFG () (c:TOCCFG))
 
-(princ "\nLoaded cad_toc_auto.lsp. Easy commands: TSET=set form, TLIST=scan/create list, TSTAT=status, TCFG=config.")
-(princ "\nFull commands: TOCFORMSET, TOCFORMSTATUS, TOCFORMSCAN, TOCSEMI, TOCSEMIALL, TOCCFG, TOCAUTO, TOCAUTOALL, TOCTABLESCAN, TOCNEARSCAN")
+(princ "\nLoaded cad_toc_auto.lsp. Easy commands: TSET=set first form, TADD=add another form, TLIST=scan/create list, TSTAT=status, TCFG=config.")
+(princ "\nFull commands: TOCFORMSET, TOCFORMADD, TOCFORMSTATUS, TOCFORMSCAN, TOCSEMI, TOCSEMIALL, TOCCFG, TOCAUTO, TOCAUTOALL, TOCTABLESCAN, TOCNEARSCAN")
 (princ)
