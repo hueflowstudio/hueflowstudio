@@ -23,6 +23,23 @@ TCFG  = 도면번호/축척 패턴과 출력 설정 조정
 TADD  = 폼 모양이나 방향이 완전히 다른 종류가 섞인 도면에서만 추가 등록
 ```
 
+## 도면 열 때마다 자동 로드하기
+
+가장 쉬운 방법은 `cad_toc_auto.lsp` 자체를 AutoCAD Startup Suite에 한 번 등록하는 것입니다.
+
+```text
+APPLOAD 입력
+Startup Suite 또는 시작하기 모음 선택
+Add/추가 클릭
+cad_toc_auto.lsp 선택
+AutoCAD 재시작 또는 새 도면 열기
+TSET/TLIST 명령어가 바로 먹는지 확인
+```
+
+이 작업은 한 번만 하면 됩니다. 단, `cad_toc_auto.lsp` 파일 위치를 옮기면 Startup Suite에서 다시 등록해야 합니다.
+
+`hueflow_toc_autoload.lsp`는 보조 자동로드 파일입니다. `cad_toc_auto.lsp`가 AutoCAD Support File Search Path 안에 있을 때 사용할 수 있습니다.
+
 ## 중요한 선택 기준
 
 - TSET에서 선택하는 첫 객체는 이미 만들어진 도면 리스트 표가 아니라, 도면마다 반복되는 실제 시트폼/도곽입니다.

@@ -33,7 +33,8 @@
         <div class="download-row">
           <a class="download" href="assets/cad_toc_auto_20260605.lsp" download>cad_toc_auto.lsp 다운로드</a>
           <a class="download secondary-download" href="assets/cad_toc_auto_2014_20260605.lsp" download>2014 호환판 다운로드</a>
-          <a class="download secondary-download" href="assets/Hueflow_CAD_TOC_Automation_20260605.zip" download>ZIP 다운로드</a>
+          <a class="download secondary-download" href="assets/hueflow_toc_autoload.lsp" download>자동로드 파일 다운로드</a>
+          <a class="download secondary-download" href="assets/Hueflow_CAD_TOC_Automation_autoload_20260605.zip" download>ZIP 다운로드</a>
           <a class="download secondary-download" href="assets/cad_toc_README_KR.md" download>README 다운로드</a>
         </div>
       </div>
@@ -76,6 +77,27 @@
             <li>도면 안의 같은 시트폼들을 자동으로 읽어서 도면 리스트 생성</li>
             <li>폼 모양이나 방향이 완전히 다른 종류가 섞인 도면만 TADD로 추가 등록</li>
           </ol>
+        </div>
+      </article>
+    </section>
+
+    <p class="section-heading">자동 로드</p>
+    <section class="version-list" aria-label="CAD 도면 리스트 리습 자동 로드">
+      <article class="version-item">
+        <div class="version-label">
+          <span>Auto</span>
+          <span class="version-date">Once</span>
+        </div>
+        <div>
+          <h2 class="version-title">도면을 열 때마다 자동으로 로드하기</h2>
+          <ol class="guide-list">
+            <li>cad_toc_auto.lsp 파일을 계속 둘 폴더에 저장</li>
+            <li>AutoCAD에서 APPLOAD 입력</li>
+            <li>Startup Suite 또는 시작하기 모음 버튼 선택</li>
+            <li>Add 또는 추가 버튼으로 cad_toc_auto.lsp 파일 등록</li>
+            <li>AutoCAD를 다시 열거나 새 도면을 열어 TSET/TLIST 명령어가 바로 먹는지 확인</li>
+          </ol>
+          <p class="version-desc">이 작업은 한 번만 하면 됩니다. 파일 위치를 옮기면 Startup Suite에서 다시 등록해야 합니다.</p>
         </div>
       </article>
     </section>
