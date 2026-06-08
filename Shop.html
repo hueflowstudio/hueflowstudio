@@ -346,8 +346,8 @@
           <h2 class="product-title">Hueflow Takeoff</h2>
           <p class="product-desc">도면과 마감 정보를 바탕으로 공간별 수량, 자재, 산출 내역을 정리하는 인테리어 물량 산출 자동화 도구입니다.</p>
         </div>
-        <p class="price">Early Access<span>가격 및 결제 링크 준비 중</span></p>
-        <a class="buy-link" href="mailto:kimyj0623@naver.com?subject=Hueflow%20Takeoff%20%EA%B5%AC%EB%A7%A4%20%EB%AC%B8%EC%9D%98" data-checkout-url="">Inquire</a>
+        <p class="price">KRW 590,000<span>카드 결제 테스트 연동</span></p>
+        <a class="buy-link" href="#" data-ksnet-pay>Pay by Card</a>
       </article>
     </section>
 
@@ -367,7 +367,7 @@
       </article>
       <article class="detail-block">
         <h2>판매 방식</h2>
-        <p>정식 결제 링크가 준비되면 이 페이지의 구매 버튼을 바로 체크아웃으로 연결할 수 있습니다. 현재는 얼리 액세스 문의를 받는 형태입니다.</p>
+        <p>구매 버튼을 누르면 KSNET KSPAY 인증결제창으로 이동합니다. 카드정보는 휴플로우스튜디오가 직접 저장하지 않고 결제대행사와 카드사 화면에서 처리됩니다.</p>
       </article>
       <article class="detail-block">
         <h2>다음 확장</h2>
@@ -377,7 +377,7 @@
 
     <div class="note">
       <span class="note-label">Payment</span>
-      <p>결제 링크가 준비되면 버튼에 연결할 수 있습니다. Toss Payments, Stripe Payment Link, Gumroad, Lemon Squeezy처럼 외부 체크아웃 URL을 발급하는 방식이면 GitHub Pages에서도 가장 빠르게 판매를 시작할 수 있습니다.</p>
+      <p>현재 KSNET 카드사 심사를 위한 인증결제 테스트 연동 상태입니다. 심사 완료 후 발급되는 실제 상점아이디로 전환하면 운영 결제로 사용할 수 있습니다.</p>
     </div>
   </main>
 
@@ -387,21 +387,62 @@
   </footer>
 
   <div class="toast" role="status" aria-live="polite"></div>
+  <form name="KSPayAuthForm" method="post" style="display:none">
+    <input type="hidden" name="sndStoreid" value="2999199999">
+    <input type="hidden" name="sndStorepasswd" value="">
+    <input type="hidden" name="sndOrdernumber" value="">
+    <input type="hidden" name="sndGoodname" value="Hueflow Takeoff">
+    <input type="hidden" name="sndAmount" value="590000">
+    <input type="hidden" name="sndOrdername" value="Hueflow Customer">
+    <input type="hidden" name="sndEmail" value="hello@hueflow.studio">
+    <input type="hidden" name="sndMobile" value="01074471242">
+    <input type="hidden" name="sndPaymethod" value="1000000000">
+    <input type="hidden" name="sndInstallmenttype" value="ALL">
+    <input type="hidden" name="sndInteresttype" value="NONE">
+    <input type="hidden" name="sndCurrencytype" value="WON">
+    <input type="hidden" name="sndReply" value="https://www.hueflowstudio.com/api/ksnet/receive">
+    <input type="hidden" name="sndWptype" value="1">
+    <input type="hidden" name="sndAdulttype" value="0">
+  </form>
   <script>
     (function(){
-      var checkout = document.querySelector('[data-checkout-url]');
+      var checkout = document.querySelector('[data-ksnet-pay]');
       var toast = document.querySelector('.toast');
+      var form = document.forms.KSPayAuthForm;
       if (!checkout || !toast) return;
+
+      function createOrderNumber() {
+        var now = new Date();
+        var pad = function(n){ return String(n).padStart(2, '0'); };
+        return 'HFSHOP' +
+          now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) +
+          pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
+      }
+
+      window.paramSet = function(authyn, trno, trdt, trtm, authno, ordno, msg1, msg2, amt) {
+        var params = new URLSearchParams({
+          authyn: authyn || '',
+          trno: trno || '',
+          trdt: trdt || '',
+          trtm: trtm || '',
+          authno: authno || '',
+          ordno: ordno || '',
+          msg1: msg1 || '',
+          msg2: msg2 || '',
+          amt: amt || ''
+        });
+        window.location.href = 'ksnet-result.html?' + params.toString();
+      };
+
       checkout.addEventListener('click', function(event){
-        var url = checkout.getAttribute('data-checkout-url');
         event.preventDefault();
-        if (url) {
-          window.location.href = url;
-          return;
-        }
-        toast.textContent = '결제 링크 준비 중입니다. 문의 메일로 연결합니다.';
+        if (!form) return;
+        form.sndOrdernumber.value = createOrderNumber();
+        form.action = 'https://kspay.ksnet.to/store/KSPayWebV1.3/KSPayWeb.jsp';
+        form.target = '_self';
+        form.submit();
+        toast.textContent = 'KSNET 인증결제창을 열었습니다.';
         toast.classList.add('show');
-        setTimeout(function(){ window.location.href = checkout.getAttribute('href'); }, 450);
         setTimeout(function(){ toast.classList.remove('show'); }, 1600);
       });
     })();

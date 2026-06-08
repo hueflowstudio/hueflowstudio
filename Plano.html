@@ -1181,7 +1181,7 @@
       </div>
     </div>
     <div class="apply-actions">
-      <a href="https://buy.polar.sh/polar_cl_665tG75JvlcMw66tOuBAqWfVgp1pVvnfad6Ul2uggKK" target="_blank" rel="noopener" class="btn btn-solid">
+      <a href="#" class="btn btn-solid" data-ksnet-pay>
         <span>카드 결제하기</span><span class="arrow">→</span>
       </a>
       <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
@@ -1479,7 +1479,7 @@
           <li>녹화본 제공</li>
         </ul>
         <div class="apply-actions">
-          <a href="https://buy.polar.sh/polar_cl_665tG75JvlcMw66tOuBAqWfVgp1pVvnfad6Ul2uggKK" target="_blank" rel="noopener" class="btn btn-solid">
+          <a href="#" class="btn btn-solid" data-ksnet-pay>
             <span>카드 결제하기</span><span class="arrow">→</span>
           </a>
           <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
@@ -1586,7 +1586,7 @@
       <li><strong>Step 03</strong><span>결제가 확인되면 2기 자리가 확정됩니다.</span></li>
     </ol>
     <div class="apply-actions">
-      <a href="https://buy.polar.sh/polar_cl_665tG75JvlcMw66tOuBAqWfVgp1pVvnfad6Ul2uggKK" target="_blank" rel="noopener" class="btn btn-solid">
+      <a href="#" class="btn btn-solid" data-ksnet-pay>
         <span>카드 결제하기</span><span class="arrow">→</span>
       </a>
       <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
@@ -1616,11 +1616,69 @@
 <div class="bottom-bar">
   <div class="row">
     <div class="left">온라인 집중반 07.02 시작<span class="accent">59만원 · 세금포함</span></div>
-    <div class="right"><a href="https://buy.polar.sh/polar_cl_665tG75JvlcMw66tOuBAqWfVgp1pVvnfad6Ul2uggKK" target="_blank" rel="noopener">결제 →</a></div>
+    <div class="right"><a href="#" data-ksnet-pay>결제 →</a></div>
   </div>
 </div>
 
+<form name="KSPayAuthForm" method="post" style="display:none">
+  <input type="hidden" name="sndStoreid" value="2999199999">
+  <input type="hidden" name="sndStorepasswd" value="">
+  <input type="hidden" name="sndOrdernumber" value="">
+  <input type="hidden" name="sndGoodname" value="Plano 02 Online Intensive">
+  <input type="hidden" name="sndAmount" value="590000">
+  <input type="hidden" name="sndOrdername" value="Hueflow Student">
+  <input type="hidden" name="sndEmail" value="hello@hueflow.studio">
+  <input type="hidden" name="sndMobile" value="01074471242">
+  <input type="hidden" name="sndPaymethod" value="1000000000">
+  <input type="hidden" name="sndInstallmenttype" value="ALL">
+  <input type="hidden" name="sndInteresttype" value="NONE">
+  <input type="hidden" name="sndCurrencytype" value="WON">
+  <input type="hidden" name="sndReply" value="https://www.hueflowstudio.com/api/ksnet/receive">
+  <input type="hidden" name="sndWptype" value="1">
+  <input type="hidden" name="sndAdulttype" value="0">
+</form>
+
 <script>
+  // KSNET KSPAY authentication payment window.
+  (function(){
+    var form = document.forms.KSPayAuthForm;
+    if (!form) return;
+
+    function createOrderNumber() {
+      var now = new Date();
+      var pad = function(n){ return String(n).padStart(2, '0'); };
+      return 'HFPLANO' +
+        now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate()) +
+        pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
+    }
+
+    window.paramSet = function(authyn, trno, trdt, trtm, authno, ordno, msg1, msg2, amt) {
+      var params = new URLSearchParams({
+        authyn: authyn || '',
+        trno: trno || '',
+        trdt: trdt || '',
+        trtm: trtm || '',
+        authno: authno || '',
+        ordno: ordno || '',
+        msg1: msg1 || '',
+        msg2: msg2 || '',
+        amt: amt || ''
+      });
+      window.location.href = 'ksnet-result.html?' + params.toString();
+    };
+
+    document.addEventListener('click', function(event){
+      var trigger = event.target.closest('[data-ksnet-pay]');
+      if (!trigger) return;
+      event.preventDefault();
+
+      form.sndOrdernumber.value = createOrderNumber();
+      form.action = 'https://kspay.ksnet.to/store/KSPayWebV1.3/KSPayWeb.jsp';
+      form.target = '_self';
+      form.submit();
+    });
+  })();
+
   // "준비중" toast
   (function(){
     var toast = document.createElement('div');
