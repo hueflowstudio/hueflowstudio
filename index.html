@@ -312,6 +312,9 @@
     gap: 16px;
   }
   footer .l, footer .r { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  footer .sep { opacity: 0.4; }
+  footer .phone { color: var(--color-graphite); }
+  footer .phone:hover { color: var(--color-ink); }
   footer .b2b { color: var(--color-graphite); }
   footer .b2b:hover { color: var(--color-ink); }
 
@@ -745,7 +748,7 @@
       grid-template-columns: 1fr;
       gap: 6px;
     }
-    footer .l span:nth-child(2),
+    footer .sep,
     footer .r span {
       display: none;
     }
@@ -928,8 +931,10 @@
   <footer id="business-info">
     <div class="l">
       <span>Hueflow Studio</span>
-      <span>·</span>
+      <span class="sep">·</span>
       <span>사업자등록번호 566-25-02364</span>
+      <span class="sep">·</span>
+      <a class="phone" href="tel:+821074471242">+82 10-7447-1242</a>
     </div>
     <div class="r">
       <a href="Terms.html">이용약관</a>
