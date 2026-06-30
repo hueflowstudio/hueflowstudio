@@ -14,28 +14,29 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
   :root {
-    --ink: #000000;
-    --canvas: #f8f8f8;
-    --fog: #efefef;
-    --snow: rgba(255, 255, 255, 0.9);
-    --pebble: #d9d9d9;
-    --graphite: #636363;
-    --slate: #959595;
-    --line: rgba(0, 0, 0, 0.08);
-    --shadow: rgba(0, 0, 0, 0.08) 0 0 8px 0;
-    --spectrum: linear-gradient(90deg, rgb(198, 121, 196) 0%, rgb(250, 61, 29) 25%, rgb(255, 176, 5) 50%, rgb(225, 225, 254) 75%, rgb(3, 88, 247) 100%);
+    --bg: #f7f5f1;
+    --paper: rgba(255, 255, 255, 0.84);
+    --paper-strong: #fffdf9;
+    --soft: #eeebe5;
+    --soft-2: #e6e0d8;
+    --ink: #242320;
+    --muted: #706d66;
+    --faint: #9b978e;
+    --line: rgba(36, 35, 32, 0.1);
+    --shadow: rgba(36, 35, 32, 0.08) 0 8px 26px;
+    --glow: linear-gradient(135deg, rgba(227, 216, 222, 0.72), rgba(217, 228, 223, 0.7), rgba(235, 229, 217, 0.78));
     --font: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, Arial, sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html {
-    min-height: 100%;
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
   body {
-    min-height: 100%;
     margin: 0;
-    background: var(--canvas);
+    min-height: 100%;
+    background:
+      radial-gradient(circle at 18% 0%, rgba(227, 216, 222, 0.72), transparent 34%),
+      radial-gradient(circle at 92% 20%, rgba(217, 228, 223, 0.62), transparent 32%),
+      var(--bg);
     color: var(--ink);
     font-family: var(--font);
     font-weight: 400;
@@ -44,746 +45,572 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    isolation: isolate;
-  }
-  body::before,
-  body::after {
-    content: "";
-    position: fixed;
-    z-index: -1;
-    pointer-events: none;
-    background: var(--spectrum);
-    opacity: 0.28;
-    filter: blur(54px);
-  }
-  body::before {
-    width: 760px;
-    height: 240px;
-    top: 92px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  body::after {
-    width: 520px;
-    height: 220px;
-    right: -140px;
-    bottom: 22%;
-    opacity: 0.18;
+    padding-bottom: 92px;
   }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; height: auto; }
   ::selection { background: var(--ink); color: #fff; }
 
-  .topbar {
+  .shell {
+    width: min(100% - 28px, 520px);
+    margin: 0 auto;
+    padding: 18px 0 42px;
+  }
+  .top {
     position: sticky;
-    top: 14px;
+    top: 10px;
     z-index: 20;
-    width: min(1200px, calc(100% - 36px));
     min-height: 52px;
-    margin: 14px auto 0;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
-    gap: 18px;
-    padding: 8px 10px 8px 18px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 8px 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 18px;
-    background: rgba(239, 239, 239, 0.78);
-    backdrop-filter: blur(24px);
-    box-shadow: var(--shadow);
+    background: rgba(247, 245, 241, 0.78);
+    backdrop-filter: blur(22px);
+    box-shadow: rgba(36, 35, 32, 0.06) 0 6px 22px;
   }
   .brand {
-    display: inline-flex;
-    flex-direction: column;
+    display: grid;
     gap: 1px;
-    font-size: 14px;
+    min-width: 0;
+  }
+  .brand strong {
+    font-size: 13px;
+    font-weight: 500;
     line-height: 1.2;
   }
-  .brand small {
-    color: var(--slate);
+  .brand span {
+    color: var(--faint);
     font-size: 11px;
+    line-height: 1.2;
   }
-  .navlinks {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 22px;
-    color: var(--graphite);
-    font-size: 14px;
-  }
-  .navlinks a:hover,
-  .brand:hover { color: var(--ink); }
-  .top-cta {
-    justify-self: end;
+  .top a.cta {
+    min-height: 36px;
     display: inline-flex;
-    min-height: 38px;
     align-items: center;
     justify-content: center;
-    padding: 0 18px;
+    padding: 0 14px;
     border-radius: 999px;
-    background: var(--pebble);
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .top-cta:hover,
-  .button.primary:hover {
     background: var(--ink);
-    color: #fff;
+    color: #fffdf9;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
   }
 
-  .page {
-    width: min(1200px, calc(100% - 36px));
-    margin: 0 auto;
-    padding: 82px 0 72px;
-  }
   .hero {
-    position: relative;
-    min-height: 640px;
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
-    gap: 20px;
-    align-items: stretch;
-  }
-  .hero-copy,
-  .workflow-card,
-  .date-card,
-  .curriculum-card,
-  .notice-card,
-  .instructor-card {
-    background: var(--snow);
-    backdrop-filter: blur(24px);
-    border-radius: 30px;
+    margin-top: 20px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 28px;
+    background: var(--paper);
     box-shadow: var(--shadow);
-  }
-  .hero-copy {
-    min-height: 640px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 34px;
+    backdrop-filter: blur(24px);
   }
   .eyebrow {
-    margin: 0 0 20px;
-    color: var(--slate);
-    font-size: 13px;
-    line-height: 1.5;
+    margin: 0 0 16px;
+    color: var(--faint);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
   h1 {
     margin: 0;
-    max-width: 8.6em;
     color: var(--ink);
-    font-size: 58px;
+    font-size: clamp(31px, 9vw, 42px);
     font-weight: 300;
-    line-height: 1.12;
+    line-height: 1.15;
     letter-spacing: 0;
   }
   .lead {
-    max-width: 520px;
-    margin: 24px 0 0;
-    color: var(--graphite);
-    font-size: 18px;
-    line-height: 1.72;
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.76;
   }
-  .spectrum-strip {
-    width: min(340px, 78%);
-    height: 10px;
-    margin: 34px 0 0;
+  .soft-strip {
+    height: 8px;
+    width: 172px;
+    margin: 24px 0 0;
     border-radius: 999px;
-    background: var(--spectrum);
+    background: var(--glow);
   }
   .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 30px;
+    display: grid;
+    gap: 9px;
+    margin-top: 24px;
   }
   .button {
-    display: inline-flex;
     min-height: 50px;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 22px;
-    border: 0;
-    border-radius: 30px;
-    background: transparent;
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 15px;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-size: 14px;
     font-weight: 500;
-    transition: background 0.2s ease, color 0.2s ease;
   }
   .button.primary {
-    background: var(--pebble);
+    background: var(--ink);
+    color: #fffdf9;
   }
-  .button.ghost {
-    background: rgba(0, 0, 0, 0.04);
+  .button.secondary {
+    background: rgba(36, 35, 32, 0.06);
+    color: var(--ink);
   }
-  .button.ghost:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-  .button .arrow { font-size: 17px; }
 
-  .quick-facts {
+  .summary {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 28px;
+    gap: 10px;
+    margin-top: 14px;
   }
-  .fact {
-    min-height: 96px;
-    padding: 16px;
-    border-radius: 18px;
-    background: rgba(0, 0, 0, 0.04);
+  .summary-card {
+    min-height: 104px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.58);
   }
-  .fact span {
+  .summary-card span {
     display: block;
-    margin-bottom: 8px;
-    color: var(--slate);
-    font-size: 12px;
+    margin-bottom: 9px;
+    color: var(--faint);
+    font-size: 11px;
   }
-  .fact strong {
+  .summary-card strong {
     display: block;
     color: var(--ink);
-    font-size: 17px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 500;
     line-height: 1.42;
   }
 
-  .workflow-card {
-    min-height: 640px;
-    padding: 34px;
+  .prompt-note {
+    margin-top: 14px;
+    padding: 18px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: rgba(36, 35, 32, 0.04) 0 5px 18px;
+  }
+  .prompt-note p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .prompt-box {
+    margin-top: 14px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: var(--paper-strong);
+    color: var(--ink);
+    font-size: 13px;
+    box-shadow: inset rgba(36, 35, 32, 0.06) 0 0 0 1px;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #c7bbb4;
+  }
+  .send {
+    margin-left: auto;
+    color: var(--faint);
+  }
+
+  .section {
+    margin-top: 32px;
+  }
+  .section-head {
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+  .section-head h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 1.32;
+  }
+  .section-head p {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.72;
+  }
+
+  .timeline {
     display: grid;
-    align-content: space-between;
+    gap: 10px;
+  }
+  .timeline-card {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    padding: 17px;
+    border-radius: 24px;
+    background: var(--paper);
+    box-shadow: rgba(36, 35, 32, 0.05) 0 5px 18px;
+  }
+  .timeline-card .date {
+    display: grid;
+    gap: 4px;
+    color: var(--ink);
+  }
+  .timeline-card .date strong {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .timeline-card .date span {
+    color: var(--faint);
+    font-size: 11px;
+  }
+  .timeline-card h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.42;
+  }
+  .timeline-card p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.64;
+  }
+
+  .curriculum {
+    display: grid;
+    gap: 10px;
+  }
+  details {
+    border-radius: 24px;
+    background: var(--paper);
+    box-shadow: rgba(36, 35, 32, 0.05) 0 5px 18px;
     overflow: hidden;
   }
-  .window-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--graphite);
-    font-size: 14px;
-  }
-  .dots {
-    display: inline-flex;
-    gap: 8px;
-  }
-  .dots span {
-    width: 9px;
-    height: 9px;
-    border-radius: 999px;
-    background: #c679c4;
-  }
-  .dots span:nth-child(2) { background: #b6d1c9; }
-  .dots span:nth-child(3) { background: #8b9ed1; }
-  .prompt-stack {
-    display: grid;
-    gap: 12px;
-    margin: 40px 0 26px;
-  }
-  .prompt-chip {
-    width: min(100%, 300px);
-    min-height: 46px;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.04);
-    color: var(--graphite);
-    font-size: 15px;
-  }
-  .prompt-chip:nth-child(2) { width: min(100%, 360px); }
-  .prompt-chip:nth-child(3) { width: min(100%, 280px); }
-  .code-window {
-    position: relative;
-    margin-left: auto;
-    width: min(100%, 410px);
-    min-height: 330px;
-    padding: 34px 30px;
-    border-radius: 24px;
-    background: #111;
-    color: #f4f4f4;
-    display: flex;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.08) 0 0 8px 0;
-  }
-  .code-window pre {
-    margin: 0;
-    white-space: pre-wrap;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: 15px;
-    line-height: 1.65;
-  }
-  .workflow-foot {
+  summary {
+    min-height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 18px;
-    color: var(--graphite);
-    font-size: 14px;
+    gap: 14px;
+    padding: 0 18px;
+    cursor: pointer;
+    list-style: none;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 500;
   }
-  .class-pill {
-    min-width: 70px;
-    min-height: 38px;
+  summary::-webkit-details-marker { display: none; }
+  summary span {
+    color: var(--faint);
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  details[open] summary {
+    border-bottom: 1px solid var(--line);
+  }
+  .detail-body {
+    padding: 16px 18px 18px;
+  }
+  .detail-body p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.68;
+  }
+  .detail-body ul {
+    display: grid;
+    gap: 8px;
+    margin: 13px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .detail-body li {
+    display: grid;
+    grid-template-columns: 11px 1fr;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.58;
+  }
+  .detail-body li::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    margin-top: 8px;
+    border-radius: 50%;
+    background: #b8afa7;
+  }
+
+  .apply-card {
+    padding: 22px;
+    border-radius: 28px;
+    background: var(--paper-strong);
+    box-shadow: var(--shadow);
+  }
+  .apply-card h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.32;
+  }
+  .apply-card p {
+    margin: 12px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.72;
+  }
+  .teacher {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .teacher img {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .teacher strong {
+    display: block;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .teacher span {
+    display: block;
+    margin-top: 2px;
+    color: var(--faint);
+    font-size: 12px;
+  }
+  .legal {
+    margin: 26px 4px 0;
+    color: var(--faint);
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .bottom-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    padding: 10px 14px max(10px, env(safe-area-inset-bottom));
+    background: rgba(247, 245, 241, 0.82);
+    border-top: 1px solid rgba(36, 35, 32, 0.08);
+    backdrop-filter: blur(22px);
+  }
+  .bottom-cta-inner {
+    width: min(100%, 520px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+  .bottom-cta a {
+    min-height: 46px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 999px;
-    background: linear-gradient(90deg, rgba(198, 121, 196, 0.38), rgba(3, 88, 247, 0.22));
-    color: var(--ink);
+    font-size: 14px;
     font-weight: 500;
   }
-
-  .section {
-    padding-top: 86px;
+  .bottom-cta .pay {
+    background: var(--ink);
+    color: #fffdf9;
   }
-  .section-head {
-    display: grid;
-    grid-template-columns: minmax(0, 0.76fr) minmax(280px, 0.44fr);
-    gap: 24px;
-    align-items: end;
-    margin-bottom: 24px;
-  }
-  .section-head h2 {
-    margin: 0;
-    max-width: 760px;
-    font-size: 44px;
-    font-weight: 300;
-    line-height: 1.18;
-  }
-  .section-head p {
-    margin: 0;
-    color: var(--graphite);
-    font-size: 16px;
-    line-height: 1.68;
-  }
-
-  .date-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-  }
-  .date-card {
-    min-height: 190px;
-    padding: 24px;
-  }
-  .date-card .week {
-    display: block;
-    color: var(--slate);
-    font-size: 13px;
-    text-transform: uppercase;
-  }
-  .date-card .date {
-    display: block;
-    margin-top: 22px;
+  .bottom-cta .talk {
+    min-width: 86px;
+    background: var(--soft);
     color: var(--ink);
-    font-size: 30px;
-    font-weight: 300;
-    line-height: 1.1;
-  }
-  .date-card .topic {
-    display: block;
-    margin-top: 20px;
-    color: var(--graphite);
-    font-size: 15px;
-    line-height: 1.55;
   }
 
-  .curriculum-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-  .curriculum-card {
-    min-height: 328px;
-    padding: 28px;
-  }
-  .curriculum-card .meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 24px;
-    color: var(--slate);
-    font-size: 13px;
-  }
-  .curriculum-card h3 {
-    margin: 0;
-    color: var(--ink);
-    font-size: 27px;
-    font-weight: 300;
-    line-height: 1.28;
-  }
-  .curriculum-card p {
-    margin: 18px 0 0;
-    color: var(--graphite);
-    font-size: 15px;
-    line-height: 1.72;
-  }
-  .curriculum-card ul {
-    display: grid;
-    gap: 8px;
-    margin: 20px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .curriculum-card li {
-    display: grid;
-    grid-template-columns: 14px 1fr;
-    gap: 8px;
-    color: var(--graphite);
-    font-size: 14px;
-    line-height: 1.58;
-  }
-  .curriculum-card li::before {
-    content: "";
-    width: 5px;
-    height: 5px;
-    margin-top: 9px;
-    border-radius: 999px;
-    background: var(--slate);
-  }
-
-  .notice-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.72fr) minmax(260px, 0.28fr);
-    gap: 16px;
-    align-items: stretch;
-  }
-  .notice-card,
-  .instructor-card {
-    padding: 28px;
-  }
-  .notice-card h2 {
-    margin: 0;
-    max-width: 820px;
-    font-size: 42px;
-    font-weight: 300;
-    line-height: 1.18;
-  }
-  .notice-card p {
-    margin: 18px 0 0;
-    color: var(--graphite);
-    font-size: 16px;
-    line-height: 1.72;
-  }
-  .notice-card .hero-actions {
-    margin-top: 28px;
-  }
-  .instructor-card {
-    display: grid;
-    align-content: space-between;
-    gap: 28px;
-  }
-  .instructor-card img {
-    width: 92px;
-    height: 92px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .instructor-card strong {
-    display: block;
-    color: var(--ink);
-    font-size: 22px;
-    font-weight: 400;
-  }
-  .instructor-card span,
-  .instructor-card p {
-    color: var(--graphite);
-    font-size: 14px;
-    line-height: 1.62;
-  }
-  .legal {
-    margin: 44px 0 0;
-    color: var(--slate);
-    font-size: 12px;
-    line-height: 1.7;
-  }
-
-  @media (max-width: 980px) {
-    .topbar,
-    .page {
-      width: min(100% - 28px, 760px);
+  @media (min-width: 760px) {
+    body {
+      padding-bottom: 108px;
     }
-    .topbar {
-      grid-template-columns: 1fr auto;
-    }
-    .navlinks {
-      display: none;
-    }
-    .hero,
-    .section-head,
-    .notice-grid {
-      grid-template-columns: 1fr;
-    }
-    .hero-copy,
-    .workflow-card {
-      min-height: auto;
-    }
-    h1 {
-      max-width: 9.4em;
-      font-size: 42px;
-    }
-    .section-head h2,
-    .notice-card h2 {
-      font-size: 34px;
-    }
-    .date-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .curriculum-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .topbar,
-    .page {
-      width: calc(100% - 24px);
-    }
-    .topbar {
-      top: 10px;
-      margin-top: 10px;
-      padding: 8px 8px 8px 14px;
-      border-radius: 16px;
-    }
-    .brand {
-      font-size: 13px;
-    }
-    .top-cta {
-      min-height: 36px;
-      padding: 0 13px;
-      font-size: 13px;
-    }
-    .page {
-      padding-top: 52px;
-      padding-bottom: 52px;
+    .shell {
+      padding-top: 24px;
     }
     .hero {
-      gap: 14px;
-      min-height: auto;
-    }
-    .hero-copy,
-    .workflow-card,
-    .date-card,
-    .curriculum-card,
-    .notice-card,
-    .instructor-card {
-      border-radius: 24px;
-    }
-    .hero-copy,
-    .workflow-card {
-      padding: 24px;
+      padding: 30px;
     }
     h1 {
-      font-size: 34px;
+      font-size: 44px;
     }
-    .lead {
-      font-size: 16px;
+    .summary {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
-    .hero-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-    }
-    .button {
-      width: 100%;
-    }
-    .quick-facts,
-    .date-grid {
-      grid-template-columns: 1fr;
-    }
-    .code-window {
-      min-height: 260px;
-      padding: 26px 22px;
-    }
-    .code-window pre {
-      font-size: 13px;
-    }
-    .workflow-foot {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-    .section {
-      padding-top: 58px;
-    }
-    .section-head h2,
-    .notice-card h2 {
-      font-size: 30px;
-    }
-    .curriculum-card {
-      min-height: auto;
-      padding: 24px;
-    }
-    .curriculum-card h3 {
-      font-size: 24px;
+    .timeline-card {
+      grid-template-columns: 90px minmax(0, 1fr);
     }
   }
 </style>
 </head>
 <body>
-<nav class="topbar" aria-label="Plano invite navigation">
-  <a class="brand" href="index.html">
-    <span>Hueflow Studio</span>
-    <small>휴플로우스튜디오</small>
-  </a>
-  <div class="navlinks">
-    <a href="#schedule">Schedule</a>
-    <a href="#curriculum">Curriculum</a>
-    <a href="Plano.html">Plano Page</a>
-  </div>
-  <a class="top-cta" href="Plano.html?pay=1#apply">신청하기</a>
-</nav>
+<main class="shell">
+  <nav class="top" aria-label="Plano invite navigation">
+    <a class="brand" href="index.html">
+      <strong>Hueflow Studio</strong>
+      <span>휴플로우스튜디오</span>
+    </a>
+    <a class="cta" href="Plano.html?pay=1#apply">신청하기</a>
+  </nav>
 
-<main class="page">
   <section class="hero" aria-label="Plano 2기 오픈 초대장">
-    <article class="hero-copy">
-      <div>
-        <p class="eyebrow">Plano 02 is open</p>
-        <h1>인테리어 AI 워크플로우 2기 오픈</h1>
-        <p class="lead">7월 15일 수요일 저녁, 온라인 집중반으로 시작합니다. 평면도와 레퍼런스를 AI 이미지, 영상, 제안서, 브랜드 사이트와 자동화 흐름까지 연결하는 4주 과정입니다.</p>
-        <div class="spectrum-strip" aria-hidden="true"></div>
-        <div class="hero-actions">
-          <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 신청하기</span><span class="arrow">→</span></a>
-          <a class="button ghost" href="#curriculum"><span>커리큘럼 보기</span><span class="arrow">↓</span></a>
-        </div>
-      </div>
+    <p class="eyebrow">Plano 02 · online intensive</p>
+    <h1>인테리어 AI 워크플로우 2기 오픈</h1>
+    <p class="lead">7월 15일 수요일 저녁 시작합니다. 평면도와 레퍼런스를 AI 이미지, 영상, 제안서, 브랜드 사이트와 자동화 흐름까지 연결하는 4주 과정입니다.</p>
+    <div class="soft-strip" aria-hidden="true"></div>
 
-      <div class="quick-facts" aria-label="핵심 안내">
-        <div class="fact"><span>Start</span><strong>2026.07.15 수요일<br>19:00-22:00</strong></div>
-        <div class="fact"><span>Format</span><strong>실시간 Zoom<br>온라인 집중반</strong></div>
-        <div class="fact"><span>Seats</span><strong>정원 30명<br>결제 승인 순 확정</strong></div>
-        <div class="fact"><span>Tuition</span><strong>590,000원<br>부가세 포함</strong></div>
-      </div>
-    </article>
+    <div class="hero-actions">
+      <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 신청하기</span><span>→</span></a>
+      <a class="button secondary" href="#curriculum"><span>커리큘럼 먼저 보기</span><span>↓</span></a>
+    </div>
+  </section>
 
-    <article class="workflow-card" aria-label="Plano workflow preview">
-      <div class="window-label">
-        <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span>class-plan.md</span>
-      </div>
-      <div>
-        <div class="prompt-stack" aria-label="수업 프롬프트 예시">
-          <span class="prompt-chip">isometric-interior-prompt.md</span>
-          <span class="prompt-chip">reference-to-material-keywords.md</span>
-          <span class="prompt-chip">client-proposal-flow.md</span>
-        </div>
-        <div class="code-window">
-<pre><code>const plano02 = {
-  open: true,
-  start: "2026.07.15 Wed 19:00",
-  weeks: ["image", "rendering", "video", "codex"],
-  output: "portfolio + workflow system"
-};
+  <section class="summary" aria-label="핵심 안내">
+    <div class="summary-card"><span>Start</span><strong>2026.07.15<br>수요일 19:00</strong></div>
+    <div class="summary-card"><span>Format</span><strong>실시간 Zoom<br>온라인 집중반</strong></div>
+    <div class="summary-card"><span>Seats</span><strong>정원 30명<br>결제순 확정</strong></div>
+    <div class="summary-card"><span>Tuition</span><strong>590,000원<br>부가세 포함</strong></div>
+  </section>
 
-reserveSeat(plano02);</code></pre>
-        </div>
-      </div>
-      <div class="workflow-foot">
-        <a class="class-pill" href="Plano.html">class</a>
-        <span>isometric · proposal · video · automation</span>
-      </div>
-    </article>
+  <section class="prompt-note" aria-label="수업 프롬프트 예시">
+    <p>수업에서는 이런 식으로 공간 자료를 프롬프트와 작업 순서로 바꿔갑니다.</p>
+    <div class="prompt-box">
+      <span class="dot" aria-hidden="true"></span>
+      <span>평면도를 실내 아이소메트릭 컷으로 정리해줘</span>
+      <span class="send" aria-hidden="true">↵</span>
+    </div>
   </section>
 
   <section class="section" id="schedule" aria-label="Plano 2기 일정">
     <div class="section-head">
-      <h2>매주 수요일 저녁, 네 번의 실무 흐름으로 정리합니다.</h2>
-      <p>모든 회차는 실시간 Zoom으로 진행됩니다. Zoom 주소와 준비 안내를 정확히 보내드리기 위해 결제 전에 성함과 휴대폰 번호를 받습니다.</p>
+      <h2>수요일 저녁 네 번으로 정리합니다.</h2>
+      <p>모든 회차는 실시간 Zoom으로 진행됩니다. 결석 회차를 따라올 수 있도록 녹화본도 제공합니다.</p>
     </div>
-    <div class="date-grid">
-      <article class="date-card">
-        <span class="week">Week 01</span>
-        <span class="date">07.15</span>
-        <span class="topic">AI 이미지 기초와 공간 아이디어 도출</span>
+    <div class="timeline">
+      <article class="timeline-card">
+        <div class="date"><strong>07.15</strong><span>Week 01</span></div>
+        <div><h3>AI 이미지 기초와 아이디어 도출</h3><p>레퍼런스 분석에서 첫 렌더링 프롬프트까지.</p></div>
       </article>
-      <article class="date-card">
-        <span class="week">Week 02</span>
-        <span class="date">07.22</span>
-        <span class="topic">프롬프트 분해와 공간별 렌더링 패턴</span>
+      <article class="timeline-card">
+        <div class="date"><strong>07.22</strong><span>Week 02</span></div>
+        <div><h3>프롬프트 분해와 렌더링 패턴</h3><p>공간, 스타일, 조명, 재질을 나눠 원하는 이미지로 조정합니다.</p></div>
       </article>
-      <article class="date-card">
-        <span class="week">Week 03</span>
-        <span class="date">07.29</span>
-        <span class="topic">이미지에서 제안서와 영상 흐름으로 확장</span>
+      <article class="timeline-card">
+        <div class="date"><strong>07.29</strong><span>Week 03</span></div>
+        <div><h3>제안서와 영상 흐름 만들기</h3><p>이미지 컷을 설득되는 제안 자료와 영상 스토리로 묶습니다.</p></div>
       </article>
-      <article class="date-card">
-        <span class="week">Week 04</span>
-        <span class="date">08.05</span>
-        <span class="topic">Codex 자동화와 브랜드 사이트 정리</span>
+      <article class="timeline-card">
+        <div class="date"><strong>08.05</strong><span>Week 04</span></div>
+        <div><h3>Codex 자동화와 홈페이지 정리</h3><p>결과물을 브랜드 사이트와 반복 업무 자동화로 연결합니다.</p></div>
       </article>
     </div>
   </section>
 
   <section class="section" id="curriculum" aria-label="Plano 2기 커리큘럼">
     <div class="section-head">
-      <h2>툴 사용법이 아니라, 공간 업무에 붙는 순서로 배웁니다.</h2>
-      <p>레퍼런스 분석부터 최종 제안 자료와 자동화 흐름까지, 수업 후 바로 다시 꺼내 쓸 수 있는 결과물을 만드는 과정입니다.</p>
+      <h2>커리큘럼</h2>
+      <p>툴 사용법보다, 공간 실무에서 실제로 쓰는 순서에 맞춰 진행합니다.</p>
     </div>
-    <div class="curriculum-grid">
-      <article class="curriculum-card">
-        <div class="meta"><span>Week 01</span><span>07.15 Wed</span></div>
-        <h3>AI 이미지 기초 &amp; 아이디어 도출</h3>
-        <p>공간의 방향을 잡고 첫 장면을 설계하는 방법부터 시작합니다.</p>
-        <ul>
-          <li>레퍼런스 분석에서 키워드로 연결하기</li>
-          <li>시점, 구도, 조명, 재질의 기본값 이해</li>
-          <li>첫 렌더링을 위한 프롬프트 골격 만들기</li>
-        </ul>
-      </article>
-      <article class="curriculum-card">
-        <div class="meta"><span>Week 02</span><span>07.22 Wed</span></div>
-        <h3>AI 렌더링 심화</h3>
-        <p>좋은 결과가 우연히 나오게 두지 않고, 프롬프트를 요소별로 분해해 조정합니다.</p>
-        <ul>
-          <li>공간, 스타일, 카메라, 조명, 재질로 분해</li>
-          <li>주거, 카페, 상업공간, 외관별 이미지 패턴</li>
-          <li>시안 A안, B안, 디테일 컷 이미지 세트</li>
-        </ul>
-      </article>
-      <article class="curriculum-card">
-        <div class="meta"><span>Week 03</span><span>07.29 Wed</span></div>
-        <h3>AI 인테리어 영상과 제안 흐름</h3>
-        <p>흩어진 이미지 컷을 클라이언트에게 설득되는 제안서와 영상 스토리로 묶습니다.</p>
-        <ul>
-          <li>공간 스토리 기반 이미지 구성과 컷 배치</li>
-          <li>AI로 제안 문구와 PPT 흐름 다듬기</li>
-          <li>영상 전환을 위한 장면 순서와 프롬프트 작성</li>
-        </ul>
-      </article>
-      <article class="curriculum-card">
-        <div class="meta"><span>Week 04</span><span>08.05 Wed</span></div>
-        <h3>Codex 자동화 · 홈페이지</h3>
-        <p>수업 결과물을 브랜드 사이트, 상담 동선, 반복 업무 자동화로 연결합니다.</p>
-        <ul>
-          <li>Codex로 HTML 페이지를 직접 수정하는 흐름</li>
-          <li>GitHub 기반 배포와 도메인 연결 이해</li>
-          <li>프롬프트 생성기와 반복 업무 자동화 구성</li>
-        </ul>
-      </article>
+    <div class="curriculum">
+      <details open>
+        <summary>Week 01 · AI 이미지 기초 <span>07.15</span></summary>
+        <div class="detail-body">
+          <p>공간의 방향을 잡고 첫 장면을 설계하는 방법부터 시작합니다.</p>
+          <ul>
+            <li>레퍼런스 분석에서 키워드로 연결하기</li>
+            <li>시점, 구도, 조명, 재질의 기본값 이해</li>
+            <li>첫 렌더링을 위한 프롬프트 골격 만들기</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>Week 02 · 렌더링 심화 <span>07.22</span></summary>
+        <div class="detail-body">
+          <p>좋은 결과가 우연히 나오게 두지 않고, 프롬프트를 요소별로 분해해 조정합니다.</p>
+          <ul>
+            <li>공간, 스타일, 카메라, 조명, 재질로 분해</li>
+            <li>주거, 카페, 상업공간, 외관별 이미지 패턴</li>
+            <li>시안 A안, B안, 디테일 컷 이미지 세트</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>Week 03 · 영상과 제안 흐름 <span>07.29</span></summary>
+        <div class="detail-body">
+          <p>흩어진 이미지 컷을 제안서와 영상 스토리로 묶습니다.</p>
+          <ul>
+            <li>공간 스토리 기반 이미지 구성과 컷 배치</li>
+            <li>AI로 제안 문구와 PPT 흐름 다듬기</li>
+            <li>영상 전환을 위한 장면 순서와 프롬프트 작성</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>Week 04 · 자동화와 홈페이지 <span>08.05</span></summary>
+        <div class="detail-body">
+          <p>수업 결과물을 브랜드 사이트, 상담 동선, 반복 업무 자동화로 연결합니다.</p>
+          <ul>
+            <li>Codex로 HTML 페이지를 직접 수정하는 흐름</li>
+            <li>GitHub 기반 배포와 도메인 연결 이해</li>
+            <li>프롬프트 생성기와 반복 업무 자동화 구성</li>
+          </ul>
+        </div>
+      </details>
     </div>
   </section>
 
-  <section class="section notice-grid" aria-label="Plano 2기 신청 안내">
-    <article class="notice-card">
-      <p class="eyebrow">Apply</p>
-      <h2>2기는 결제 승인 순으로 30명까지만 확정됩니다.</h2>
-      <p>카드 결제는 신청 정보 입력 후 KSNET 결제로 이동합니다. 계좌이체가 편하신 분은 카카오톡으로 성함과 휴대폰 번호를 보내주시면 계좌와 현금영수증 안내를 드립니다.</p>
-      <div class="hero-actions">
-        <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 자리 확정하기</span><span class="arrow">→</span></a>
-        <a class="button ghost" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener"><span>계좌이체 문의하기</span><span class="arrow">↗</span></a>
-      </div>
-    </article>
-    <aside class="instructor-card">
+  <section class="section apply-card" aria-label="Plano 2기 신청 안내">
+    <p class="eyebrow">Apply</p>
+    <h2>정원 30명, 결제 승인 순으로 확정됩니다.</h2>
+    <p>카드 결제 전 성함과 휴대폰 번호를 받습니다. 수강생분께 Zoom 주소와 준비 안내를 정확히 보내드리기 위한 정보입니다.</p>
+    <div class="hero-actions">
+      <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 자리 확정하기</span><span>→</span></a>
+      <a class="button secondary" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener"><span>계좌이체 문의하기</span><span>↗</span></a>
+    </div>
+    <div class="teacher">
       <img src="assets/instructor-plano-badge.png?v=2" alt="Plano 강의를 진행하는 김예진 강사">
       <div>
-        <strong>김예진</strong>
-        <span>Hueflow Studio</span>
+        <strong>김예진 · Hueflow Studio</strong>
+        <span>20년차 공간 설계 실무 기반 AI 워크플로우 수업</span>
       </div>
-      <p>20년차 공간 설계 실무를 바탕으로, 인테리어 업무에 실제로 붙는 AI 워크플로우를 가르칩니다.</p>
-    </aside>
+    </div>
   </section>
 
   <p class="legal">휴플로우스튜디오 · 대표 김예진 · 사업자등록번호 566-25-02364 · 통신판매업신고 제2026-서울성동-0719호 · 070-4570-8159 · 서울특별시 성동구 금호산8길 14</p>
 </main>
+
+<div class="bottom-cta" aria-label="빠른 신청">
+  <div class="bottom-cta-inner">
+    <a class="pay" href="Plano.html?pay=1#apply">카드 결제로 신청</a>
+    <a class="talk" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener">문의</a>
+  </div>
+</div>
 </body>
 </html>
