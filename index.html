@@ -289,6 +289,24 @@
     color: var(--dia-graphite);
     font-size: 15px;
   }
+  .typing-text {
+    min-width: 0;
+    line-height: 1.45;
+  }
+  .typing-text::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 1em;
+    margin-left: 4px;
+    transform: translateY(2px);
+    background: #96a3d8;
+    animation: caretBlink 920ms steps(1, end) infinite;
+  }
+  @keyframes caretBlink {
+    0%, 48% { opacity: 1; }
+    49%, 100% { opacity: 0; }
+  }
   .prompt-bloom {
     width: 12px;
     height: 12px;
@@ -885,11 +903,11 @@
             <p class="prompt-label">Live AI Class</p>
             <h2>건축·인테리어 워크플로우를 하나로 연결합니다.</h2>
           </div>
-          <p class="prompt-note">평면과 레퍼런스를 바탕으로 실내 아이소 컷, 조명 무드, 재료 키워드를 정리했습니다.</p>
+          <p class="prompt-note">평면도와 레퍼런스를 바탕으로 천장이 열린 실내 아이소메트릭 컷, 조명 무드, 재료 키워드를 정리했습니다.</p>
           <div class="prompt-box" aria-label="프롬프트 입력 예시">
             <div class="prompt-field">
               <span class="prompt-bloom" aria-hidden="true"></span>
-              <span>아기자기하지만 실무에 바로 쓰이는 제안 흐름으로 정리해줘</span>
+              <span class="typing-text" data-typewriter>평면도를 실내 아이소메트릭 컷으로 변환해줘</span>
               <span class="prompt-send" aria-hidden="true">→</span>
             </div>
           </div>
@@ -990,6 +1008,57 @@ verify(workflow);</code></pre>
       });
       startVideo(v);
     });
+  })();
+
+  // Type the hero prompt like a live prompt window.
+  (function(){
+    var target = document.querySelector('[data-typewriter]');
+    if (!target) return;
+
+    var prompts = [
+      '평면도를 실내 아이소메트릭 컷으로 변환해줘',
+      '천장을 열어 동선과 가구 배치가 보이게 구성해줘',
+      '우드, 패브릭, 간접조명 중심의 따뜻한 무드로 정리해줘',
+      '클라이언트 제안서에 넣을 이미지 프롬프트로 다듬어줘'
+    ];
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      target.textContent = prompts[0];
+      return;
+    }
+
+    var promptIndex = 0;
+    var charIndex = 0;
+    var deleting = false;
+
+    function tick() {
+      var current = prompts[promptIndex];
+      target.textContent = current.slice(0, charIndex);
+
+      if (!deleting && charIndex < current.length) {
+        charIndex += 1;
+        window.setTimeout(tick, 58);
+        return;
+      }
+
+      if (!deleting && charIndex === current.length) {
+        deleting = true;
+        window.setTimeout(tick, 1450);
+        return;
+      }
+
+      if (deleting && charIndex > 0) {
+        charIndex -= 1;
+        window.setTimeout(tick, 28);
+        return;
+      }
+
+      deleting = false;
+      promptIndex = (promptIndex + 1) % prompts.length;
+      window.setTimeout(tick, 360);
+    }
+
+    tick();
   })();
 
   /* "준비중" toast for unfinished links */
