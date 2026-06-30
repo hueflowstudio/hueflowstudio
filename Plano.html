@@ -1091,6 +1091,131 @@
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+  /* ============ Payment applicant modal ============ */
+  .payment-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: none;
+    place-items: center;
+    padding: 24px;
+    background: rgba(18, 18, 18, 0.42);
+  }
+  .payment-modal.is-open {
+    display: grid;
+  }
+  .payment-dialog {
+    width: min(100%, 500px);
+    max-height: min(760px, calc(100vh - 48px));
+    overflow: auto;
+    border: 0.5px solid var(--line-soft);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 24px;
+  }
+  .payment-dialog__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  .payment-dialog__head p {
+    margin: 0;
+    color: var(--mid);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .payment-dialog__head h2 {
+    margin: 6px 0 8px;
+    color: var(--ink);
+    font-family: var(--hf-font-kr);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
+  .payment-close {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    border: 0.5px solid var(--line-soft);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    cursor: pointer;
+  }
+  .payment-form {
+    display: grid;
+    gap: 16px;
+  }
+  .payment-field {
+    display: grid;
+    gap: 8px;
+  }
+  .payment-field span,
+  .payment-consent {
+    color: var(--mid);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .payment-field input {
+    width: 100%;
+    min-height: 46px;
+    border: 0.5px solid var(--line-soft);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    padding: 0 13px;
+    font: inherit;
+    font-size: 15px;
+    letter-spacing: 0;
+  }
+  .payment-field input:focus {
+    outline: 1px solid var(--ink);
+    outline-offset: 0;
+  }
+  .payment-consent {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+  .payment-consent input {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+  }
+  .payment-error {
+    min-height: 20px;
+    color: var(--terracotta);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .payment-submit {
+    width: 100%;
+    min-height: 48px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .payment-submit[disabled] {
+    cursor: progress;
+    opacity: 0.62;
+  }
+  .payment-note {
+    margin: 4px 0 0;
+    color: var(--mid);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
   @media print {
     @page { size: A4; margin: 12mm; }
     html, body {
@@ -1101,7 +1226,8 @@
     body { padding-bottom: 0; }
     .topnav { position: static; }
     .bottom-bar,
-    .toast { display: none !important; }
+    .toast,
+    .payment-modal { display: none !important; }
     .section,
     .week,
     .track-card,
@@ -1182,7 +1308,7 @@
     </div>
     <div class="apply-actions">
       <a href="#" class="btn btn-solid" data-ksnet-pay>
-        <span>카드 결제하기</span><span class="arrow">→</span>
+        <span>신청 정보 입력 후 카드 결제</span><span class="arrow">→</span>
       </a>
       <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
         <span>계좌이체 안내받기</span><span class="arrow">→</span>
@@ -1419,7 +1545,7 @@
     </div>
     <dl class="deflist">
       <div class="row"><dt>Cohort</dt><dd>온라인 집중반 <span class="note">기수별 단톡방을 운영해 같은 회차 수강생들이 함께 질문하고 결과물을 공유합니다.</span></dd></div>
-      <div class="row"><dt>Recruiting</dt><dd>2기 사전 문의 및 신청 진행 중 <span class="note">정원 마감 시 조기 마감됩니다.</span></dd></div>
+      <div class="row"><dt>Recruiting</dt><dd>온라인 집중반 2기 신청 진행 중 <span class="note">정원 30명 · 결제 승인 순으로 확정됩니다.</span></dd></div>
       <div class="row"><dt>Start</dt><dd>2026년 7월 15일(수) 시작 <span class="note">7/15 · 7/22 · 7/29 · 8/5, 총 4회</span></dd></div>
       <div class="row"><dt>Time</dt><dd>매주 수요일 19:00–22:00</dd></div>
       <div class="row"><dt>Format</dt><dd>실시간 Zoom 수업 + 녹화본 제공 <span class="note">2기는 온라인 집중반으로만 운영합니다.</span></dd></div>
@@ -1480,7 +1606,7 @@
         </ul>
         <div class="apply-actions">
           <a href="#" class="btn btn-solid" data-ksnet-pay>
-            <span>카드 결제하기</span><span class="arrow">→</span>
+            <span>신청 정보 입력 후 카드 결제</span><span class="arrow">→</span>
           </a>
           <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
             <span>계좌이체 안내받기</span><span class="arrow">→</span>
@@ -1489,7 +1615,7 @@
       </article>
     </div>
     <dl class="deflist">
-      <div class="row"><dt>Payment</dt><dd>카드 결제 / 계좌이체 가능 <span class="note">계좌번호는 공개하지 않고, 카카오톡으로 신청 정보를 확인한 뒤 안내드립니다.</span></dd></div>
+      <div class="row"><dt>Payment</dt><dd>카드 결제 / 계좌이체 가능 <span class="note">카드 결제 전 성함과 연락처를 먼저 입력합니다. 계좌이체는 카카오톡으로 신청 정보를 확인한 뒤 안내드립니다.</span></dd></div>
       <div class="row"><dt>Receipt</dt><dd>현금영수증 발급 가능 <span class="note">사업자 지출증빙용 현금영수증도 가능합니다.</span></dd></div>
       <div class="row"><dt>Included</dt><dd>
         수강생 전용 채널 평생 이용
@@ -1578,16 +1704,17 @@
       <span class="idx">13</span>
     </div>
     <p class="lead">2기 신청은 결제 확인 순으로 확정됩니다.</p>
-    <p class="copy">카카오톡으로 신청 과정과 결제 방식을 보내주세요.<br>카드 결제 링크 또는 계좌 안내 후 결제가 확인되면 시작 안내와 준비물을 전달드립니다.</p>
-    <p class="meta">2026.07.15 시작 · 매주 수요일 19:00–22:00 · 온라인 집중반</p>
+    <p class="copy">카드 결제는 성함과 연락처를 먼저 남긴 뒤 결제로 이동합니다.<br>계좌이체는 카카오톡으로 신청 정보를 확인한 뒤 계좌를 안내드립니다.</p>
+    <p class="meta">정원 30명 · 2026.07.15 시작 · 매주 수요일 19:00–22:00 · 온라인 집중반</p>
+    <p class="meta" data-seat-status>현재 신청 가능 여부를 확인하고 있습니다.</p>
     <ol class="process" aria-label="신청 절차">
-      <li><strong>Step 01</strong><span>온라인 집중반 2기 신청을 카카오톡으로 문의합니다.</span></li>
-      <li><strong>Step 02</strong><span>성함, 연락처, 결제 방식, 현금영수증 필요 여부를 남깁니다.</span></li>
-      <li><strong>Step 03</strong><span>결제가 확인되면 2기 자리가 확정됩니다.</span></li>
+      <li><strong>Step 01</strong><span>카드 결제 버튼을 눌러 성함과 연락처를 입력합니다.</span></li>
+      <li><strong>Step 02</strong><span>KSNET 카드 결제로 이동하거나, 계좌이체는 카카오톡으로 문의합니다.</span></li>
+      <li><strong>Step 03</strong><span>결제가 승인되면 온라인 집중반 2기 자리가 확정됩니다.</span></li>
     </ol>
     <div class="apply-actions">
       <a href="#" class="btn btn-solid" data-ksnet-pay>
-        <span>카드 결제하기</span><span class="arrow">→</span>
+        <span>신청 정보 입력 후 카드 결제</span><span class="arrow">→</span>
       </a>
       <a href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener" class="btn btn-outline">
         <span>계좌이체 안내받기</span><span class="arrow">→</span>
@@ -1621,6 +1748,44 @@
   </div>
 </div>
 
+<div class="payment-modal" data-payment-modal aria-hidden="true">
+  <div class="payment-dialog" role="dialog" aria-modal="true" aria-labelledby="payment-title">
+    <div class="payment-dialog__head">
+      <div>
+        <p>Plano 온라인 집중반 2기</p>
+        <h2 id="payment-title">신청 정보를 입력해 주세요.</h2>
+        <p>결제 승인 순으로 정원 30명까지 확정됩니다.</p>
+      </div>
+      <button type="button" class="payment-close" data-payment-close aria-label="닫기">×</button>
+    </div>
+    <form class="payment-form" data-payment-form>
+      <label class="payment-field">
+        <span>이름 *</span>
+        <input type="text" name="name" autocomplete="name" required placeholder="홍길동">
+      </label>
+      <label class="payment-field">
+        <span>휴대폰 번호 *</span>
+        <input type="tel" name="phone" autocomplete="tel" required inputmode="tel" placeholder="010-0000-0000">
+      </label>
+      <label class="payment-field">
+        <span>이메일</span>
+        <input type="email" name="email" autocomplete="email" placeholder="hello@example.com">
+      </label>
+      <label class="payment-field">
+        <span>인스타그램 / 스레드 ID</span>
+        <input type="text" name="social" autocomplete="off" placeholder="@hueflow_studio">
+      </label>
+      <label class="payment-consent">
+        <input type="checkbox" name="consent" required>
+        <span>결제 확인, 수강 안내, 환불 처리에 필요한 신청 정보를 휴플로우스튜디오가 보관하는 데 동의합니다.</span>
+      </label>
+      <p class="payment-error" data-payment-error aria-live="polite"></p>
+      <button type="submit" class="payment-submit" data-payment-submit>KSNET 카드 결제로 이동</button>
+      <p class="payment-note">입력한 정보는 주문번호와 함께 연결됩니다. 결제가 취소되면 자리 확정도 되지 않습니다.</p>
+    </form>
+  </div>
+</div>
+
 <form name="KSPayAuthForm" method="post" style="display:none">
   <input type="hidden" name="sndStoreid" value="2999199999">
   <input type="hidden" name="sndStorepasswd" value="">
@@ -1650,8 +1815,13 @@
 <script>
   // KSNET KSPAY authentication payment window.
   (function(){
-    var form = document.querySelector('form[name="KSPayAuthForm"]');
-    if (!form) return;
+    var ksnetForm = document.querySelector('form[name="KSPayAuthForm"]');
+    var modal = document.querySelector('[data-payment-modal]');
+    var applicantForm = document.querySelector('[data-payment-form]');
+    var errorEl = document.querySelector('[data-payment-error]');
+    var submitEl = document.querySelector('[data-payment-submit]');
+    var seatStatusEls = document.querySelectorAll('[data-seat-status]');
+    if (!ksnetForm || !modal || !applicantForm) return;
 
     function createOrderNumber() {
       var now = new Date();
@@ -1667,7 +1837,133 @@
     }
 
     function setReplyUrl(mode) {
-      form.querySelector('[name="sndReply"]').value = window.location.origin + '/api/ksnet/receive?mode=' + mode;
+      var params = new URLSearchParams({ mode: mode, course: 'plano-02-online-intensive' });
+      ksnetForm.querySelector('[name="sndReply"]').value = window.location.origin + '/api/ksnet/receive?' + params.toString();
+    }
+
+    function setHidden(name, value) {
+      var input = ksnetForm.querySelector('[name="' + name + '"]');
+      if (input) input.value = value || '';
+    }
+
+    function setError(message) {
+      if (errorEl) errorEl.textContent = message || '';
+    }
+
+    function setSeatStatus(message) {
+      seatStatusEls.forEach(function(el){ el.textContent = message; });
+    }
+
+    function normalizePhone(value) {
+      return String(value || '').replace(/[^\d]/g, '');
+    }
+
+    function openModal() {
+      setError('');
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      var nameInput = applicantForm.querySelector('[name="name"]');
+      if (nameInput) setTimeout(function(){ nameInput.focus(); }, 30);
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      setError('');
+    }
+
+    function getApplicant(orderNumber) {
+      var name = String(applicantForm.elements.name.value || '').trim();
+      var phone = normalizePhone(applicantForm.elements.phone.value);
+      var email = String(applicantForm.elements.email.value || '').trim();
+      var social = String(applicantForm.elements.social.value || '').trim();
+
+      if (name.length < 2) {
+        setError('이름을 입력해 주세요.');
+        return null;
+      }
+      if (phone.length < 9) {
+        setError('휴대폰 번호를 입력해 주세요.');
+        return null;
+      }
+      if (!applicantForm.elements.consent.checked) {
+        setError('신청 정보 보관 동의가 필요합니다.');
+        return null;
+      }
+
+      return {
+        course: 'plano-02-online-intensive',
+        orderNumber: orderNumber,
+        name: name,
+        phone: phone,
+        email: email,
+        social: social,
+        amount: 590000,
+        source: 'Plano.html',
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    async function fetchSeatStatus() {
+      if (!window.fetch) return;
+      try {
+        var res = await fetch('/api/plano/applications?action=status', { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('status failed');
+        var data = await res.json();
+        if (data.configured && typeof data.remaining === 'number') {
+          setSeatStatus(data.soldOut ? '현재 정원 30명이 마감되었습니다.' : '정원 30명 중 현재 ' + data.remaining + '자리 신청 가능합니다.');
+        } else {
+          setSeatStatus('정원 30명 · 결제 승인 순으로 확정됩니다.');
+        }
+      } catch (error) {
+        setSeatStatus('정원 30명 · 결제 승인 순으로 확정됩니다.');
+      }
+    }
+
+    async function reserveApplicant(applicant) {
+      if (!window.fetch) return { configured: false };
+      try {
+        var res = await fetch('/api/plano/applications', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(applicant)
+        });
+        var data = await res.json().catch(function(){ return {}; });
+        if (!res.ok) {
+          if (data && data.soldOut) return data;
+          throw new Error(data.error || 'reserve failed');
+        }
+        return data;
+      } catch (error) {
+        return { configured: false, warning: 'reservation-api-unavailable' };
+      }
+    }
+
+    function rememberApplicant(applicant) {
+      try {
+        localStorage.setItem('hueflowApplicant:' + applicant.orderNumber, JSON.stringify(applicant));
+      } catch (error) {}
+    }
+
+    function submitPayment(applicant) {
+      var mode = isMobilePayment() ? 'mobile' : 'pc';
+      setHidden('sndOrdernumber', applicant.orderNumber);
+      setHidden('sndOrdername', applicant.name);
+      setHidden('sndMobile', applicant.phone);
+      setHidden('sndEmail', applicant.email || 'hello@hueflow.studio');
+      setReplyUrl(mode);
+      if (mode === 'mobile') {
+        ksnetForm.action = 'https://kspay.ksnet.to/store/KSPayMobileV1.4/KSPayPWeb.jsp';
+        ksnetForm.target = '_self';
+        ksnetForm.submit();
+      } else {
+        ksnetForm.action = 'https://kspay.ksnet.to/store/KSPayWebV1.4/KSPayPWeb.jsp';
+        ksnetForm.target = '_self';
+        ksnetForm.submit();
+      }
     }
 
     window.paramSet = function(authyn, trno, trdt, trtm, authno, ordno, msg1, msg2, amt) {
@@ -1689,20 +1985,48 @@
       var trigger = event.target.closest('[data-ksnet-pay]');
       if (!trigger) return;
       event.preventDefault();
+      openModal();
+    });
 
-      var mode = isMobilePayment() ? 'mobile' : 'pc';
-      form.querySelector('[name="sndOrdernumber"]').value = createOrderNumber();
-      setReplyUrl(mode);
-      if (mode === 'mobile') {
-        form.action = 'https://kspay.ksnet.to/store/KSPayMobileV1.4/KSPayPWeb.jsp';
-        form.target = '_self';
-        form.submit();
-      } else {
-        form.action = 'https://kspay.ksnet.to/store/KSPayWebV1.4/KSPayPWeb.jsp';
-        form.target = '_self';
-        form.submit();
+    document.addEventListener('click', function(event){
+      if (event.target.closest('[data-payment-close]') || event.target === modal) {
+        closeModal();
       }
     });
+
+    document.addEventListener('keydown', function(event){
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+
+    applicantForm.addEventListener('submit', async function(event){
+      event.preventDefault();
+      setError('');
+      var orderNumber = createOrderNumber();
+      var applicant = getApplicant(orderNumber);
+      if (!applicant) return;
+
+      if (submitEl) {
+        submitEl.disabled = true;
+        submitEl.textContent = '신청 가능 여부 확인 중...';
+      }
+
+      var reservation = await reserveApplicant(applicant);
+      if (reservation && reservation.soldOut) {
+        setError('죄송합니다. 현재 정원 30명이 마감되었습니다. 카카오톡으로 대기 문의를 남겨주세요.');
+        if (submitEl) {
+          submitEl.disabled = false;
+          submitEl.textContent = 'KSNET 카드 결제로 이동';
+        }
+        await fetchSeatStatus();
+        return;
+      }
+
+      rememberApplicant(applicant);
+      if (submitEl) submitEl.textContent = 'KSNET 결제창으로 이동합니다...';
+      submitPayment(applicant);
+    });
+
+    fetchSeatStatus();
   })();
 
   // "준비중" toast

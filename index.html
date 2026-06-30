@@ -42,7 +42,7 @@
   html, body { margin: 0; padding: 0; height: 100%; overflow-x: hidden; }
   html, body { max-width: 100vw; }
   body {
-    background: linear-gradient(135deg, #fbfbfa 0%, #f3f4f6 52%, #ffffff 100%);
+    background: #fbfbfa;
     color: var(--color-ink);
     font-family: var(--font-sans-kr);
     font-weight: 400;
@@ -59,47 +59,50 @@
     z-index: 20;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-    padding: 22px 32px 0;
+    align-items: flex-start;
+    gap: 28px;
+    width: min(100%, 1180px);
+    margin: 0 auto;
+    padding: 28px 32px 0;
     flex-shrink: 0;
   }
   .top-brand {
+    display: grid;
+    gap: 3px;
     color: #151515;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0;
+    line-height: 1.2;
+  }
+  .top-brand small {
+    color: #777777;
+    font-size: 11px;
+    font-weight: 400;
   }
   .top-links {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 18px;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
   .top-links a,
   .social-link {
-    min-height: 34px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 13px;
-    border: 1px solid rgba(20, 20, 20, 0.12);
-    border-radius: 999px;
-    color: #2a2a2a;
-    background: rgba(255, 255, 255, 0.62);
-    font-size: 12px;
+    color: #2b2b2b;
+    border-bottom: 1px solid transparent;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    line-height: 1.4;
+    transition: border-color 160ms ease;
   }
   .top-links a:hover,
   .social-link:hover {
-    border-color: rgba(20, 20, 20, 0.28);
-    background: rgba(255, 255, 255, 0.86);
-    transform: translateY(-1px);
+    border-bottom-color: currentColor;
   }
 
   /* ============ Hero ============ */
@@ -107,76 +110,55 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    padding: 28px 32px 48px;
+    padding: 70px 32px 54px;
     flex: 1 0 auto;
   }
   .studio-hero {
-    min-height: min(720px, calc(100vh - 136px));
+    width: min(100%, 1120px);
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
-    gap: 22px;
-    align-items: stretch;
+    grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.7fr);
+    gap: 64px;
+    align-items: start;
   }
-  .prompt-panel,
-  .code-panel {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(18, 18, 18, 0.11);
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.72);
-    box-shadow: 0 24px 70px rgba(15, 15, 15, 0.08);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-  }
-  .prompt-panel::before,
-  .code-panel::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0));
-  }
-  .prompt-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: clamp(24px, 4vw, 56px);
+  .hero-copy-block {
+    min-width: 0;
   }
   .hero-kicker {
-    margin: 0 0 20px;
-    color: #5c5c5c;
+    margin: 0 0 16px;
+    color: #6b6b6b;
     font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    font-weight: 500;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
-  .prompt-panel h1 {
-    position: relative;
-    z-index: 1;
-    max-width: 780px;
+  .hero-copy-block h1 {
     margin: 0;
     color: #111111;
-    font-size: clamp(48px, 7.4vw, 106px);
+    font-size: 72px;
     font-weight: 300;
-    line-height: 0.98;
+    line-height: 0.96;
     letter-spacing: 0;
   }
+  .brand-ko {
+    margin: 12px 0 0;
+    color: #626262;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
   .hero-copy {
-    position: relative;
-    z-index: 1;
     max-width: 560px;
-    margin: 22px 0 0;
-    color: #4d4d4d;
+    margin: 28px 0 0;
+    color: #3f3f3f;
     font-size: 18px;
     font-weight: 400;
-    line-height: 1.68;
+    line-height: 1.72;
   }
   .hero-legal {
-    position: relative;
-    z-index: 1;
     max-width: 620px;
     margin-top: 18px;
-    color: #686868;
+    color: #6a6a6a;
     font-size: 12px;
     line-height: 1.7;
   }
@@ -184,79 +166,108 @@
     color: #1d1d1d;
     font-weight: 600;
   }
-  .prompt-box {
-    position: relative;
-    z-index: 1;
-    margin: 40px 0 0;
-    padding: 18px;
-    border: 1px solid rgba(17, 17, 17, 0.12);
-    border-radius: 18px;
-    background: rgba(250, 250, 250, 0.78);
-  }
-  .prompt-box__label,
-  .code-panel__file {
-    margin-bottom: 14px;
-    color: #6b6b6b;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .prompt-box__text {
-    min-height: 118px;
-    color: #1d1d1d;
-    font-size: clamp(18px, 2vw, 24px);
-    line-height: 1.55;
-  }
-  .prompt-cursor {
-    display: inline-block;
-    width: 9px;
-    height: 1.12em;
-    margin-left: 3px;
-    transform: translateY(3px);
-    border-radius: 999px;
-    background: linear-gradient(180deg, #7cc7ff, #ff7aa9 52%, #f5cc58);
-  }
   .hero-actions,
   .social-actions {
-    position: relative;
-    z-index: 1;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 22px;
+    margin-top: 26px;
+  }
+  .social-actions {
+    margin-top: 14px;
   }
   .primary-cta,
   .ghost-cta {
-    min-height: 46px;
+    min-height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 0 18px;
-    border-radius: 999px;
+    gap: 8px;
+    padding: 0 16px;
+    border-radius: 8px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0;
-    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    transition: background 160ms ease, border-color 160ms ease;
   }
   .primary-cta {
     color: #ffffff;
-    background: #141414;
-    border: 1px solid #141414;
+    background: #151515;
+    border: 1px solid #151515;
   }
   .ghost-cta {
     color: #202020;
-    background: rgba(255, 255, 255, 0.54);
+    background: #ffffff;
     border: 1px solid rgba(20, 20, 20, 0.14);
   }
-  .primary-cta:hover,
-  .ghost-cta:hover {
-    transform: translateY(-1px);
+  .primary-cta:hover {
+    background: #2a2a2a;
   }
   .ghost-cta:hover {
-    background: rgba(255, 255, 255, 0.86);
-    border-color: rgba(20, 20, 20, 0.26);
+    border-color: rgba(20, 20, 20, 0.32);
+  }
+  .hero-tools {
+    display: grid;
+    gap: 12px;
+    align-self: start;
+  }
+  .prompt-panel,
+  .code-panel {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e4e4e0;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+  .prompt-panel {
+    padding: 16px;
+  }
+  .prompt-toolbar,
+  .code-panel__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #737373;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  .prompt-box {
+    margin-top: 16px;
+    min-height: 112px;
+    display: grid;
+    align-content: space-between;
+    gap: 18px;
+  }
+  .prompt-box__text {
+    margin: 0;
+    color: #1d1d1d;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  .prompt-field {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 10px 0 12px;
+    border: 1px solid #e4e4e0;
+    border-radius: 8px;
+    color: #777777;
+    font-size: 13px;
+  }
+  .prompt-send {
+    width: 26px;
+    height: 26px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 6px;
+    background: #151515;
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 1;
   }
   .code-panel {
     display: flex;
@@ -264,91 +275,76 @@
     min-height: 0;
   }
   .code-panel__bar {
-    position: relative;
-    z-index: 1;
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 0 18px;
-    border-bottom: 1px solid rgba(20, 20, 20, 0.1);
-    color: #565656;
-    font-size: 12px;
-    font-weight: 600;
+    min-height: 42px;
+    padding: 0 14px;
+    border-bottom: 1px solid #e4e4e0;
   }
   .window-dots {
     display: inline-flex;
-    gap: 7px;
+    gap: 6px;
   }
   .window-dots span {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: #d9d9d7;
+    background: #ddddda;
   }
-  .window-dots span:nth-child(2) { background: #c5c5c2; }
-  .window-dots span:nth-child(3) { background: #aaaaa6; }
+  .window-dots span:nth-child(2) { background: #c9c9c5; }
+  .window-dots span:nth-child(3) { background: #ababa7; }
   .code-panel__body {
-    position: relative;
-    z-index: 1;
     display: grid;
-    grid-template-rows: 1fr auto;
-    gap: 18px;
-    height: 100%;
-    padding: clamp(20px, 3.2vw, 38px);
+    gap: 16px;
+    padding: 16px;
   }
   .code-panel pre {
     margin: 0;
     min-width: 0;
+    max-height: 188px;
     overflow: hidden;
     color: #191919;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: clamp(13px, 1.3vw, 16px);
-    line-height: 1.75;
+    font-size: 13px;
+    line-height: 1.65;
     white-space: pre-wrap;
   }
-  .token-muted { color: #8a8a8a; }
+  .token-muted { color: #888888; }
   .token-key { color: #2f6df6; }
-  .token-accent { color: #ca4a78; }
-  .token-string { color: #1b7f53; }
+  .token-accent { color: #a65a2f; }
+  .token-string { color: #23724f; }
   .code-panel__cta {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 12px;
     align-items: end;
-    padding-top: 18px;
-    border-top: 1px solid rgba(20, 20, 20, 0.1);
+    padding-top: 14px;
+    border-top: 1px solid #e4e4e0;
   }
   .code-panel__cta p {
     margin: 0;
-    color: #646464;
+    color: #626262;
     font-size: 13px;
     line-height: 1.55;
   }
   .code-panel__cta strong {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     color: #151515;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
-    line-height: 1.25;
+    line-height: 1.35;
   }
   .business-strip {
+    width: min(100%, 1120px);
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 18px;
     align-items: center;
-    margin-top: 18px;
-    padding: 17px 20px;
-    border: 1px solid rgba(20, 20, 20, 0.1);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.66);
-    color: #5d5d5d;
+    margin: 42px auto 0;
+    padding: 20px 0 0;
+    border-top: 1px solid #e4e4e0;
+    color: #666666;
     font-size: 12px;
-    line-height: 1.7;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    line-height: 1.75;
   }
   .business-strip strong {
     color: #171717;
@@ -356,12 +352,12 @@
   }
   .business-strip a {
     color: #171717;
-    font-weight: 600;
+    font-weight: 500;
   }
   .business-strip__links {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 14px;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
@@ -560,10 +556,10 @@
     .studio-hero {
       grid-template-columns: 1fr;
       min-height: 0;
+      gap: 44px;
     }
-    .prompt-panel,
-    .code-panel {
-      min-height: 480px;
+    .hero-tools {
+      max-width: 620px;
     }
     .code-panel pre {
       font-size: 14px;
@@ -582,34 +578,35 @@
     }
     .top-links a,
     .social-link {
-      min-height: 32px;
-      padding: 0 11px;
-      font-size: 11px;
+      font-size: 12px;
     }
     .hero-shell {
-      padding: 18px 18px 36px;
+      padding: 58px 18px 36px;
     }
     .studio-hero {
-      gap: 14px;
+      gap: 28px;
     }
     .prompt-panel,
     .code-panel {
-      min-height: 0;
-      border-radius: 18px;
+      border-radius: 8px;
     }
     .prompt-panel {
-      padding: 22px;
+      padding: 14px;
     }
     .hero-kicker {
       margin-bottom: 14px;
       font-size: 11px;
     }
-    .prompt-panel h1 {
-      font-size: 46px;
+    .hero-copy-block h1 {
+      font-size: 44px;
       line-height: 1.02;
     }
+    .brand-ko {
+      margin-top: 9px;
+      font-size: 14px;
+    }
     .hero-copy {
-      margin-top: 16px;
+      margin-top: 22px;
       font-size: 15px;
       line-height: 1.65;
     }
@@ -618,13 +615,10 @@
       font-size: 11px;
     }
     .prompt-box {
-      margin-top: 26px;
-      padding: 15px;
-      border-radius: 15px;
+      margin-top: 14px;
     }
     .prompt-box__text {
-      min-height: 94px;
-      font-size: 17px;
+      font-size: 16px;
     }
     .hero-actions,
     .social-actions {
@@ -655,8 +649,8 @@
     }
     .business-strip {
       grid-template-columns: 1fr;
-      padding: 15px;
-      border-radius: 15px;
+      margin-top: 30px;
+      padding-top: 18px;
     }
     .business-strip__links {
       justify-content: flex-start;
@@ -722,7 +716,7 @@
 <body>
 
   <nav class="top" aria-label="Primary">
-    <a class="top-brand" href="index.html">휴플로우스튜디오</a>
+    <a class="top-brand" href="index.html"><span>Hueflow Studio</span><small>휴플로우스튜디오</small></a>
     <div class="top-links">
       <a href="Plano.html">정규 강의</a>
       <a href="Lab.html">기업 강의</a>
@@ -734,38 +728,44 @@
 
   <main class="hero-shell">
     <section class="studio-hero" aria-label="휴플로우스튜디오 소개">
-      <div class="prompt-panel">
-        <div>
-          <p class="hero-kicker">AI workflow for spatial design</p>
-          <h1>휴플로우<br>스튜디오</h1>
-          <p class="hero-copy">인테리어 실무자를 위한 AI 시각화, 프롬프트 설계, 업무 자동화 수업을 운영합니다.</p>
-          <p class="hero-legal"><strong>상호 휴플로우스튜디오</strong> · 사업자등록번호 566-25-02364 · 통신판매업신고 제2026-서울성동-0719호</p>
-
-          <div class="prompt-box" aria-label="프롬프트 예시">
-            <div class="prompt-box__label">Prompt</div>
-            <div class="prompt-box__text">상업공간 컨셉을 빠르게 정리하고, 실무자가 바로 쓸 수 있는 이미지와 문서 흐름으로 변환해줘<span class="prompt-cursor" aria-hidden="true"></span></div>
-          </div>
+      <div class="hero-copy-block">
+        <p class="hero-kicker">AI workflow for spatial design</p>
+        <h1>Hueflow<br>Studio</h1>
+        <p class="brand-ko">휴플로우스튜디오</p>
+        <p class="hero-copy">인테리어 실무자를 위한 AI 시각화, 프롬프트 설계, 업무 자동화 수업을 운영합니다. 도구 사용법보다 실제 제안과 업무 흐름에 붙는 결과물을 만듭니다.</p>
+        <p class="hero-legal"><strong>상호 휴플로우스튜디오</strong> · 사업자등록번호 566-25-02364 · 통신판매업신고 제2026-서울성동-0719호 · <a href="tel:07045708159">070-4570-8159</a></p>
+        <div class="hero-actions">
+          <a class="primary-cta" href="Plano.html">정규 강의 보기 <span aria-hidden="true">→</span></a>
+          <a class="ghost-cta" href="Lab.html">기업 강의 문의</a>
         </div>
-
-        <div>
-          <div class="hero-actions">
-            <a class="primary-cta" href="Plano.html">정규 강의 보기 <span aria-hidden="true">→</span></a>
-            <a class="ghost-cta" href="Lab.html">기업 강의 문의</a>
-          </div>
-          <div class="social-actions" aria-label="Social links">
-            <a class="social-link" href="https://instagram.com/hueflow_studio" target="_blank" rel="noopener">Instagram</a>
-            <a class="social-link" href="https://threads.net/@hueflow_studio" target="_blank" rel="noopener">Threads</a>
-          </div>
+        <div class="social-actions" aria-label="Social links">
+          <a class="social-link" href="https://instagram.com/hueflow_studio" target="_blank" rel="noopener">Instagram</a>
+          <a class="social-link" href="https://threads.net/@hueflow_studio" target="_blank" rel="noopener">Threads</a>
         </div>
       </div>
 
-      <div class="code-panel" aria-label="정규 강의 정보">
-        <div class="code-panel__bar">
-          <span class="window-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-          <span>plano-class.js</span>
+      <div class="hero-tools">
+        <div class="prompt-panel">
+          <div class="prompt-toolbar">
+            <span>Prompt</span>
+            <span>live draft</span>
+          </div>
+          <div class="prompt-box" aria-label="프롬프트 예시">
+            <p class="prompt-box__text">상업공간 컨셉을 정리해서 클라이언트에게 보여줄 이미지, 제안 문구, 작업 순서로 바꿔줘.</p>
+            <div class="prompt-field">
+              <span>프롬프트를 입력하세요</span>
+              <span class="prompt-send" aria-hidden="true">→</span>
+            </div>
+          </div>
         </div>
-        <div class="code-panel__body">
-          <pre><code><span class="token-muted">// Live AI class</span>
+
+        <div class="code-panel" aria-label="정규 강의 정보">
+          <div class="code-panel__bar">
+            <span class="window-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span>plano-class.js</span>
+          </div>
+          <div class="code-panel__body">
+            <pre><code><span class="token-muted">// Live AI class</span>
 <span class="token-key">const</span> plano = {
   title: <span class="token-string">"Plano 정규 강의"</span>,
   start: <span class="token-string">"2026.07.15 WED"</span>,
@@ -778,9 +778,10 @@
   ],
   checkout: <span class="token-string">"KSNET card payment"</span>
 };</code></pre>
-          <div class="code-panel__cta">
-            <p><strong>7월 3째주 수요일 시작</strong>카드 결제와 계좌이체 안내를 함께 확인할 수 있습니다.</p>
-            <a class="primary-cta" href="Plano.html">신청 페이지로</a>
+            <div class="code-panel__cta">
+              <p><strong>7월 셋째 주 수요일 시작</strong>카드 결제와 계좌이체 안내를 함께 확인할 수 있습니다.</p>
+              <a class="primary-cta" href="Plano.html">신청 페이지로</a>
+            </div>
           </div>
         </div>
       </div>

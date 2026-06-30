@@ -1,5 +1,6 @@
 const http = require('http');
 const { TextDecoder } = require('util');
+const { recordPayment } = require('../../lib/plano-store');
 
 const DEFAULT_RPARAMS = [
   'authyn',
@@ -170,6 +171,11 @@ function buildResultUrl(values) {
   return `/ksnet-result.html?${params.toString()}`;
 }
 
+function isApproved(values) {
+  const authyn = String(values.authyn || '').toUpperCase();
+  return authyn === 'O' || authyn === 'Y';
+}
+
 module.exports = async function handler(req, res) {
   try {
     const query = parseQuery(req);
@@ -182,6 +188,13 @@ module.exports = async function handler(req, res) {
 
     const approval = await fetchApproval(data, query.mode || data.mode);
     const values = normalizeValues(data, approval);
+    if (isApproved(values) && /^HFPLANO/.test(values.ordno || '')) {
+      try {
+        await recordPayment(values.ordno, values);
+      } catch (error) {
+        console.error('Failed to record Plano payment', error);
+      }
+    }
     const resultUrl = buildResultUrl(values);
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');

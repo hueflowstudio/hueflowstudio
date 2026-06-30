@@ -59,6 +59,25 @@
   }
   dt { color: var(--mid); }
   dd { margin: 0; word-break: break-all; }
+  .applicant-box {
+    display: none;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+  .applicant-box.is-visible {
+    display: block;
+  }
+  .applicant-box h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+  .applicant-box dl {
+    margin-top: 18px;
+    padding-top: 18px;
+  }
   a {
     display: inline-flex;
     margin-top: 32px;
@@ -81,6 +100,15 @@
     <dt>금액</dt><dd id="amt">-</dd>
     <dt>메시지</dt><dd id="msg">-</dd>
   </dl>
+  <section class="applicant-box" id="applicantBox" aria-label="신청 정보">
+    <h2>신청 정보</h2>
+    <p>입력한 신청 정보가 주문번호와 함께 연결되었습니다.</p>
+    <dl>
+      <dt>이름</dt><dd id="applicantName">-</dd>
+      <dt>연락처</dt><dd id="applicantPhone">-</dd>
+      <dt>SNS</dt><dd id="applicantSocial">-</dd>
+    </dl>
+  </section>
   <a href="Plano.html">Plano로 돌아가기</a>
 </main>
 <script>
@@ -98,6 +126,18 @@
     document.getElementById('authno').textContent = params.get('authno') || '-';
     document.getElementById('amt').textContent = params.get('amt') || '-';
     document.getElementById('msg').textContent = [params.get('msg1'), params.get('msg2')].filter(Boolean).join(' / ') || '-';
+    var ordno = params.get('ordno') || '';
+    if (ordno) {
+      try {
+        var applicant = JSON.parse(localStorage.getItem('hueflowApplicant:' + ordno) || 'null');
+        if (applicant) {
+          document.getElementById('applicantBox').classList.add('is-visible');
+          document.getElementById('applicantName').textContent = applicant.name || '-';
+          document.getElementById('applicantPhone').textContent = applicant.phone || '-';
+          document.getElementById('applicantSocial').textContent = applicant.social || '-';
+        }
+      } catch (error) {}
+    }
   })();
 </script>
 </body>
