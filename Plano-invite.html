@@ -35,7 +35,7 @@
     background:
       radial-gradient(circle at 18% 0%, rgba(227, 216, 222, 0.72), transparent 34%),
       radial-gradient(circle at 92% 20%, rgba(217, 228, 223, 0.62), transparent 32%),
-      var(--bg);
+      linear-gradient(145deg, #f8f8f8 0%, #f1e8ee 28%, #f4edda 52%, #e8efeb 76%, #eef1f7 100%);
     color: var(--ink);
     font-family: var(--font);
     font-weight: 400;
@@ -79,8 +79,10 @@
     z-index: -2;
     inset: 0;
     background:
+      radial-gradient(circle at 10% 34%, rgba(255, 255, 255, 0.52), transparent 28%),
       radial-gradient(circle at 18% 0%, rgba(227, 216, 222, 0.54), transparent 34%),
-      radial-gradient(circle at 92% 20%, rgba(217, 228, 223, 0.46), transparent 32%);
+      radial-gradient(circle at 92% 20%, rgba(217, 228, 223, 0.46), transparent 32%),
+      linear-gradient(180deg, rgba(255,255,255,0.18), rgba(247,245,241,0.42));
     pointer-events: none;
   }
   a { color: inherit; text-decoration: none; }
@@ -571,7 +573,7 @@
     <div class="soft-strip" aria-hidden="true"></div>
 
     <details class="apply-reveal">
-      <summary>신청 링크 살짝 열기</summary>
+      <summary>신청 링크 열기</summary>
       <div class="apply-panel">
         <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 신청하기</span><span>→</span></a>
         <a class="button secondary" href="#curriculum"><span>커리큘럼 먼저 보기</span><span>↓</span></a>
@@ -582,7 +584,7 @@
   <section class="summary" aria-label="핵심 안내">
     <div class="summary-card"><span>Start</span><strong>2026.07.15<br>수요일 19:00</strong></div>
     <div class="summary-card"><span>Format</span><strong>실시간 Zoom<br>온라인 집중반</strong></div>
-    <div class="summary-card"><span>Tuition</span><strong>590,000원<br>부가세 포함</strong></div>
+    <div class="summary-card"><span>Replay</span><strong>결석 회차<br>녹화본 제공</strong></div>
   </section>
 
   <section class="prompt-note" aria-label="수업 프롬프트 예시">
