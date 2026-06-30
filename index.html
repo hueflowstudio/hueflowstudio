@@ -171,13 +171,16 @@
     line-height: 1.33;
   }
   .hero-copy-block h1 {
+    display: inline-block;
     margin: 0;
     color: #000000;
     font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
-    font-size: 72px;
+    font-size: 68px;
     font-weight: 400;
-    line-height: 1.02;
+    line-height: 0.86;
     letter-spacing: 0;
+    transform: scaleY(0.88);
+    transform-origin: left center;
   }
   .brand-ko {
     margin: 8px 0 0;
@@ -264,6 +267,10 @@
     font-weight: 300;
     line-height: 1.16;
     letter-spacing: 0;
+  }
+  .prompt-title-line {
+    display: inline-block;
+    white-space: nowrap;
   }
   .prompt-note {
     max-width: 430px;
@@ -750,8 +757,9 @@
       margin-bottom: 28px;
     }
     .hero-copy-block h1 {
-      font-size: 50px;
-      line-height: 1.02;
+      font-size: 48px;
+      line-height: 0.9;
+      transform: scaleY(0.9);
     }
     .hero-kicker {
       margin-top: 8px;
@@ -782,7 +790,7 @@
       font-size: 12px;
     }
     .prompt-panel h2 {
-      font-size: 34px;
+      font-size: 27px;
       line-height: 1.18;
     }
     .prompt-note {
@@ -943,7 +951,7 @@
           </div>
           <div>
             <p class="prompt-label">Live AI Class</p>
-            <h2>건축·인테리어 워크플로우를 하나로 연결합니다.</h2>
+            <h2><span class="prompt-title-line">건축·인테리어 워크플로우를</span><br><span class="prompt-title-line">하나로 연결합니다.</span></h2>
           </div>
           <p class="prompt-note">평면도와 레퍼런스를 바탕으로 천장이 열린 실내 아이소메트릭 컷, 조명 무드, 재료 키워드를 정리했습니다.</p>
           <div class="prompt-box" aria-label="프롬프트 입력 예시">
