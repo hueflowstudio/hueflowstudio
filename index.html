@@ -440,6 +440,46 @@
     background: #ffffff;
     transform: translateY(-1px);
   }
+  .hero-social-icons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .social-icon {
+    width: 34px;
+    height: 34px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: var(--dia-shadow);
+    color: var(--dia-graphite);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  }
+  .social-icon:hover {
+    background: #ffffff;
+    color: #000000;
+    transform: translateY(-1px);
+  }
+  .social-icon svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
   .business-strip {
     width: min(100%, 1200px);
     display: grid;
@@ -798,6 +838,10 @@
       min-height: 52px;
       font-size: 14px;
     }
+    .hero-social-icons {
+      justify-content: flex-start;
+      margin-top: 12px;
+    }
     .business-strip {
       grid-template-columns: 1fr;
       margin-top: 30px;
@@ -888,8 +932,6 @@
           <a href="Plano.html">Plano — 정규 강의 →</a>
           <a href="Lab.html">Lab — 기업 강의 문의 →</a>
           <a href="Shop.html">Shop — AI Tools →</a>
-          <a href="https://instagram.com/hueflow_studio" target="_blank" rel="noopener">Instagram →</a>
-          <a href="https://threads.net/@hueflow_studio" target="_blank" rel="noopener">Threads →</a>
         </div>
       </div>
 
@@ -948,6 +990,24 @@ verify(workflow);</code></pre>
         <a href="Plano.html">Plano Class</a>
         <a href="Lab.html">AI Lab</a>
         <a href="FreeLibrary.html">Library</a>
+      </div>
+      <div class="hero-social-icons" aria-label="Social links">
+        <a class="social-icon" href="https://instagram.com/hueflow_studio" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="5" y="5" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="16.5" cy="7.5" r="1" fill="currentColor"/>
+          </svg>
+          <span class="sr-only">Instagram</span>
+        </a>
+        <a class="social-icon" href="https://threads.net/@hueflow_studio" target="_blank" rel="noopener" aria-label="Threads">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 21c4.7 0 7.6-2.9 7.6-7.3C19.6 9 16.8 5 12 5c-4.6 0-7.6 3.4-7.6 8.2C4.4 18 7.7 21 12 21Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15.8 9.1c-.7-1.4-2-2.2-3.7-2.2-2.5 0-4.1 1.7-4.1 4.3 0 2.7 1.8 4.4 4.4 4.4 2 0 3.4-.9 3.4-2.3 0-1.5-1.4-2.3-3.7-2.3h-1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.7 12.1c1.1.4 1.8 1.1 2.1 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <span class="sr-only">Threads</span>
+        </a>
       </div>
     </section>
 
