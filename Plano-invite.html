@@ -6,8 +6,7 @@
 <title>Plano 2기 오픈 초대장 · Hueflow Studio</title>
 <meta name="description" content="Plano 2기 온라인 집중반 오픈 안내. 2026년 7월 15일부터 매주 수요일 저녁 7시, 총 4회 진행됩니다.">
 <meta property="og:title" content="Plano 2기 오픈 초대장">
-<meta property="og:description" content="인테리어 AI 워크플로우 온라인 집중반 2기가 오픈되었습니다. 7/15 수요일 저녁 시작.">
-<meta property="og:image" content="https://www.hueflowstudio.com/assets/instructor-plano-badge.png">
+<meta property="og:description" content="인테리어 AI Zoom 라이브 강의 2기가 오픈되었습니다. 7/15 수요일 저녁 시작.">
 <meta property="og:url" content="https://www.hueflowstudio.com/Plano-invite.html">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="colors_and_type.css">
@@ -24,7 +23,7 @@
     --faint: #9b978e;
     --line: rgba(36, 35, 32, 0.1);
     --shadow: rgba(36, 35, 32, 0.08) 0 8px 26px;
-    --glow: linear-gradient(135deg, rgba(227, 216, 222, 0.72), rgba(217, 228, 223, 0.7), rgba(235, 229, 217, 0.78));
+    --glow: linear-gradient(135deg, rgba(226, 214, 220, 0.72), rgba(218, 226, 220, 0.7), rgba(235, 229, 217, 0.78));
     --font: "General Sans", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, Arial, sans-serif;
   }
 
@@ -46,9 +45,45 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     padding-bottom: 92px;
+    isolation: isolate;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    top: 62px;
+    left: 50%;
+    width: min(440px, 112vw);
+    height: 220px;
+    transform: translateX(-50%);
+    border-radius: 440px 440px 0 0;
+    background:
+      radial-gradient(ellipse at 50% 100%,
+        transparent 0 44px,
+        rgba(199, 187, 180, 0.24) 45px 60px,
+        transparent 61px 70px,
+        rgba(226, 214, 220, 0.42) 71px 88px,
+        transparent 89px 98px,
+        rgba(218, 226, 220, 0.44) 99px 117px,
+        transparent 118px 128px,
+        rgba(235, 229, 217, 0.54) 129px 148px,
+        transparent 149px 160px,
+        rgba(205, 212, 224, 0.32) 161px 182px,
+        transparent 183px);
+    opacity: 0.88;
+    pointer-events: none;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    z-index: -2;
+    inset: 0;
+    background:
+      radial-gradient(circle at 18% 0%, rgba(227, 216, 222, 0.54), transparent 34%),
+      radial-gradient(circle at 92% 20%, rgba(217, 228, 223, 0.46), transparent 32%);
+    pointer-events: none;
   }
   a { color: inherit; text-decoration: none; }
-  img { display: block; max-width: 100%; height: auto; }
   ::selection { background: var(--ink); color: #fff; }
 
   .shell {
@@ -94,8 +129,8 @@
     justify-content: center;
     padding: 0 14px;
     border-radius: 999px;
-    background: var(--ink);
-    color: #fffdf9;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--ink);
     font-size: 13px;
     font-weight: 500;
     white-space: nowrap;
@@ -142,7 +177,6 @@
   .hero-actions {
     display: grid;
     gap: 9px;
-    margin-top: 24px;
   }
   .button {
     min-height: 50px;
@@ -164,9 +198,54 @@
     color: var(--ink);
   }
 
+  .apply-reveal {
+    margin-top: 24px;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: inset rgba(36, 35, 32, 0.06) 0 0 0 1px;
+    overflow: hidden;
+  }
+  .apply-reveal summary {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 18px;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    list-style: none;
+  }
+  .apply-reveal summary::-webkit-details-marker { display: none; }
+  .apply-reveal summary::after {
+    content: "+";
+    width: 24px;
+    height: 24px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1;
+  }
+  .apply-reveal[open] summary::after {
+    content: "−";
+  }
+  .apply-panel {
+    display: grid;
+    gap: 9px;
+    padding: 0 10px 10px;
+  }
+  .apply-reveal:not([open]) > .apply-panel {
+    display: none;
+  }
+
   .summary {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
     margin-top: 14px;
   }
@@ -377,33 +456,6 @@
     font-size: 14px;
     line-height: 1.72;
   }
-  .teacher {
-    display: grid;
-    grid-template-columns: 54px 1fr;
-    gap: 12px;
-    align-items: center;
-    margin-top: 18px;
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-  }
-  .teacher img {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .teacher strong {
-    display: block;
-    color: var(--ink);
-    font-size: 15px;
-    font-weight: 500;
-  }
-  .teacher span {
-    display: block;
-    margin-top: 2px;
-    color: var(--faint);
-    font-size: 12px;
-  }
   .legal {
     margin: 26px 4px 0;
     color: var(--faint);
@@ -422,12 +474,44 @@
     border-top: 1px solid rgba(36, 35, 32, 0.08);
     backdrop-filter: blur(22px);
   }
-  .bottom-cta-inner {
+  .bottom-cta summary {
+    width: min(100%, 520px);
+    margin: 0 auto;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fffdf9;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    list-style: none;
+  }
+  .bottom-cta summary::-webkit-details-marker { display: none; }
+  .bottom-cta summary::after {
+    content: " +";
+    color: rgba(255, 253, 249, 0.74);
+  }
+  .bottom-cta[open] summary {
+    margin-bottom: 8px;
+    background: var(--soft);
+    color: var(--ink);
+  }
+  .bottom-cta[open] summary::after {
+    content: " −";
+    color: var(--muted);
+  }
+  .bottom-cta-panel {
     width: min(100%, 520px);
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 8px;
+  }
+  .bottom-cta:not([open]) > .bottom-cta-panel {
+    display: none;
   }
   .bottom-cta a {
     min-height: 46px;
@@ -462,7 +546,7 @@
       font-size: 44px;
     }
     .summary {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .timeline-card {
       grid-template-columns: 90px minmax(0, 1fr);
@@ -477,25 +561,27 @@
       <strong>Hueflow Studio</strong>
       <span>휴플로우스튜디오</span>
     </a>
-    <a class="cta" href="Plano.html?pay=1#apply">신청하기</a>
+    <a class="cta" href="#apply">신청 안내</a>
   </nav>
 
   <section class="hero" aria-label="Plano 2기 오픈 초대장">
     <p class="eyebrow">Plano 02 · online intensive</p>
-    <h1>인테리어 AI 워크플로우 2기 오픈</h1>
-    <p class="lead">7월 15일 수요일 저녁 시작합니다. 평면도와 레퍼런스를 AI 이미지, 영상, 제안서, 브랜드 사이트와 자동화 흐름까지 연결하는 4주 과정입니다.</p>
+    <h1>인테리어 AI Zoom 라이브 강의 2기</h1>
+    <p class="lead">7월 15일 수요일 저녁, Zoom에서 시작합니다. 평면도와 레퍼런스를 바탕으로 AI 이미지, 영상, 제안서, 브랜드 페이지까지 함께 정리하는 온라인 강의입니다.</p>
     <div class="soft-strip" aria-hidden="true"></div>
 
-    <div class="hero-actions">
-      <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 신청하기</span><span>→</span></a>
-      <a class="button secondary" href="#curriculum"><span>커리큘럼 먼저 보기</span><span>↓</span></a>
-    </div>
+    <details class="apply-reveal">
+      <summary>신청 링크 살짝 열기</summary>
+      <div class="apply-panel">
+        <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 신청하기</span><span>→</span></a>
+        <a class="button secondary" href="#curriculum"><span>커리큘럼 먼저 보기</span><span>↓</span></a>
+      </div>
+    </details>
   </section>
 
   <section class="summary" aria-label="핵심 안내">
     <div class="summary-card"><span>Start</span><strong>2026.07.15<br>수요일 19:00</strong></div>
     <div class="summary-card"><span>Format</span><strong>실시간 Zoom<br>온라인 집중반</strong></div>
-    <div class="summary-card"><span>Seats</span><strong>정원 30명<br>결제순 확정</strong></div>
     <div class="summary-card"><span>Tuition</span><strong>590,000원<br>부가세 포함</strong></div>
   </section>
 
@@ -586,31 +672,28 @@
     </div>
   </section>
 
-  <section class="section apply-card" aria-label="Plano 2기 신청 안내">
+  <section class="section apply-card" id="apply" aria-label="Plano 2기 신청 안내">
     <p class="eyebrow">Apply</p>
-    <h2>정원 30명, 결제 승인 순으로 확정됩니다.</h2>
+    <h2>신청 후 Zoom 안내를 보내드립니다.</h2>
     <p>카드 결제 전 성함과 휴대폰 번호를 받습니다. 수강생분께 Zoom 주소와 준비 안내를 정확히 보내드리기 위한 정보입니다.</p>
-    <div class="hero-actions">
-      <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 자리 확정하기</span><span>→</span></a>
-      <a class="button secondary" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener"><span>계좌이체 문의하기</span><span>↗</span></a>
-    </div>
-    <div class="teacher">
-      <img src="assets/instructor-plano-badge.png?v=2" alt="Plano 강의를 진행하는 김예진 강사">
-      <div>
-        <strong>김예진 · Hueflow Studio</strong>
-        <span>20년차 공간 설계 실무 기반 AI 워크플로우 수업</span>
+    <details class="apply-reveal">
+      <summary>신청 방법 열기</summary>
+      <div class="apply-panel">
+        <a class="button primary" href="Plano.html?pay=1#apply"><span>카드 결제로 신청하기</span><span>→</span></a>
+        <a class="button secondary" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener"><span>계좌이체 문의하기</span><span>↗</span></a>
       </div>
-    </div>
+    </details>
   </section>
 
   <p class="legal">휴플로우스튜디오 · 대표 김예진 · 사업자등록번호 566-25-02364 · 통신판매업신고 제2026-서울성동-0719호 · 070-4570-8159 · 서울특별시 성동구 금호산8길 14</p>
 </main>
 
-<div class="bottom-cta" aria-label="빠른 신청">
-  <div class="bottom-cta-inner">
+<details class="bottom-cta" aria-label="빠른 신청">
+  <summary>신청 링크 열기</summary>
+  <div class="bottom-cta-panel">
     <a class="pay" href="Plano.html?pay=1#apply">카드 결제로 신청</a>
     <a class="talk" href="https://pf.kakao.com/_LxajxbX/chat" target="_blank" rel="noopener">문의</a>
   </div>
-</div>
+</details>
 </body>
 </html>
