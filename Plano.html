@@ -1767,21 +1767,13 @@
         <span>휴대폰 번호 *</span>
         <input type="tel" name="phone" autocomplete="tel" required inputmode="tel" placeholder="010-0000-0000">
       </label>
-      <label class="payment-field">
-        <span>이메일</span>
-        <input type="email" name="email" autocomplete="email" placeholder="hello@example.com">
-      </label>
-      <label class="payment-field">
-        <span>인스타그램 / 스레드 ID</span>
-        <input type="text" name="social" autocomplete="off" placeholder="@hueflow_studio">
-      </label>
       <label class="payment-consent">
         <input type="checkbox" name="consent" required>
         <span>결제 확인, 수강 안내, 환불 처리에 필요한 신청 정보를 휴플로우스튜디오가 보관하는 데 동의합니다.</span>
       </label>
       <p class="payment-error" data-payment-error aria-live="polite"></p>
       <button type="submit" class="payment-submit" data-payment-submit>KSNET 카드 결제로 이동</button>
-      <p class="payment-note">입력한 정보는 주문번호와 함께 연결됩니다. 결제가 취소되면 자리 확정도 되지 않습니다.</p>
+      <p class="payment-note">이름과 휴대폰 번호가 주문번호와 함께 연결됩니다. 결제가 취소되면 자리 확정도 되지 않습니다.</p>
     </form>
   </div>
 </div>
@@ -1875,8 +1867,6 @@
     function getApplicant(orderNumber) {
       var name = String(applicantForm.elements.name.value || '').trim();
       var phone = normalizePhone(applicantForm.elements.phone.value);
-      var email = String(applicantForm.elements.email.value || '').trim();
-      var social = String(applicantForm.elements.social.value || '').trim();
 
       if (name.length < 2) {
         setError('이름을 입력해 주세요.');
@@ -1896,8 +1886,6 @@
         orderNumber: orderNumber,
         name: name,
         phone: phone,
-        email: email,
-        social: social,
         amount: 590000,
         source: 'Plano.html',
         createdAt: new Date().toISOString()
@@ -1953,7 +1941,7 @@
       setHidden('sndOrdernumber', applicant.orderNumber);
       setHidden('sndOrdername', applicant.name);
       setHidden('sndMobile', applicant.phone);
-      setHidden('sndEmail', applicant.email || 'hello@hueflow.studio');
+      setHidden('sndEmail', 'hello@hueflow.studio');
       setReplyUrl(mode);
       if (mode === 'mobile') {
         ksnetForm.action = 'https://kspay.ksnet.to/store/KSPayMobileV1.4/KSPayPWeb.jsp';

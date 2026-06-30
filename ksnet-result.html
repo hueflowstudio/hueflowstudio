@@ -106,7 +106,6 @@
     <dl>
       <dt>이름</dt><dd id="applicantName">-</dd>
       <dt>연락처</dt><dd id="applicantPhone">-</dd>
-      <dt>SNS</dt><dd id="applicantSocial">-</dd>
     </dl>
   </section>
   <a href="Plano.html">Plano로 돌아가기</a>
@@ -134,7 +133,6 @@
           document.getElementById('applicantBox').classList.add('is-visible');
           document.getElementById('applicantName').textContent = applicant.name || '-';
           document.getElementById('applicantPhone').textContent = applicant.phone || '-';
-          document.getElementById('applicantSocial').textContent = applicant.social || '-';
         }
       } catch (error) {}
     }
