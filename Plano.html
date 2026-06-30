@@ -2020,6 +2020,10 @@
     });
 
     fetchSeatStatus();
+    var openPaymentParam = new URLSearchParams(window.location.search).get('pay');
+    if (openPaymentParam === '1' || window.location.hash === '#pay') {
+      window.setTimeout(openModal, 120);
+    }
   })();
 
   // "준비중" toast
